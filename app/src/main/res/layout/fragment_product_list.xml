@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/editText_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Filter"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:imeActionLabel="Search"/>
+
+        <Button
+            android:id="@+id/btnClearSearch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="@android:drawable/ic_notification_clear_all" />
+
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#C0C0C0"
+        android:text="@string/no_items_found"
+        android:padding="5dp"
+        android:dividerHeight="5dp"
+        android:visibility="gone"/>
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/no_items_found"
+        android:numColumns="5"
+        android:background="#C0C0C0"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"/>
+
+</LinearLayout>

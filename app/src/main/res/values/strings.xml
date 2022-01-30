@@ -1,0 +1,116 @@
+<resources>
+    <string name="drawer_open">Menu open</string>
+    <string name="drawer_close">Menu closed</string>
+    <string name="no_items_found">No items found!</string>
+    <string name="view_shopping_cart">View shopping cart</string>
+    <string name="shopping_cart_title">Shopping Cart</string>
+    <string name="switch_salesman">Switch salesman</string>
+    <string name="menu_item_utilities">Util</string>
+    <string name="menu_item_statuses">Status…</string>
+    <string name="menu_item_select_store">Select store</string>
+    <string name="menu_item_sell_sheets">Sell Sheets</string>
+    <string name="menu_item_update_product_info">Update Product Info</string>
+    <string name="menu_item_update_product_images">Update Product Images</string>
+    <string name="menu_item_update_product_images_update">Update Products</string>
+    <string name="menu_item_update_brands">Update Brands</string>
+    <string name="menu_item_update_brand_logos">Update Brand Logos</string>
+    <string name="menu_item_update_sell_sheets">Update Sell Sheets</string>
+    <string name="menu_item_update_salesman_store">Update Stores</string>
+    <string name="calculate">Calculate</string>
+    <string name="reset">Reset</string>
+    <string name="cost_price">Cost Price:</string>
+    <string name="sell_price">Sell Price:</string>
+    <string name="markup">Markup:</string>
+    <string name="percentaje_symbol">%</string>
+    <string name="profit">Profit:</string>
+    <string name="margin">Margin:</string>
+    <string name="selling_price">Selling Price: $</string>
+    <string name="cost_price_with_price_symbol">Cost Price: $</string>
+    <string name="margin_calculator_help_text">Please enter 2 values only. The third value will be calculated along with the profit in the results section of the calculator.</string>
+    <string name="number_pad_7">7</string>
+    <string name="number_pad_8">8</string>
+    <string name="number_pad_9">9</string>
+    <string name="number_pad_4">4</string>
+    <string name="number_pad_5">5</string>
+    <string name="number_pad_6">6</string>
+    <string name="number_pad_0">0</string>
+    <string name="number_pad_delete">Delete</string>
+    <string name="number_pad_1">1</string>
+    <string name="number_pad_2">2</string>
+    <string name="number_pad_3">3</string>
+    <string name="quantity">%s%s</string>
+    <string name="change_mode">Change mode</string>
+    <string name="number_pad_point">.</string>
+    <string name="case_mode">Case</string>
+    <string name="piece_mode">Piece</string>
+    <string name="case_vertical">C\na\ns\ne</string>
+    <string name="piece_vertical">P\ni\ne\nc\ne</string>
+    <string name="quantity_initial_value">0</string>
+    <string name="quantity_hint">0</string>
+    <string name="order_history">Order History</string>
+    <string name="view_statement_shopping_cart">View Statement</string>
+    <string name="continue_shopping">Continue Shopping (Save Changes)</string>
+    <string name="checkout_shopping_cart">Checkout (Send Order)</string>
+    <string name="cancel_shopping_cart">Cancel (Don\'t Save Changes)</string>
+    <string name="any_comments">Any comments?</string>
+    <string name="please_enter_store_contact_here">PLEASE ENTER STORE CONTACT HERE</string>
+    <string name="upc_dialog_title">%d PRODUCTS found by search for \"%s\" </string>
+    <string name="switch_store_dialog_title">Changing stores will remove all items from your shopping cart.</string>
+    <string name="switch_store_dialog_message">Are you sure you want to continue?</string>
+    <string name="view_statement">View Statement</string>
+    <string name="no">no</string>
+    <string name="yes">yes</string>
+    <string name="ok">OK</string>
+    <string name="order_item_title">%s : %d PRODUCTS</string>
+    <string name="this_product_already_exist">This product already exist</string>
+    <string name="wipe_data_message">Are you sure you want to wipe all the data?</string>
+    <string name="clear_folders_message">Are you sure you want to clear the folders?</string>
+
+    <string name="field_string_formatter">%s: </string>
+    <string name="quantity_string_formatter">$%s</string>
+
+    <string name="in_progress_detected">An in-progress order has been detected at %s containing %d products</string>
+    <string name="resume_order_message">Would you like to resume this order?</string>
+    <string name="outstanding_balance">OUTSTANDING BALANCE</string>
+    <string name="amount_owed">AMOUNT OWED: $%s %s</string>
+    <string name="total_qty_sold_message">QTY: %s</string>
+
+    <plurals name="case_qty_selected">
+        <item quantity="one">%s Case</item>
+        <item quantity="other">%s Cases</item>
+    </plurals>
+
+    <plurals name="piece_qty_selected">
+        <item quantity="one">%s Piece</item>
+        <item quantity="other">%s Pieces</item>
+    </plurals>
+
+    <string name="delete_item_shopping_cart_message">Are you sure you want to remove all %s %s from your shopping car?</string>
+    <string name="select_store">Please, select a store</string>
+    
+    <string name="no_results_found_for_upc_search">No results found for %s</string>
+    <string name="select_update_to_load">Select update to load</string>
+    <string name="load">Load</string>
+    <string name="cancel">Cancel</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="r_d">R-D</string>
+    <string name="email_this_statement">EMAIL THIS STATEMENT</string>
+    <string name="customer_has_special_prices">CUSTOMER HAS SPECIAL PRICES</string>
+    <string name="level_1_price">Level 1 Price:</string>
+    <string name="level_2_price">Level 2 Price:</string>
+    <string name="level_3_price">Level 3 Price:</string>
+    <string name="similar_products">Similar products</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="cs">CS</string>
+    <string name="pc">PC</string>
+    <string-array name="reports_array">
+        <item>REPORTS</item>
+        <item>Customer Stats</item>
+        <item>Statement (small)</item>
+    </string-array>
+
+</resources>

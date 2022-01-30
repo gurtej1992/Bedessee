@@ -1,0 +1,131 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'io.fabric'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+
+        minSdkVersion 19
+        multiDexEnabled true
+        //noinspection HighAppVersionCode
+        versionCode 20200718
+        versionName '2020-07-18'
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("../keystores/debug.keystore")
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // Specifies one flavor dimension.
+    flavorDimensions "version"
+    productFlavors {
+        stable {
+            applicationId "com.bedessee.sales21"
+            resValue "string", "app_name", "Sales"
+        }
+        stableUS {
+            applicationId "com.bedessee.sales21.us"
+            resValue "string", "app_name", "Sales US"
+        }
+        beta {
+            applicationId "com.bedessee.sales22"
+            resValue "string", "app_name", "Sales B"
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def flavor = variant.name
+            def versionName = variant.versionName
+            outputFileName = "sales2019_${flavor}_${versionName}.apk"
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+}
+
+dependencies {
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Android
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat-resources:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation 'com.google.firebase:firebase-core:17.4.3'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+    implementation 'it.sephiroth.android.library.imagezoom:imagezoom:2.1.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    implementation project(':FilePicker')
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.android.material:material:1.1.0'
+
+    implementation 'com.maltaisn:calcdialog:2.0.1'
+
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha03'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
+    implementation "androidx.tonyodev.fetch2:xfetch2:3.1.4"
+
+    implementation 'commons-io:commons-io:2.7'
+
+    implementation 'org.apache.commons:commons-compress:1.18'
+
+    implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
+    compile 'com.github.ghost1372:Mzip-Android:0.4.0'
+}
+
+apply plugin: 'com.google.gms.google-services'

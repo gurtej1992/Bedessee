@@ -1,0 +1,219 @@
+---
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: android
+trigger_map:
+- push_branch: "*"
+  workflow: primary
+- pull_request_source_branch: "*"
+  workflow: primary
+workflows:
+  deploy:
+    description: |
+      ## How to get a signed APK
+
+      This workflow contains the **Sign APK** step. To sign your APK all you have to do is to:
+
+      1. Click on **Code Signing** tab
+      1. Find the **ANDROID KEYSTORE FILE** section
+      1. Click or drop your file on the upload file field
+      1. Fill the displayed 3 input fields:
+       1. **Keystore password**
+       1. **Keystore alias**
+       1. **Private key password**
+      1. Click on **[Save metadata]** button
+
+      That's it! From now on, **Sign APK** step will receive your uploaded files.
+
+      ## To run this workflow
+
+      If you want to run this workflow manually:
+
+      1. Open the app's build list page
+      2. Click on **[Start/Schedule a Build]** button
+      3. Select **deploy** in **Workflow** dropdown input
+      4. Click **[Start Build]** button
+
+      Or if you need this workflow to be started by a GIT event:
+
+      1. Click on **Triggers** tab
+      2. Setup your desired event (push/tag/pull) and select **deploy** workflow
+      3. Click on **[Done]** and then **[Save]** buttons
+
+      The next change in your repository that matches any of your trigger map event will start **deploy** workflow.
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.0: {}
+    - script@1.1.5:
+        title: Do anything with Script step
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - change-android-versioncode-and-versionname@1.1.1:
+        inputs:
+        - build_gradle_path: "$PROJECT_LOCATION/$MODULE/build.gradle"
+    - android-lint@0.9.6:
+        inputs:
+        - project_location: "$PROJECT_LOCATION"
+        - module: "$MODULE"
+        - variant: "$VARIANT"
+    - android-unit-test@1.0.0:
+        inputs:
+        - project_location: "$PROJECT_LOCATION"
+        - module: "$MODULE"
+        - variant: "$VARIANT"
+    - android-build@0.10.0:
+        inputs:
+        - project_location: "$PROJECT_LOCATION"
+        - module: "$MODULE"
+        - variant: "$VARIANT"
+    - sign-apk@1.4.1:
+        run_if: '{{getenv "BITRISEIO_ANDROID_KEYSTORE_URL" | ne ""}}'
+    - deploy-to-bitrise-io@1.7.1: {}
+    - cache-push@2.2.0: {}
+  primary:
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.1: {}
+    - script@1.1.5:
+        title: Do anything with Script step
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - gradle-runner@1.9.0:
+        inputs:
+        - gradle_file: ''
+        - gradlew_path: "./gradlew"
+        - gradle_task: assembleStableDebug assembleStableUSDebug assembleBetaDebug
+    - zip-directory-and-export-its-path@1.0.2:
+        inputs:
+        - directory_to_zip: app
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # write your script here
+            echo "Hello World!"
+
+            mv $ZIP_FILE $BITRISE_DEPLOY_DIR
+
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+    - deploy-to-bitrise-io@1.9.3:
+        inputs:
+        - public_install_page_url_map_format: "{{range $index, $element := .}}{{if
+            $index}} \\n {{end}}{{$element.File}}=>{{$element.URL}}{{end}}"
+        - notify_email_list: "$EMAIL_NOTIFIER"
+    - cache-push@2.2.1: {}
+  email_test:
+    steps:
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # write your script here
+            envman add --key DWARF_DSYM_FILE_NAME --value "$BITRISE_TRIGGERED_WORKFLOW_ID"
+            echo $DWARF_DSYM_FILE_NAME
+            envman add --key MY_RELEASE_NOTE --value "1234"
+            echo $MY_RELEASE_NOTE
+            echo $BITRISE_TRIGGERED_WORKFLOW_ID
+
+            envman add --key DAVID --value "asdfsadf"
+            echo $DAVID
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+    - email-with-mailgun@2.1.4:
+        inputs:
+        - from_email: "$RECIPIENT"
+        - send_to: "$EMAIL_NOTIFIER"
+    - set-env-var@0.9.1:
+        inputs:
+        - destination_keys: BITRISE_APP_VERSION_NAME
+        - value: grep "versionName" app/build.gradle | awk '{print $2}' | tr -d \''"\'
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # write your script here
+            echo "Hello World!"
+            echo $BITRISE_TRIGGERED_WORKFLOW_ID
+            echo $BITRISE_APP_VERSION_NAME
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+    - zip-directory-and-export-its-path@1.0.2:
+        inputs:
+        - directory_to_zip: app
+  primaryAndEmailNotifier:
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.1: {}
+    - script@1.1.5:
+        title: Do anything with Script step
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - gradle-runner@1.9.0:
+        inputs:
+        - gradle_file: ''
+        - gradlew_path: "./gradlew"
+        - gradle_task: assembleStableDebug assembleStableUSDebug assembleBetaDebug
+    - deploy-to-bitrise-io@1.9.2:
+        inputs:
+        - public_install_page_url_map_format: "{{range $index, $element := .}} <br><br>{{$element.File}}
+            -> {{$element.URL}}{{end}}"
+        - notify_email_list: "$EMAIL_NOTIFIER"
+    - cache-push@2.2.1: {}
+    - email-with-mailgun@2.1.4:
+        inputs:
+        - message: "Dear Henry, \n<br><br><br><br>\n\nThe $BITRISE_APP_TITLE Build
+            $BITRISE_BUILD_NUMBER has been deployed.\n<br><br>\nThe apks are available
+            on the following urls:\n<br>\n$BITRISE_PUBLIC_INSTALL_PAGE_URL_MAP \n<br><br>\nRegards,\n<br>\nDavid
+            Fernandez\n<br>\nNordicloop Inc."
+        - subject: Android sales app $BITRISE_APP_TITLE Build $BITRISE_BUILD_NUMBER
+            deployed
+        - error_message: "$BITRISE_APP_TITLE Build $BITRISE_BUILD_NUMBER failed please
+            notify David Fernandez."
+        - from_email: "$RECIPIENT"
+        - send_to: "$EXTERNAL_MAIL_NOTIFIER"
+        is_always_run: false
+app:
+  envs:
+  - opts:
+      is_expand: false
+    PROJECT_LOCATION: "."
+  - opts:
+      is_expand: false
+    MODULE: app
+  - opts:
+      is_expand: false
+    VARIANT: debug
+meta:
+  bitrise.io:
+    machine_type: standard

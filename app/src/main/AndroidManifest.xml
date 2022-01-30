@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bedessee.sales">
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <application
+        android:requestLegacyExternalStorage="true"
+        android:name=".BedesseeApp"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/MaterialAppTheme"
+        tools:ignore="GoogleAppIndexingWarning, LockedOrientationActivity"
+        tools:replace="android:icon">
+
+        <activity
+            android:name="com.bedessee.sales.login.Login"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.nononsenseapps.filepicker.FilePickerActivity"
+            android:label="sdf"
+            android:theme="@style/FilePicker.Theme">
+            <intent-filter>
+                <action android:name="android.intent.action.GET_CONTENT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.bedessee.sales.main.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"
+            android:theme="@style/MaterialAppTheme" />
+
+        <activity
+            android:name="com.bedessee.sales.admin.AdminSettings"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name="com.bedessee.sales.shoppingcart.ShoppingCartDialog"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name="com.bedessee.sales.update.UpdateActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name="com.bedessee.sales.store.StoreSelector"
+            android:screenOrientation="landscape"
+            android:theme="@style/MaterialDialogAppTheme" />
+
+        <activity
+            android:name="com.bedessee.sales.customview.MarginCalculator"
+            android:screenOrientation="landscape"
+            android:theme="@style/MaterialDialogAppTheme" />
+
+        <activity
+            android:name="com.bedessee.sales.orderhistory.OrderHistoryDialog"
+            android:screenOrientation="landscape" />
+
+        <activity
+            android:name="com.bedessee.sales.pastorder.PastOrderActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.bedessee.sales.backorder.BackOrderActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.bedessee.sales.store.WebViewer"
+            android:screenOrientation="landscape"
+            android:theme="@style/MaterialAppTheme"/>
+
+        <activity
+            android:name="com.bedessee.sales.sellsheets.SellSheetsDialog"
+            android:screenOrientation="portrait" />
+
+        <activity android:name="com.bedessee.sales.product.FullScreenImageActivity" />
+
+        <provider
+            android:name="com.bedessee.sales.provider.Provider"
+            android:authorities="${applicationId}.provider"
+            android:enabled="true"
+            android:exported="false"
+            android:syncable="true" />
+    </application>
+</manifest>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textSize="25dp"
+            android:text="Enter price:"/>
+
+        <ImageView
+            android:id="@+id/closeView"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:gravity="center_vertical"
+            android:id="@+id/edt_price"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            tools:text="234.234"
+            android:background="@android:drawable/edit_text"
+            android:singleLine="true" />
+        <Button
+            android:layout_gravity="center"
+            android:text="Delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_delete"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/table_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="1"
+                    android:id="@+id/btn1"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="2"
+                    android:id="@+id/btn2"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="3"
+                    android:id="@+id/btn3"/>
+
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="4"
+                    android:id="@+id/btn4"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="5"
+                    android:id="@+id/btn5"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="6"
+                    android:id="@+id/btn6"/>
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="7"
+                    android:id="@+id/btn7"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="8"
+                    android:id="@+id/btn8"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="9"
+                    android:id="@+id/btn9"/>
+            </TableRow>
+
+            <TableRow>
+
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="."
+                    android:id="@+id/btnComma"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="0"
+                    android:id="@+id/btn0"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="Done"
+                    android:id="@+id/btn_done"/>
+
+            </TableRow>
+            <TableRow
+                android:id="@+id/qty_row"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

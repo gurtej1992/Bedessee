@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="16dp"
+    android:id="@+id/layoutUpdating">
+
+    <ListView
+        android:id="@+id/number_pad_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_close"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btn_close"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:padding="32dp"
+        android:enabled="false"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="CLOSE"/>
+</RelativeLayout>

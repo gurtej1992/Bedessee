@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white">
+    
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView_brand"
+        android:layout_alignBottom="@+id/datainfoscroll"
+        android:background="@android:color/white"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/sample_product_1" />
+
+
+    <View
+        android:id="@+id/background_dimmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/datainfoscroll"
+        android:layout_alignTop="@+id/datainfoscroll"
+        android:layout_alignEnd="@+id/datainfoscroll"
+        android:alpha="0.75"
+        android:background="@android:color/white" />
+
+    <LinearLayout
+        android:layout_marginLeft="7dp"
+        android:orientation="horizontal"
+        android:id="@+id/textView_brand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView_brand_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:ellipsize="none"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="@dimen/gutter"
+            android:scrollHorizontally="false"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="BEDESSEE PRODUCT" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_zoom"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+            android:adjustViewBounds="true"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="fitXY"
+            android:tint="@android:color/black"
+            app:srcCompat="@drawable/ic_eye"
+            tools:ignore="ContentDescription" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_share"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+            android:background="?android:selectableItemBackground"
+            android:scaleType="fitXY"
+            android:tint="@android:color/black"
+            app:srcCompat="@drawable/ic_share" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/ll_action"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.bedessee.sales.customview.QtySelector
+            android:id="@+id/qty_selector"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <Button
+            android:layout_marginLeft="30dp"
+            android:id="@+id/btnAddToCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to cart" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/datainfoscroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ll_action"
+        android:layout_below="@+id/textView_brand">
+        
+        <LinearLayout
+            android:id="@+id/datainfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/gutter"
+                android:layout_weight="1"
+                android:shrinkColumns="0">
+                
+                <TextView
+                    android:id="@+id/textView_special_available"
+                    style="?android:attr/spinnerDropDownItemStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:ellipsize="none"
+                    android:gravity="center"
+                    android:maxLines="2"
+                    android:padding="@dimen/gutter"
+                    android:scrollHorizontally="false"
+                    android:text="@string/customer_has_special_prices"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+                
+                <TextView
+                    android:id="@+id/textView_price_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="_qty:20: " />
+                
+                <TextView
+                    android:id="@+id/textView_unitprice_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_level1price_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    android:text="@string/level_1_price" />
+                
+                <TextView
+                    android:id="@+id/textView_level2price_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    android:text="@string/level_2_price" />
+                
+                <TextView
+                    android:id="@+id/textView_level3price_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    android:text="@string/level_3_price" />
+                
+                <TextView
+                    android:id="@+id/textView_qty1_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_qty2_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_qty3_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_qty4_field"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_gutter"
+                    tools:text="Test: " />
+            </TableLayout>
+            
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/gutter"
+                android:layout_weight="1">
+                
+                
+                <TextView
+                    android:id="@+id/textView_uom"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_status"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_casesperskid"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_casesperrow"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_layersperskid"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_totalqty"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_prodnum"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_upc"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_note01"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                <TextView
+                    android:id="@+id/textView_note02"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_note03"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_note04"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+                
+                
+                <TextView
+                    android:id="@+id/textView_note05"
+                    style="@style/FieldTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/gutter"
+                    android:layout_marginBottom="@dimen/gutter"
+                    tools:text="Test: " />
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

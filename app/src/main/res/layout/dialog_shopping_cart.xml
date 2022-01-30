@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <View
+        android:id="@+id/control_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dialog_number_pad_control_buttons_size"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/control_bar"
+        app:layout_constraintStart_toStartOf="@+id/control_bar"
+        app:layout_constraintTop_toTopOf="@+id/control_bar"
+        app:srcCompat="@drawable/ic_close_2"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/totalItems"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="@id/control_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="10dp"
+        tools:text="Total Items: 234" />
+
+    <TextView
+        android:id="@+id/store_name"
+        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="@id/control_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/btn_close"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ABC LTD 1999-99" />
+    
+    <ListView
+        android:id="@+id/listView_shoppingCart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/no_items_found"
+        app:layout_constraintBottom_toTopOf="@id/edtContact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttons_barrier" />
+    
+    <EditText
+        android:id="@+id/edtContact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:hint="@string/please_enter_store_contact_here"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="120"
+        app:layout_constraintBottom_toTopOf="@id/edtComment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    
+    <EditText
+        android:id="@+id/edtComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:layout_marginBottom="@dimen/gutter"
+        android:hint="@string/any_comments"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:maxLength="120"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnViewStatement"
+        style="@style/DefaultButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/gutter"
+        android:paddingEnd="@dimen/gutter"
+        android:text="@string/view_statement_shopping_cart"
+        app:layout_constraintBottom_toBottomOf="@id/btnSave"
+        app:layout_constraintEnd_toStartOf="@id/btnSave"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/control_bar" />
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        style="@style/DefaultButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:paddingStart="@dimen/gutter"
+        android:paddingEnd="@dimen/gutter"
+        android:text="@string/continue_shopping"
+        app:layout_constraintEnd_toStartOf="@id/btnCheckout"
+        app:layout_constraintStart_toEndOf="@id/btnViewStatement"
+        app:layout_constraintTop_toBottomOf="@id/control_bar" />
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCheckout"
+        style="@style/DefaultButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/gutter"
+        android:paddingEnd="@dimen/gutter"
+        android:text="@string/checkout_shopping_cart"
+        app:layout_constraintBottom_toBottomOf="@id/btnSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnSave"
+        app:layout_constraintTop_toBottomOf="@id/control_bar" />
+    
+    <View
+        android:id="@+id/control_bar_divider"
+        style="@style/Divider"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/divider_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/control_bar" />
+    
+    <View
+        android:id="@+id/divider1"
+        style="@style/Divider"
+        android:layout_width="@dimen/divider_size"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/buttons_barrier"
+        app:layout_constraintEnd_toStartOf="@id/btnSave"
+        app:layout_constraintStart_toEndOf="@id/btnViewStatement"
+        app:layout_constraintTop_toTopOf="@id/btnViewStatement" />
+    
+    
+    <View
+        android:id="@+id/divider2"
+        style="@style/Divider"
+        android:layout_width="@dimen/divider_size"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/buttons_barrier"
+        app:layout_constraintEnd_toStartOf="@id/btnCheckout"
+        app:layout_constraintStart_toEndOf="@id/btnSave"
+        app:layout_constraintTop_toTopOf="@id/btnViewStatement" />
+    
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/buttons_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="btnCheckout,btnViewStatement,btnSave" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="stores">
+        <item>Ample Market</item>
+        <item>Food Basics</item>
+        <item>Shoppers Drug Mart</item>
+        <item>Fortinos</item>
+    </string-array>
+
+    <string-array name="locations">
+        <item>Canada</item>
+        <item>New York</item>
+    </string-array>
+
+    <string-array name="location_values">
+        <item>canada</item>
+        <item>newyork</item>
+    </string-array>
+
+
+
+</resources>

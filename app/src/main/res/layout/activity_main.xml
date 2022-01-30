@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <ImageView
+            android:id="@+id/iconToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingEnd="@dimen/gutter"
+            android:paddingTop="@dimen/gutter"
+            android:paddingBottom="@dimen/gutter"
+            android:paddingStart="0dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                tools:text="Sales Rep: DAVID F"/>
+            <TextView
+                android:id="@+id/toolbar_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                tools:text="ZZ - NEW CUSTOMER ACCOUNT-0000-00"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#C0C0C0"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listView_filters"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#FFF" />
+
+            <Spinner
+                android:id="@+id/spinner_reports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_sell_sheets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sell Sheets" />
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="6"
+            android:background="#FFF" />
+
+    </LinearLayout>
+
+</LinearLayout>

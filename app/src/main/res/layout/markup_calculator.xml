@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="@dimen/default_icon_size"
+            android:layout_height="@dimen/default_icon_size"
+            android:layout_margin="@dimen/default_margin"
+            android:background="@null"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:gravity="center"
+            android:padding="@dimen/gutter"
+            android:text="@string/margin_calculator_help_text"
+            android:textColor="#FF0000"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toStartOf="@+id/btnClose"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnClose" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:gravity="end"
+            android:text="@string/cost_price_with_price_symbol"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintEnd_toStartOf="@id/editText_costprice"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <EditText
+            android:id="@+id/editText_costprice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:ems="4"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView2"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            tools:ignore="Autofill,LabelFor" />
+
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:gravity="end"
+            android:text="@string/selling_price"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintEnd_toStartOf="@id/editText_sellingprice"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_costprice" />
+
+        <EditText
+            android:id="@+id/editText_sellingprice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:ems="4"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            tools:ignore="Autofill,LabelFor" />
+
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:gravity="end"
+            android:text="@string/margin"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintEnd_toStartOf="@id/editText_markup"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <EditText
+            android:id="@+id/editText_markup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:ems="4"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            tools:ignore="Autofill,LabelFor" />
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/percentaje_symbol"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            app:layout_constraintBottom_toBottomOf="@+id/editText_markup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editText_markup"
+            app:layout_constraintTop_toTopOf="@+id/editText_markup" />
+
+
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/gutter"
+            android:text="@string/reset"
+            app:layout_constraintEnd_toStartOf="@id/btnCalculate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_markup" />
+
+        <Button
+            android:id="@+id/btnCalculate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gutter"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:text="@string/calculate"
+            app:layout_constraintBottom_toBottomOf="@+id/btnReset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnReset"
+            app:layout_constraintTop_toTopOf="@+id/btnReset" />
+
+        <TextView
+            android:id="@+id/resultCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:text="@string/cost_price"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/resultSell"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnReset" />
+
+
+        <TextView
+            android:id="@+id/resultSell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_price"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/resultCost"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/resultCost"
+            app:layout_constraintTop_toTopOf="@+id/resultCost" />
+
+        <TextView
+            android:id="@+id/resultMarkup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:text="@string/markup"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/resultProfit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resultCost" />
+
+
+        <TextView
+            android:id="@+id/resultProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/profit"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/resultMarkup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/resultMarkup"
+            app:layout_constraintTop_toTopOf="@+id/resultMarkup" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

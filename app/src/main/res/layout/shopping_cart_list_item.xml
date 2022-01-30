@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/edtQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginTop="@dimen/gutter"
+        android:layout_marginBottom="@dimen/gutter"
+        android:background="@color/colorPrimary"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:minWidth="@dimen/shopping_car_list_item_qty_min_size"
+        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="LabelFor"
+        tools:text="4" />
+
+    <RadioGroup
+        android:id="@+id/radioType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edtQty"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioCase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:enabled="false"
+            android:text="@string/case_mode"
+            android:textAllCaps="true" />
+
+        <RadioButton
+            android:id="@+id/radioPiece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/piece_mode"
+            android:textAllCaps="true" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_brand"
+        style="@style/Subtitle1Text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginEnd="@dimen/gutter"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintEnd_toStartOf="@id/textView_totalQtySold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/radioType"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="WEST INDIAN QUEEN PRODUCT WITH AN EXTREMELY LARGE TEXT" />
+
+    <TextView
+        android:id="@+id/textView_description"
+        style="@style/DescriptionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:layout_marginBottom="@dimen/default_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_totalQtySold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/radioType"
+        app:layout_constraintTop_toBottomOf="@+id/textView_brand"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="CREAM SODA SOMETHING WITH ALSO AN EXTREMELY LARGE DESCRIPTION" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnRemoveItem"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/default_icon_size"
+        android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitXY"
+        android:tint="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_close_2"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/textView_totalQtySold"
+        style="@style/TextAppearance.MaterialComponents.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/gutter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Total quantity sold: 0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

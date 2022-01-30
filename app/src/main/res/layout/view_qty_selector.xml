@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/btnMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/minus"
+        app:layout_constraintBottom_toBottomOf="@id/editText"
+        app:layout_constraintEnd_toStartOf="@id/editText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editText"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:inputType="number"
+        android:singleLine="true"
+        android:text="0"
+        app:layout_constraintEnd_toStartOf="@id/btnPlus"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@id/btnMinus"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill,LabelFor" />
+
+    <ImageButton
+        android:id="@+id/btnPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@id/editText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editText"
+        app:layout_constraintTop_toTopOf="@id/editText"
+        tools:ignore="ContentDescription" />
+
+    <RadioGroup
+        android:id="@+id/radioType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selector_barrier">
+
+        <RadioButton
+            android:id="@+id/radioCase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/cs" />
+
+        <RadioButton
+            android:id="@+id/radioPiece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="@string/pc" />
+
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/selector_barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="btnPlus,editText,btnMinus"
+        tools:layout_editor_absoluteY="45dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

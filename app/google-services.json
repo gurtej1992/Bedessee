@@ -1,0 +1,159 @@
+{
+  "project_info": {
+    "project_number": "1000791119080",
+    "firebase_url": "https://bedessee-sales-2.firebaseio.com",
+    "project_id": "bedessee-sales-2",
+    "storage_bucket": "bedessee-sales-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000791119080:android:7438c938cf63923c",
+        "android_client_info": {
+          "package_name": "com.bedessee.sales20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000791119080-loiruu505vqkhjp0gbeunugs3a8nvq47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bedessee.sales20",
+            "certificate_hash": "89dc84a13b18f90d69f7de701b04084a3ab6302a"
+          }
+        },
+        {
+          "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9ZX6jfWZ4_5v5JDNvq8eBrMp_nazBk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000791119080:android:290b620046e1bcb8",
+        "android_client_info": {
+          "package_name": "com.bedessee.sales21"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000791119080-1n1iqb65uheqsb7ves47nfppi436t329.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bedessee.sales21",
+            "certificate_hash": "6fd398bf5e3d508fdc327055ec61b277c58dc70c"
+          }
+        },
+        {
+          "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9ZX6jfWZ4_5v5JDNvq8eBrMp_nazBk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000791119080:android:85aa3f3fc3ab9a9c3a655d",
+        "android_client_info": {
+          "package_name": "com.bedessee.sales21.us"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000791119080-d632d0k30ijus136jir2v4v3m46m9kj5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bedessee.sales21.us",
+            "certificate_hash": "6fd398bf5e3d508fdc327055ec61b277c58dc70c"
+          }
+        },
+        {
+          "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9ZX6jfWZ4_5v5JDNvq8eBrMp_nazBk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000791119080:android:06f9f46b6f43f0e53a655d",
+        "android_client_info": {
+          "package_name": "com.bedessee.sales22"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000791119080-nk94qgjerdki5de4ajpukqoeramgmuq7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bedessee.sales22",
+            "certificate_hash": "6fd398bf5e3d508fdc327055ec61b277c58dc70c"
+          }
+        },
+        {
+          "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq9ZX6jfWZ4_5v5JDNvq8eBrMp_nazBk8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000791119080-nt7uohcadbfa2t9ujvobl99mtgbrnoho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

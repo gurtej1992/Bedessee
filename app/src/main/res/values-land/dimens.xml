@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Dialog Number Pad-->
+    <dimen name="dialog_number_pad_control_buttons_size">48dp</dimen>
+    <dimen name="dialog_number_pad_item_type_buttons_size">48dp</dimen>
+    <dimen name="dialog_number_pad_text_size">18sp</dimen>
+    <dimen name="dialog_number_pad_backspace_size">24dp</dimen>
+    <dimen name="dialog_number_pad_control_buttons_margin">12dp</dimen>
+
+    <!-- Text -->
+    <dimen name="field_text_size">18sp</dimen>
+</resources>

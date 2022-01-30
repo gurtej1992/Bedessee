@@ -1,0 +1,205 @@
+---
+format_version: '8'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: android
+trigger_map:
+- push_branch: "*"
+  workflow: primary
+- pull_request_source_branch: "*"
+  workflow: primary
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.2: {}
+    - script@1.1.5:
+        title: Do anything with Script step
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - gradle-runner@1.9.0:
+        inputs:
+        - gradle_file: ''
+        - gradlew_path: "./gradlew"
+        - gradle_task: assembleStableDebug assembleStableUSDebug assembleBetaDebug
+    - deploy-to-bitrise-io@1.9.4:
+        inputs:
+        - public_install_page_url_map_format: "{{range $index, $element := .}}{{if
+            $index}} \\n {{end}}{{$element.File}}=>{{$element.URL}}{{end}}"
+        - debug_mode: 'true'
+        - notify_email_list: "$EMAIL_NOTIFIER"
+    - cache-push@2.2.3:
+        inputs:
+        - is_debug_mode: 'true'
+  deploy:
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.2: {}
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - gradle-runner@1.9.0:
+        inputs:
+        - gradle_file: ''
+        - gradlew_path: "./gradlew"
+        - gradle_task: assembleStableDebug assembleStableUSDebug assembleBetaDebug
+    - script@1.1.5:
+        is_always_run: true
+        title: Remove Build Folder
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            rm -r $BITRISE_SOURCE_DIR/build
+            rm -r $BITRISE_SOURCE_DIR/app/build
+            rm -r $BITRISE_SOURCE_DIR/FilePicker/build
+    - create-zip@0.9.0:
+        inputs:
+        - destination: "$BITRISE_DEPLOY_DIR"
+        - source_path: "$BITRISE_SOURCE_DIR"
+    - script@1.1.6:
+        title: ExposeFiles
+        inputs:
+        - content: "#!/usr/bin/env bash\n# fail if any commands fails\nset -e\n# debug
+            log\nset -x\n\n# write your script here\necho \"Exposing files from folder
+            `filesToExpose` to\"\necho $BITRISE_SOURCE_DIR\necho \"/build\"\neval
+            \"ls\" \nmv $BITRISE_SOURCE_DIR/filesToExpose/* $BITRISE_DEPLOY_DIR\n#
+            or run a script from your repository, like:\n# bash ./path/to/script.sh\n#
+            not just bash, e.g.:\n# ruby ./path/to/script.rb"
+    - deploy-to-bitrise-io@1.9.4:
+        inputs:
+        - public_install_page_url_map_format: "{{range $index, $element := .}} <br><br>{{$element.File}}
+            -> {{$element.URL}}{{end}}"
+        - debug_mode: 'true'
+        - notify_email_list: "$EMAIL_NOTIFIER"
+    - cache-push@2.2.3: {}
+    - email-with-mailgun@2.1.4:
+        inputs:
+        - message: "Dear Henry, \n<br><br><br><br>\n\nThe $BITRISE_APP_TITLE Build
+            $BITRISE_BUILD_NUMBER has been deployed.\n<br><br>\nThe apks are available
+            on the following urls:\n<br>\n$BITRISE_PUBLIC_INSTALL_PAGE_URL_MAP \n<br><br>\nThe
+            source code is available in the following url: $BITRISE_PUBLIC_INSTALL_PAGE_URL\nRegards,\n<br>\nDavid
+            Fernandez\n<br>\nNordicloop Inc."
+        - subject: Android sales app $BITRISE_APP_TITLE Build $BITRISE_BUILD_NUMBER
+            deployed
+        - error_message: "$BITRISE_APP_TITLE Build $BITRISE_BUILD_NUMBER failed please
+            notify David Fernandez."
+        - from_email: "$RECIPIENT"
+        - send_to: "$EXTERNAL_MAIL_NOTIFIER"
+        is_always_run: false
+  test_mail:
+    steps:
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # write your script here
+            envman add --key DWARF_DSYM_FILE_NAME --value "$BITRISE_TRIGGERED_WORKFLOW_ID"
+            echo $DWARF_DSYM_FILE_NAME
+            envman add --key MY_RELEASE_NOTE --value "1234"
+            echo $MY_RELEASE_NOTE
+            echo $BITRISE_TRIGGERED_WORKFLOW_ID
+
+            envman add --key DAVID --value "asdfsadf"
+            echo $DAVID
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+    - email-with-mailgun@2.1.4:
+        inputs:
+        - from_email: "$RECIPIENT"
+        - send_to: "$EMAIL_NOTIFIER"
+    - set-env-var@0.9.1:
+        inputs:
+        - destination_keys: BITRISE_APP_VERSION_NAME
+        - value: grep "versionName" app/build.gradle | awk '{print $2}' | tr -d \''"\'
+    - script@1.1.5:
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            # write your script here
+            echo "Hello World!"
+            echo $BITRISE_TRIGGERED_WORKFLOW_ID
+            echo $BITRISE_APP_VERSION_NAME
+            # or run a script from your repository, like:
+            # bash ./path/to/script.sh
+            # not just bash, e.g.:
+            # ruby ./path/to/script.rb
+    - zip-directory-and-export-its-path@1.0.2:
+        inputs:
+        - directory_to_zip: app
+  test_expose_source_code:
+    steps:
+    - activate-ssh-key@4.0.3:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+    - git-clone@4.0.17: {}
+    - cache-pull@2.1.2: {}
+    - install-missing-android-tools@2.3.7:
+        inputs:
+        - gradlew_path: "$PROJECT_LOCATION/gradlew"
+    - gradle-runner@1.9.0:
+        inputs:
+        - gradle_file: ''
+        - gradlew_path: "./gradlew"
+        - gradle_task: assembleStableDebug assembleStableUSDebug assembleBetaDebug
+    - script@1.1.5:
+        inputs:
+        - is_debug: 'yes'
+        - content: |+
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            rm -r $BITRISE_SOURCE_DIR/build
+            rm -r $BITRISE_SOURCE_DIR/app/build
+            rm -r $BITRISE_SOURCE_DIR/FilePicker/build
+
+        title: Remove build folder
+    - create-zip@0.9.0:
+        inputs:
+        - destination: "$BITRISE_DEPLOY_DIR"
+        - source_path: "$BITRISE_SOURCE_DIR"
+    - deploy-to-bitrise-io@1.9.4:
+        inputs:
+        - public_install_page_url_map_format: "{{range $index, $element := .}}{{if
+            $index}} \\n {{end}}{{$element.File}}=>{{$element.URL}}{{end}}"
+        - debug_mode: 'true'
+        - notify_email_list: "$EMAIL_NOTIFIER"
+    - cache-push@2.2.3:
+        inputs:
+        - is_debug_mode: 'true'
+app:
+  envs:
+  - opts:
+      is_expand: false
+    PROJECT_LOCATION: "."
+  - opts:
+      is_expand: false
+    MODULE: app
+  - opts:
+      is_expand: false
+    VARIANT: debug
+meta:
+  bitrise.io:
+    machine_type: standard

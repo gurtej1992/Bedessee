@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/utils"
+          android:showAsAction="always"
+        app:showAsAction="always"
+          android:title="@string/menu_item_utilities"
+          android:actionLayout="@layout/menu_item_select_store"
+          app:actionViewClass="com.bedessee.sales.customview.UtilitiesSpinner"
+          android:actionViewClass="com.bedessee.sales.customview.UtilitiesSpinner"/>
+
+    <item android:id="@+id/select_store"
+          android:showAsAction="always"
+        app:showAsAction="always"
+          android:title="@string/menu_item_select_store"
+          android:actionLayout="@layout/menu_item_button"
+        app:actionViewClass="android.widget.Button"
+          android:actionViewClass="android.widget.Button"/>
+
+    <item android:id="@+id/shopping_cart"
+          android:actionLayout="@layout/menu_item_button"
+        app:actionViewClass="android.widget.Button"
+          android:actionViewClass="android.widget.Button"
+          android:title="@string/view_shopping_cart"
+        app:showAsAction="always"
+          android:showAsAction="always" />
+
+    <item android:id="@+id/daily_update"
+          android:title="Daily Update"
+        app:showAsAction="never"
+          android:showAsAction="never" />
+
+    <item android:id="@+id/past_order"
+          android:title="Past Sales"
+        app:showAsAction="never"
+          android:showAsAction="never" />
+
+    <item android:id="@+id/back_order"
+        android:title="Back Order"
+        app:showAsAction="never"
+        android:showAsAction="never" />
+    <item android:id="@+id/back_order"
+        android:title="Clear History"
+        app:showAsAction="never"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/exit"
+          android:icon="@drawable/ic_action_person"
+          android:title="Exit App"
+        app:showAsAction="never"
+          android:showAsAction="never" />
+
+
+    <item android:id="@+id/version"
+          android:icon="@drawable/ic_action_person"
+          android:title="vXXX"
+        app:showAsAction="never"
+          android:showAsAction="never" />
+</menu>

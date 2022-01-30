@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<ListPreference-->
+        <!--android:key="pref_location"-->
+        <!--android:title="Location"-->
+        <!--android:dialogTitle="Select location..."-->
+        <!--android:entries="@array/locations"-->
+        <!--android:entryValues="@array/location_values"-->
+        <!--android:summary="Determines data source"-->
+        <!--android:defaultValue="Canada"/>-->
+
+    <CheckBoxPreference
+        android:key="pref_show_level1price"
+        android:title="Show Level 1 Price"
+        android:defaultValue="true"
+        android:checked="true"/>
+
+    <CheckBoxPreference
+        android:key="pref_show_level2price"
+        android:title="Show Level 2 Price"
+        android:defaultValue="true"
+        android:checked="true"/>
+
+    <CheckBoxPreference
+        android:key="pref_show_level3price"
+        android:title="Show Level 3 Price"
+        android:defaultValue="true"
+        android:checked="true"/>
+</PreferenceScreen>

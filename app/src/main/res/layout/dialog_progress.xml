@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_margin">
+    
+    <TextView
+        android:id="@+id/progressTitle"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="An in-progress order has been detected at ABC LTD 1999-00 containing 1 products" />
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/progressBarGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/progressBarView"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:maxWidth="300dp"
+            android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/progressText"
+        android:layout_gravity="center_vertical"
+        tools:text="10%"
+        android:textSize="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/message"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/gutter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBarGroup"
+        tools:text="Would you like to resume this order \n testing second line" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/positiveButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gutter"
+        android:text="@string/yes"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/message"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/negativeButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:text="@string/no"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/positiveButton"
+        app:layout_constraintTop_toBottomOf="@id/message"
+        tools:visibility="visible" />
+    
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="progressTitle"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="174dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

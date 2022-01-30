@@ -1,0 +1,17 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <application
+        tools:replace="android:icon"
+        android:icon="@drawable/ic_launcher_var">
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.bedessee.sales22.provider.File"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+    </application>
+</manifest>

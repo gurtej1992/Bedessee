@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_gravity="center"
+              android:gravity="center">
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/qty"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:maxLength="10"
+            android:hint="0"/>
+
+        <TableLayout
+            android:id="@+id/table_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TableRow>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="1"
+                    android:id="@+id/btn1"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="2"
+                    android:id="@+id/btn2"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="3"
+                    android:id="@+id/btn3"/>
+            </TableRow>
+
+            <TableRow>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="4"
+                    android:id="@+id/btn4"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="5"
+                    android:id="@+id/btn5"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="6"
+                    android:id="@+id/btn6"/>
+
+
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="7"
+                    android:id="@+id/btn7"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="8"
+                    android:id="@+id/btn8"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="9"
+                    android:id="@+id/btn9"/>
+            </TableRow>
+
+            <TableRow>
+
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="Delete"
+                    android:id="@+id/btnDelete"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="0"
+                    android:id="@+id/btn0"/>
+
+                <Button
+                    android:id="@+id/btnDone"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="Done" />
+
+            </TableRow>
+            <TableRow>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="Piece"
+                    android:id="@+id/btnPiece"/>
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="Case"
+                    android:id="@+id/btnCase"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/qty_row"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+</ScrollView>
+</LinearLayout>

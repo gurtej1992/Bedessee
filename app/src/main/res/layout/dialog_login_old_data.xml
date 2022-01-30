@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="@android:color/black"
+        android:text="There appears to be an error with APP_LOGIN.JSON\n\nPlease select a previous APP_LOGIN.JSON to use"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/slct_monday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="Monday"/>
+
+        <RadioButton
+            android:id="@+id/slct_tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="Tuesday"/>
+
+        <RadioButton
+            android:id="@+id/slct_wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="Wednesday"/>
+
+        <RadioButton
+            android:id="@+id/slct_thursday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="Thursday"/>
+
+        <RadioButton
+            android:id="@+id/slct_friday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="Friday"/>
+
+        <RadioButton
+            android:id="@+id/slct_rnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="21sp"
+            android:layout_marginTop="8dp"
+            android:text="R n D"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="CONTINUE"/>
+
+</LinearLayout>
