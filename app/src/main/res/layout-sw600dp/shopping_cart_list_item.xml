@@ -12,6 +12,7 @@
         android:layout_marginStart="@dimen/gutter"
         android:layout_marginTop="@dimen/gutter"
         android:layout_marginBottom="@dimen/gutter"
+        android:layout_marginEnd="@dimen/default_margin"
         android:background="#BA1B1B"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -65,23 +66,21 @@
         android:layout_marginEnd="@dimen/default_margin"
         android:ellipsize="end"
         android:maxLines="2"
-        app:layout_constraintEnd_toStartOf="@id/textView_totalQtySold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/radioType"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="WEST INDIAN QUEEN PRODUCT WITH AN EXTREMELY LARGE TEXT" />
+        tools:text="WEST INDIAN QUEEN PRODUCT WITH AN EXTREMELY LARGE TEXT " />
 
     <TextView
         android:id="@+id/textView_description"
         style="@style/DescriptionText"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/desc_width"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
         android:maxLines="3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView_totalQtySold"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/radioType"
         app:layout_constraintTop_toBottomOf="@+id/textView_brand"
@@ -100,28 +99,37 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42000002"
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
-    <TextView
+
+    <EditText
         android:id="@+id/textView_totalCase"
-        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:textColor="@color/tabs_divider"
+        android:layout_marginStart="@dimen/desc_width"
+        android:text="$12"
+        android:textSize="@dimen/subtitle_1_text_size"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Total quantity sold: 0" />
+        app:layout_constraintStart_toEndOf="@+id/textView_description"
+        app:layout_constraintTop_toTopOf="@+id/textView_description"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView_totalFull"
-        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_margin"
+        android:textColor="@color/tabs_divider"
+        android:layout_marginStart="@dimen/vertical_buttons_max_width"
+        android:text="$33"
+        android:textSize="@dimen/subtitle_1_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Total quantity sold: 0" />
+        app:layout_constraintStart_toEndOf="@+id/textView_totalCase"
+        app:layout_constraintTop_toTopOf="@+id/textView_totalCase"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/textView_totalQtySold"
         style="@style/TextAppearance.MaterialComponents.Caption"
@@ -130,7 +138,9 @@
         android:layout_marginEnd="@dimen/default_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btnRemoveItem"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_totalFull"
+        app:layout_constraintTop_toTopOf="@+id/textView_totalFull"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="Total quantity sold: 0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

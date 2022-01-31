@@ -16,6 +16,7 @@
     <dimen name="medium_margin">32dp</dimen>
     <dimen name="large_margin">64dp</dimen>
     <dimen name="big_margin">128dp</dimen>
+    <dimen name="desc_width">320dp</dimen>
     <dimen name="gutter">8dp</dimen>
     <dimen name="small_gutter">4dp</dimen>
 

@@ -28,6 +28,7 @@
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
 
+
     <TextView
         android:id="@+id/totalItems"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
@@ -53,16 +54,44 @@
         app:layout_constraintStart_toEndOf="@id/btn_close"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ABC LTD 1999-99" />
-    
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/case_amount"
+        android:textColor="@color/tabs_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btnSave"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave"
+        android:text="Case $"
+        android:layout_marginTop="@dimen/default_margin"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/total_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/default_margin"
+        android:text="Total $"
+        android:textColor="@color/tabs_divider"
+        app:layout_constraintBottom_toTopOf="@+id/listView_shoppingCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+        app:layout_constraintStart_toEndOf="@+id/case_amount"
+        app:layout_constraintTop_toBottomOf="@+id/btnSave"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ListView
         android:id="@+id/listView_shoppingCart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/no_items_found"
+        android:layout_marginTop="@dimen/default_margin"
         app:layout_constraintBottom_toTopOf="@id/edtContact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttons_barrier" />
+        app:layout_constraintTop_toBottomOf="@id/case_amount" />
     
     <EditText
         android:id="@+id/edtContact"
@@ -77,22 +106,66 @@
         app:layout_constraintBottom_toTopOf="@id/edtComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    
+
     <EditText
         android:id="@+id/edtComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/gutter"
-        android:layout_marginEnd="@dimen/gutter"
         android:layout_marginBottom="@dimen/gutter"
+        android:background="@null"
+        android:padding="@dimen/small_gutter"
         android:hint="@string/any_comments"
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="120"
+        android:layout_marginStart="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/order_total_txt"
+        app:layout_constraintTop_toTopOf="@+id/order_total_txt" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/order_total_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Total"
+        android:textSize="@dimen/subtitle_1_text_size"
+        android:padding="@dimen/small_gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:textColor="@color/tabs_divider"
+        app:layout_constraintBottom_toTopOf="@+id/order_total_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintTop_toBottomOf="@+id/edtContact"
+        app:layout_constraintStart_toEndOf="@+id/edtComment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/order_total_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:text="$123"
+        android:gravity="start|left"
+        android:padding="@dimen/small_gutter"
+        android:textSize="@dimen/subtitle_1_text_size"
+        android:textColor="@color/tabs_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintTop_toBottomOf="@+id/order_total_txt"
+        app:layout_constraintStart_toEndOf="@+id/edtComment" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_grey"
+        app:layout_constraintTop_toBottomOf="@+id/order_total_price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:layout_marginBottom="@dimen/gutter"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewStatement"
         style="@style/DefaultButton"
@@ -161,7 +234,7 @@
         app:layout_constraintEnd_toStartOf="@id/btnCheckout"
         app:layout_constraintStart_toEndOf="@id/btnSave"
         app:layout_constraintTop_toTopOf="@id/btnViewStatement" />
-    
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/buttons_barrier"
         android:layout_width="wrap_content"

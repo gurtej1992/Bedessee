@@ -84,6 +84,8 @@
         <item quantity="one">%s Piece</item>
         <item quantity="other">%s Pieces</item>
     </plurals>
+    <string name="case_amount">Case $</string>
+    <string name="total_amouunt">Total $</string>
 
     <string name="delete_item_shopping_cart_message">Are you sure you want to remove all %s %s from your shopping car?</string>
     <string name="select_store">Please, select a store</string>
