@@ -1,6 +1,7 @@
 package com.bedessee.sales.pastorder;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
         viewHolder.descriptionTextView.setText(text+"\n"+order.getProduct().getOtherInfo() +"\n"+order.getProduct().getOtherInfo2());
         viewHolder.removeView.setVisibility(View.GONE);
         viewHolder.edtQty.setText("0");
+        viewHolder.textView_totalCase.setText("$"+Integer.parseInt(order.getProduct().getCasePrice()));
         viewHolder.edtQty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +121,8 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
         EditText edtQty;
         RadioButton radioCase;
         RadioButton radioPiece;
+        EditText textView_totalCase;
+        TextView textView_totalFull;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -134,6 +138,9 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
             radioCase = itemView.findViewById(R.id.radioCase);
             radioPiece = itemView.findViewById(R.id.radioPiece);
             totalQtySold = itemView.findViewById(R.id.textView_totalQtySold);
+            textView_totalCase = itemView.findViewById(R.id.textView_totalCase);
+            textView_totalFull = itemView.findViewById(R.id.textView_totalFull);
+
         }
     }
 }

@@ -47,6 +47,10 @@ class ShoppingCartAdapter(
             viewHolder.removeItem = convertView.findViewById(R.id.btnRemoveItem)
             viewHolder.brand = convertView.findViewById(R.id.textView_brand)
             viewHolder.description = convertView.findViewById(R.id.textView_description)
+            viewHolder.totalCase=convertView.findViewById(R.id.textView_totalCase)
+            viewHolder.Price=convertView.findViewById(R.id.textView_totalFull)
+
+
             convertView.tag = viewHolder
         }
 
@@ -61,6 +65,9 @@ class ShoppingCartAdapter(
         val hidePrice = TextUtils.isEmpty(price) || price.equals("null", ignoreCase = true)
         holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
+        holder.totalCase.setText("$"+ (product.casePrice.toString()))
+        holder.Price.setText("$"+getQuantity(shoppingCartProduct).toDouble()* product.casePrice!!.toDouble())
+
         holder.removeItem.setOnClickListener {
             val products = ShoppingCart.getCurrentShoppingCart().products
             val index = products.indexOf(shoppingCartProduct)
@@ -86,6 +93,8 @@ class ShoppingCartAdapter(
                         notifyDataSetChanged()
                         ShoppingCart.getCurrentShoppingCart().productChanged();
                     }
+                    holder.Price.setText("$"+qty* product.casePrice!!.toDouble())
+
                 }
             }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
         }
@@ -106,5 +115,7 @@ class ShoppingCartAdapter(
         lateinit var description: TextView
         lateinit var edtQty: EditText
         lateinit var removeItem: ImageButton
+        lateinit var totalCase:EditText
+        lateinit var Price:TextView
     }
 }

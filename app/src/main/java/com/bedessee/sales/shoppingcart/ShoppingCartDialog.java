@@ -78,6 +78,10 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         ((TextView) findViewById(R.id.totalItems)).setText("Total items: " + mShoppingCart.getTotalItems());
     }
 
+    private void UpdatePrice(){
+      //  for(int i=0;i<mShoppingCart.)
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
