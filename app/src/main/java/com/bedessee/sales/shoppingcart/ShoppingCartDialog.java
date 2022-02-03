@@ -1,6 +1,7 @@
 package com.bedessee.sales.shoppingcart;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -65,11 +66,13 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         findViewById(R.id.btn_close).setOnClickListener(this);
 
         updateTotal();
+        updatePrice();
 
         mShoppingCart.setOnShoppingCartChanged(new ShoppingCart.OnShoppingCartChanges() {
             @Override
             public void onChanged() {
                 updateTotal();
+                updatePrice();
             }
         });
     }
@@ -78,8 +81,14 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         ((TextView) findViewById(R.id.totalItems)).setText("Total items: " + mShoppingCart.getTotalItems());
     }
 
-    private void UpdatePrice(){
-      //  for(int i=0;i<mShoppingCart.)
+    private void updatePrice(){
+
+        double sum=0;
+        for(int i=0;i<mShoppingCart.getProducts().size();i++){
+             sum=sum+(double)mShoppingCart.getProducts().get(i).getQuantity()*Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+        }
+        double total_price = Math.round(sum * 100.0) / 100.0;
+        ((TextView) findViewById(R.id.order_total_price)).setText("$ " + total_price);
     }
 
     @Override
