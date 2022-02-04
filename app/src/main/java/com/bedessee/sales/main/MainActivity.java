@@ -338,6 +338,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
                 return true;
 
+            case R.id.force_crash:
+                throw new RuntimeException("Test Crash"); // Force a crash
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -37,4 +37,9 @@
           android:icon="@drawable/ic_action_person"
           android:title="vXXX"
           android:showAsAction="never" />
+
+    <item android:id="@+id/force_crash"
+        android:icon="@drawable/ic_action_person"
+        android:title="Force Crash"
+        android:showAsAction="never" />
 </menu>
