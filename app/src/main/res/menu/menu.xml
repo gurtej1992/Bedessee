@@ -9,8 +9,8 @@
         app:showAsAction="always"
           android:title="@string/menu_item_utilities"
           android:actionLayout="@layout/menu_item_select_store"
-          app:actionViewClass="com.bedessee.sales.customview.UtilitiesSpinner"
-          android:actionViewClass="com.bedessee.sales.customview.UtilitiesSpinner"/>
+          app:actionViewClass="com.bedessee.salesca.customview.UtilitiesSpinner"
+          android:actionViewClass="com.bedessee.salesca.customview.UtilitiesSpinner"/>
 
     <item android:id="@+id/select_store"
           android:showAsAction="always"

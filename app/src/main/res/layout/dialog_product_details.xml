@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <com.bedessee.sales.customview.QtySelector
+                <com.bedessee.salesca.customview.QtySelector
                     android:layout_gravity="center"
                     android:layout_margin="25dp"
                     android:id="@+id/qty_selector"

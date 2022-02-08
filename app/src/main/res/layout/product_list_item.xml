@@ -59,7 +59,7 @@
         android:gravity="center">
 
 
-        <com.bedessee.sales.customview.QtySelector
+        <com.bedessee.salesca.customview.QtySelector
             android:id="@+id/list_item_qty_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
