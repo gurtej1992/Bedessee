@@ -65,8 +65,14 @@ class ShoppingCartAdapter(
         val hidePrice = TextUtils.isEmpty(price) || price.equals("null", ignoreCase = true)
         holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
-        holder.totalCase.setText("$"+ (product.casePrice.toString()))
-        holder.Price.setText("$"+getQuantity(shoppingCartProduct).toDouble()* product.casePrice!!.toDouble())
+
+            holder.totalCase.setText("Case $")
+            holder.Price.setText("T0tal $")
+
+
+            holder.totalCase.setText("$" + (product.casePrice.toString()))
+            holder.Price.setText("$" + getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())
+
 
         holder.removeItem.setOnClickListener {
             val products = ShoppingCart.getCurrentShoppingCart().products
