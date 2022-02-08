@@ -58,7 +58,7 @@ android {
         variant.outputs.all {
             def flavor = variant.name
             def versionName = variant.versionName
-            outputFileName = "sales2019_${flavor}_${versionName}.apk"
+            outputFileName = "sales2022_${flavor}_${versionName}.apk"
         }
     }
 
