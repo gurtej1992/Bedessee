@@ -31,6 +31,7 @@ public class StoreManager {
         return null;
     }
 
+
     public static void clearCurrentStore() {
         mCurrentStore = null;
     }

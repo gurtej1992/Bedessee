@@ -1,6 +1,7 @@
 package com.bedessee.salesca.shoppingcart;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -126,6 +127,7 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
                     mShoppingCart.clearContact();
 
                     StoreManager.clearCurrentStore();
+                    StoreManager.setCurrentStore(this,null);
 
                     finish();
                 }

@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         final Store store = StoreManager.getCurrentStore();
+
         if (store == null || mCurrentStore == null) {
             loadSalesMan();
         } if (store != null && mCurrentStore != null &&
@@ -216,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
                 isFirstTime = true;
             }
             break;
+            case ShoppingCartDialog.REQUEST_CODE:{
+
+            }
 
             case OrderHistoryDialog.REQUEST_CODE: {
                 if (resultCode == OrderHistoryDialog.RESULT_CODE_LOAD) {
