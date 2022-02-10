@@ -20,6 +20,8 @@ import androidx.fragment.app.DialogFragment;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.customview.GenericDialog;
+import com.bedessee.salesca.login.Login;
+import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.main.StoreSelectorAdapter;
 import com.bedessee.salesca.orderhistory.SavedOrder;
 import com.bedessee.salesca.provider.Contract;

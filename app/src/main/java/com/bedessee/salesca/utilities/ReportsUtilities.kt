@@ -1,6 +1,10 @@
 package com.bedessee.salesca.utilities
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.reportsmenu.ReportsMenu
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
@@ -12,6 +16,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileReader
+
 
 class ReportsUtilities {
     companion object {
@@ -72,6 +77,7 @@ class ReportsUtilities {
                             reportsMenu.popupType,
                             reportsMenu.deviceFolder
                         ).absolutePath)
+                        
                     }
                 }
             } else {
@@ -79,6 +85,8 @@ class ReportsUtilities {
                 notSuccessfullyOpen(context)
             }
         }
+
+
 
     }
 }

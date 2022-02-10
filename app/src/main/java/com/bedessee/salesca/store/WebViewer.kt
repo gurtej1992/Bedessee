@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -101,6 +102,7 @@ class WebViewer : AppCompatActivity() {
 
         fun show(context: Context, absolutePath: String) {
             if (context is Activity) {
+               Log.e("@#@",absolutePath)
                 show(context, absolutePath)
             }
             if (context is Fragment) {

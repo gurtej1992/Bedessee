@@ -3,6 +3,7 @@ package com.bedessee.salesca.main;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,6 +37,7 @@ import com.bedessee.salesca.R;
 import com.bedessee.salesca.backorder.BackOrderActivity;
 import com.bedessee.salesca.customview.DialogNumberPad;
 import com.bedessee.salesca.customview.GenericDialog;
+import com.bedessee.salesca.login.Login;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
 import com.bedessee.salesca.orderhistory.OrderHistoryDialog;
 import com.bedessee.salesca.orderhistory.SavedOrder;
@@ -308,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.daily_update:
                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
                 startActivityForResult(UpdateActivity.newIntent(this), UpdateActivity.REQUEST_CODE);
+                //signOut(true);
                 return true;
 
             case R.id.past_order:
@@ -793,4 +796,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }, "").show(getSupportFragmentManager(), TAG);
     }
+
+    public void signOut(Boolean launchLoginScreen){
+        final SharedPrefsManager sharedPrefs = new SharedPrefsManager(this);
+        sharedPrefs.removeLoggedInUser();
+        if(launchLoginScreen){
+           Intent intent=new Intent(getApplicationContext(),Login.class);
+           startActivity(intent);
+        }
+       finish();
+
+    }
+
 }

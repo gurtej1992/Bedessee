@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bedessee.salesca.R;
+import com.bedessee.salesca.login.Login;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.update.json.BaseJsonUpdate;
@@ -294,7 +295,11 @@ public class UpdateActivity extends Activity {
                         finishAffinity();
                     } else {
                         setResult(Activity.RESULT_OK);
+                        new SharedPrefsManager(UpdateActivity.this).removeLoggedInUser();
+                        Intent intent=new Intent(getApplicationContext(), Login.class);
+                        startActivity(intent);
                         finish();
+
                     }
                 }
             });
