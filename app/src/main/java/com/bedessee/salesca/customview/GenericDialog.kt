@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.util.Log
+import android.view.*
+import android.widget.PopupMenu
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -86,7 +86,35 @@ class GenericDialog : DialogFragment() {
             positiveListener = object : OnClickListener {
                 override fun onClick(dialog: DialogFragment) {
                     val path = SharedPrefsManager(context).sugarSyncDir
-                    WebViewer.show(dialog, "$path/custstmt/$statementUrl")
+                   // WebViewer.show(dialog, "$path/custstmt/$statementUrl")
+                    val final_path=path+"/custstmt/"+statementUrl
+                    Log.e("@@@@",final_path)
+                    val extension: String =final_path.substring(final_path.lastIndexOf("."));
+
+                    val popup = PopupMenu(context, view)
+                    popup.inflate(R.menu.statementmenu)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        popup.gravity=Gravity.RIGHT
+                    }
+
+                    popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+                        when (item!!.itemId) {
+                            R.id.pdf -> {
+
+                                dialog.dismiss()
+
+                            }
+                            R.id.txt -> {
+                                dialog.dismiss()
+
+                            }
+                        }
+
+                        true
+                    })
+
+                    popup.show()
                 }
             }
             negativeListener = object : OnClickListener {
@@ -202,4 +230,6 @@ class GenericDialog : DialogFragment() {
             }
         }
     }
+
+
 }

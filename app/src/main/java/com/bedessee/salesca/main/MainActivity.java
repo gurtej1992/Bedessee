@@ -447,6 +447,7 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < reportsCursor.getCount(); i++) {
                 final ReportsMenu sideMenu = ProviderUtils.cursorToReportsMenu(reportsCursor);
                 reportsMenus.add(sideMenu);
+
                 reportsCursor.moveToNext();
             }
             // WTF, first item is null
