@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <View
         android:id="@+id/control_bar"
         android:layout_width="0dp"
@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btn_close"
         android:layout_width="wrap_content"
@@ -27,6 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/control_bar"
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
+
 
     <TextView
         android:id="@+id/totalItems"
@@ -53,17 +54,86 @@
         app:layout_constraintStart_toEndOf="@id/btn_close"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="ABC LTD 1999-99" />
-    
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/constraint"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/guideline"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/listView_shoppingCart"
+        app:layout_constraintTop_toBottomOf="@+id/divider2">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/case_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Case $"
+            android:textColor="@color/tabs_divider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/total_amount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total $"
+            android:textColor="@color/tabs_divider"
+            app:layout_constraintRight_toLeftOf="@+id/view1"
+            app:layout_constraintLeft_toRightOf="@+id/case_amount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:id="@+id/view1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/view"
+            app:layout_constraintLeft_toRightOf="@+id/total_amount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:id="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/view1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ListView
         android:id="@+id/listView_shoppingCart"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="@string/no_items_found"
+        android:layout_marginTop="@dimen/default_margin"
         app:layout_constraintBottom_toTopOf="@id/edtContact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttons_barrier" />
-    
+        app:layout_constraintTop_toBottomOf="@id/constraint" >
+
+
+    </ListView>
+
     <EditText
         android:id="@+id/edtContact"
         android:layout_width="0dp"
@@ -77,22 +147,66 @@
         app:layout_constraintBottom_toTopOf="@id/edtComment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    
+
     <EditText
         android:id="@+id/edtComment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/gutter"
-        android:layout_marginEnd="@dimen/gutter"
         android:layout_marginBottom="@dimen/gutter"
+        android:background="@null"
+        android:padding="@dimen/small_gutter"
         android:hint="@string/any_comments"
         android:importantForAutofill="no"
         android:inputType="text"
         android:maxLength="120"
+        android:layout_marginStart="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/order_total_txt"
+        app:layout_constraintTop_toTopOf="@+id/order_total_txt" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/order_total_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Total"
+        android:textSize="@dimen/subtitle_1_text_size"
+        android:padding="@dimen/small_gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:textColor="@color/tabs_divider"
+        app:layout_constraintBottom_toTopOf="@+id/order_total_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintTop_toBottomOf="@+id/edtContact"
+        app:layout_constraintStart_toEndOf="@+id/edtComment" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/order_total_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:text="$123"
+        android:gravity="start|left"
+        android:padding="@dimen/small_gutter"
+        android:textSize="@dimen/subtitle_1_text_size"
+        android:textColor="@color/tabs_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-    
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintTop_toBottomOf="@+id/order_total_txt"
+        app:layout_constraintStart_toEndOf="@+id/edtComment" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dark_grey"
+        app:layout_constraintTop_toBottomOf="@+id/order_total_price"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="@dimen/gutter"
+        android:layout_marginEnd="@dimen/gutter"
+        android:layout_marginBottom="@dimen/gutter"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewStatement"
         style="@style/DefaultButton"
@@ -105,7 +219,7 @@
         app:layout_constraintEnd_toStartOf="@id/btnSave"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/control_bar" />
-    
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         style="@style/DefaultButton"
@@ -118,7 +232,7 @@
         app:layout_constraintEnd_toStartOf="@id/btnCheckout"
         app:layout_constraintStart_toEndOf="@id/btnViewStatement"
         app:layout_constraintTop_toBottomOf="@id/control_bar" />
-    
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCheckout"
         style="@style/DefaultButton"
@@ -131,7 +245,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btnSave"
         app:layout_constraintTop_toBottomOf="@id/control_bar" />
-    
+
     <View
         android:id="@+id/control_bar_divider"
         style="@style/Divider"
@@ -140,7 +254,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/control_bar" />
-    
+
     <View
         android:id="@+id/divider1"
         style="@style/Divider"
@@ -150,8 +264,8 @@
         app:layout_constraintEnd_toStartOf="@id/btnSave"
         app:layout_constraintStart_toEndOf="@id/btnViewStatement"
         app:layout_constraintTop_toTopOf="@id/btnViewStatement" />
-    
-    
+
+
     <View
         android:id="@+id/divider2"
         style="@style/Divider"
@@ -161,7 +275,7 @@
         app:layout_constraintEnd_toStartOf="@id/btnCheckout"
         app:layout_constraintStart_toEndOf="@id/btnSave"
         app:layout_constraintTop_toTopOf="@id/btnViewStatement" />
-    
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/buttons_barrier"
         android:layout_width="wrap_content"
