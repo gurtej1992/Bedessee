@@ -710,7 +710,8 @@ public class MainActivity extends AppCompatActivity {
                             File file = getBackOrderFile(getApplicationContext(), store);
 
                             if (file.exists()) {
-                                openBackOrderActivity();
+                                // RESTRICTING TO OPEN PDF
+                               // openBackOrderActivity();
                             }
 
                             if (store.isOpenDefaultReport()) {

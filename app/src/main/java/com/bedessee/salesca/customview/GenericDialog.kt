@@ -14,11 +14,15 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
+import com.bedessee.salesca.store.StoreManager
 import com.bedessee.salesca.store.WebViewer
+import com.bedessee.salesca.utilities.FileUtilities
+import com.bedessee.salesca.utilities.ReportsUtilities
 import com.bedessee.salesca.utilities.Utilities.getDifferenceDays
 import com.bedessee.salesca.utilities.ViewUtilities
 import kotlinx.android.synthetic.main.dialog_generic.view.*
 import timber.log.Timber
+import java.io.File
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -98,22 +102,36 @@ class GenericDialog : DialogFragment() {
                     }
 
                     popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
-
+                        val store = StoreManager.getCurrentStore()
                         when (item!!.itemId) {
-                            R.id.pdf -> {
 
+                            R.id.pdf -> {    val file: File = FileUtilities.getFile(
+                                    context,
+                                    store.baseNumber,
+                                    "PDF",
+                                    "r545"
+                                )
+                                if (file.exists()) {
+                                    FileUtilities.openPDF(context, file)
+                                }
                                 dialog.dismiss()
 
                             }
                             R.id.txt -> {
+                                WebViewer.show(
+                                    context, FileUtilities.getFile(
+                                        context,
+                                        store.baseNumber,
+                                        "TXT",
+                                        "custstmt"
+                                    ).absolutePath
+                                )
                                 dialog.dismiss()
 
                             }
                         }
-
                         true
                     })
-
                     popup.show()
                 }
             }

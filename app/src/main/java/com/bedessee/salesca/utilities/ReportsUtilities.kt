@@ -1,8 +1,8 @@
 package com.bedessee.salesca.utilities
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_VIEW
 import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
 import com.bedessee.salesca.main.MainActivity
@@ -77,7 +77,23 @@ class ReportsUtilities {
                             reportsMenu.popupType,
                             reportsMenu.deviceFolder
                         ).absolutePath)
-                        
+//                        val f = FileUtilities.getFile(
+//                                context,
+//                        store.baseNumber,
+//                        reportsMenu.popupType,
+//                        reportsMenu.deviceFolder
+//                        )
+//                        val intent = Intent(ACTION_VIEW)
+//                        intent.addCategory(Intent.CATEGORY_BROWSABLE)
+//                        intent.setDataAndType(Uri.fromFile(f), "application/x-webarchive-xml")
+//// Have to add this one in order to work on Target 2.3.3 (API 10)
+//// Have to add this one in order to work on Target 2.3.3 (API 10)
+//                        intent.setClassName(
+//                            "com.android.browser",
+//                            "com.android.browser.BrowserActivity"
+//                        )
+//
+//                        context.startActivity(intent);
                     }
                 }
             } else {
