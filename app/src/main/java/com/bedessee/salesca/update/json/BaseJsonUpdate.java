@@ -87,6 +87,7 @@ public abstract class BaseJsonUpdate extends AsyncTask<String, String, Void> {
                     public void run() {
                         Utilities.longToast(mContext, getFilename() + " FILE NOT FOUND");
                         Utilities.longToast(mContext, "HAVE YOU SET UP A DATA FOLDER?");
+
                     }
                 });
                 ((Activity) mContext).finish();

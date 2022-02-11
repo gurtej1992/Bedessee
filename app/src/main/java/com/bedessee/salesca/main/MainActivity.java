@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -67,6 +68,7 @@ import com.bedessee.salesca.store.WebViewer;
 import com.bedessee.salesca.update.UpdateActivity;
 import com.bedessee.salesca.utilities.ReportsUtilities;
 import com.bedessee.salesca.utilities.Utilities;
+import com.nononsenseapps.filepicker.FilePickerActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -368,9 +370,22 @@ public class MainActivity extends AppCompatActivity {
                         .create()
                         .show();
 
-
+            case R.id.clear:
+                String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+                File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+                if(file.exists()){
+                    getApplicationContext().deleteDatabase(file.getAbsolutePath());
+                    Toast.makeText(getApplicationContext(),"Db Files deleted successfully",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), FilePickerActivity.class);
+                    intent.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false);
+                    intent.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
+                    intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
+                    intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
+                    intent.putExtra(FilePickerActivity.EXTRA_TITLE, "PLEASE SELECT A DATA FOLDER...");
+                    startActivityForResult(intent, 23);
+                }
             default:
-                Toast.makeText(getApplicationContext(),"This feature is still under-development!",Toast.LENGTH_SHORT).show();
+
                 return super.onOptionsItemSelected(item);
         }
     }
