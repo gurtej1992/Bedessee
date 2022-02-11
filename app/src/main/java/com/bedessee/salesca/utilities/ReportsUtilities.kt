@@ -71,12 +71,12 @@ class ReportsUtilities {
                         if (!result) notSuccessfullyOpen(context)
                     }
                     "HTM" -> {
-                        show(context, FileUtilities.getFile(
-                            context,
-                            store.baseNumber,
-                            reportsMenu.popupType,
-                            reportsMenu.deviceFolder
-                        ).absolutePath)
+//                        show(context, FileUtilities.getFile(
+//                            context,
+//                            store.baseNumber,
+//                            reportsMenu.popupType,
+//                            reportsMenu.deviceFolder
+//                        ).absolutePath)
 //                        val f = FileUtilities.getFile(
 //                                context,
 //                        store.baseNumber,

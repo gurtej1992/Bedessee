@@ -730,7 +730,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             if (store.isOpenDefaultReport()) {
-                                ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
+                            //    ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
                             }
                         }
                     }).show(getSupportFragmentManager(), TAG);
