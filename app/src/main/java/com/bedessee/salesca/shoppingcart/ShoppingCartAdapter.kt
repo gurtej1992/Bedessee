@@ -66,12 +66,10 @@ class ShoppingCartAdapter(
         holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
 
-            holder.totalCase.setText("Case $")
-            holder.Price.setText("T0tal $")
+        val f: Float = java.lang.Float.valueOf(product.casePrice.toString())
 
-
-            holder.totalCase.setText("$" + (product.casePrice.toString()))
-            holder.Price.setText("$" + getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())
+        holder.totalCase.setText("$" + String.format("%.2f",f))
+            holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())))
 
 
         holder.removeItem.setOnClickListener {
@@ -99,7 +97,7 @@ class ShoppingCartAdapter(
                         notifyDataSetChanged()
                         ShoppingCart.getCurrentShoppingCart().productChanged();
                     }
-                    holder.Price.setText("$"+qty* product.casePrice!!.toDouble())
+                    holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
 
                 }
             }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
