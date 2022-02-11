@@ -71,29 +71,13 @@ class ReportsUtilities {
                         if (!result) notSuccessfullyOpen(context)
                     }
                     "HTM" -> {
-//                        show(context, FileUtilities.getFile(
-//                            context,
-//                            store.baseNumber,
-//                            reportsMenu.popupType,
-//                            reportsMenu.deviceFolder
-//                        ).absolutePath)
-//                        val f = FileUtilities.getFile(
-//                                context,
-//                        store.baseNumber,
-//                        reportsMenu.popupType,
-//                        reportsMenu.deviceFolder
-//                        )
-//                        val intent = Intent(ACTION_VIEW)
-//                        intent.addCategory(Intent.CATEGORY_BROWSABLE)
-//                        intent.setDataAndType(Uri.fromFile(f), "application/x-webarchive-xml")
-//// Have to add this one in order to work on Target 2.3.3 (API 10)
-//// Have to add this one in order to work on Target 2.3.3 (API 10)
-//                        intent.setClassName(
-//                            "com.android.browser",
-//                            "com.android.browser.BrowserActivity"
-//                        )
-//
-//                        context.startActivity(intent);
+                        show(context, FileUtilities.getFile(
+                            context,
+                            store.baseNumber,
+                            reportsMenu.popupType,
+                            reportsMenu.deviceFolder
+                        ).absolutePath)
+
                     }
                 }
             } else {
