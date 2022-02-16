@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.exit:
                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: EXIT APP");
                 finish();
+                System.exit(0);
                 return true;
 
             case R.id.version:
