@@ -15,8 +15,11 @@ import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.store.WebViewer;
+import com.bedessee.salesca.utilities.FileUtilities;
 import com.bedessee.salesca.utilities.Utilities;
 import com.bedessee.salesca.utilities.ViewUtilities;
+
+import java.io.File;
 
 /**
  * Dialog for shopping cart.
@@ -95,9 +98,16 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnViewStatement:
-                String path = new SharedPrefsManager(ShoppingCartDialog.this).getSugarSyncDir();
                 Store store = StoreManager.getCurrentStore();
-                WebViewer.Companion.show(ShoppingCartDialog.this, path + "/custstmt/" + store.getStatementUrl());
+                 File file = FileUtilities.Companion.getFile(getApplicationContext(),store.getBaseNumber(), "PDF",
+                        "r545");
+
+                if (file.exists()) {
+                    FileUtilities.Companion.openPDF(getApplicationContext(), file);
+                }
+//                String path = new SharedPrefsManager(ShoppingCartDialog.this).getSugarSyncDir();
+//                Store store = StoreManager.getCurrentStore();
+//                WebViewer.Companion.show(ShoppingCartDialog.this, path + "/custstmt/" + store.getStatementUrl());
                 break;
 
             case R.id.btn_close:

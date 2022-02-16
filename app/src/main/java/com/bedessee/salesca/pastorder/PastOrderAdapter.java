@@ -69,7 +69,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
         viewHolder.descriptionTextView.setText(text+"\n"+order.getProduct().getOtherInfo() +"\n"+order.getProduct().getOtherInfo2());
         viewHolder.removeView.setVisibility(View.GONE);
         viewHolder.edtQty.setText("0");
-        viewHolder.textView_totalCase.setText("$"+Integer.parseInt(order.getProduct().getCasePrice()));
+        viewHolder.textView_totalCase.setText("$"+order.getProduct().getCasePrice());
         viewHolder.edtQty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
