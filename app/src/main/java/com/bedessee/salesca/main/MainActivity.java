@@ -174,14 +174,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         final Store store = StoreManager.getCurrentStore();
-
-        if (store == null || mCurrentStore == null) {
-            loadSalesMan();
-        } if (store != null && mCurrentStore != null &&
-                !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
-            loadSalesMan();
+        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+        if (file.exists()) {
+            if (store == null || mCurrentStore == null) {
+                loadSalesMan();
+            }
+            if (store != null && mCurrentStore != null &&
+                    !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
+                loadSalesMan();
+            }
+            Timber.d("MainActivity onPostResume");
         }
-        Timber.d("MainActivity onPostResume");
     }
 
     private void loadSalesMan(){

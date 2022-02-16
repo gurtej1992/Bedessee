@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 
+import java.io.File;
+
 import timber.log.Timber;
 
 /**
@@ -212,11 +214,14 @@ public class Provider extends ContentProvider {
         mDatabase = mDbHelper.getWritableDatabase();
 
         final String table = getTable(uri);
-
-        if(table != null) {
-            final int del = mDatabase.delete(table, whereClause, selectionArgs);
-            mContentResolver.notifyChange(uri, null);
-            return del;
+        String directory = new SharedPrefsManager(getContext()).getSugarSyncDir();
+        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+        if (file.exists()) {
+            if (table != null) {
+                final int del = mDatabase.delete(table, whereClause, selectionArgs);
+                mContentResolver.notifyChange(uri, null);
+                return del;
+            }
         }
 
         return 0;

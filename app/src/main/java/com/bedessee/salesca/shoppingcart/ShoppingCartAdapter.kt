@@ -63,7 +63,8 @@ class ShoppingCartAdapter(
         holder.brand.text = product.brand
         val price = shoppingCartProduct.enteredPrice
         val hidePrice = TextUtils.isEmpty(price) || price.equals("null", ignoreCase = true)
-        holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
+        holder.description.text = "${product.description} ~ ${product.caseUom}"
+       // holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
 
         val f: Float = java.lang.Float.valueOf(product.casePrice.toString())

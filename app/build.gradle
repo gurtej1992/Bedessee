@@ -14,8 +14,8 @@ android {
         minSdkVersion 19
         multiDexEnabled true
         //noinspection HighAppVersionCode
-        versionCode 20220210
-        versionName '2022-02-10'
+        versionCode 20220216
+        versionName '2022-02-16'
     }
 
     signingConfigs {

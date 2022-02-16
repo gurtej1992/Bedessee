@@ -22,15 +22,16 @@
         tools:ignore="GoogleAppIndexingWarning, LockedOrientationActivity"
         tools:replace="android:icon">
 
-        <activity
-            android:name="com.bedessee.salesca.login.Login"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+<!--        Because of this i was seeing two apps-->
+<!--        <activity-->
+<!--            android:name="com.bedessee.salesca.login.Login"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:screenOrientation="landscape">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
         <activity
             android:name=".LaunchActivity"
@@ -61,7 +62,10 @@
             android:name="com.bedessee.salesca.admin.AdminSettings"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
-
+                <activity
+                    android:name="com.bedessee.salesca.login.Login"
+                    android:label="@string/app_name"
+                    android:screenOrientation="landscape" />
         <activity
             android:name="com.bedessee.salesca.shoppingcart.ShoppingCartDialog"
             android:screenOrientation="landscape" />
