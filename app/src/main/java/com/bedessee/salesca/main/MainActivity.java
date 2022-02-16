@@ -31,6 +31,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -125,39 +126,46 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+        if(file.exists()) {
+            mFragmentManager = getSupportFragmentManager();
 
-        mFragmentManager = getSupportFragmentManager();
+            deleteExpiredSavedOrders();
+            checkForExistingSavedOrder();
+            Utilities.getScreenDimensInPx(this);
+            prepareData();
 
-        deleteExpiredSavedOrders();
-        checkForExistingSavedOrder();
-        Utilities.getScreenDimensInPx(this);
-        prepareData();
-
-        // Clear the store if the app is not updated
-        SharedPrefsManager sharedPrefs = new SharedPrefsManager(getApplicationContext());
-        if (!sharedPrefs.isDailyUpdated()) {
-            Timber.d("clearing the store because isDailyUpdated needed");
-            StoreManager.clearCurrentStore();
-            mCurrentStore = null;
+            // Clear the store if the app is not updated
+            SharedPrefsManager sharedPrefs = new SharedPrefsManager(getApplicationContext());
+            if (!sharedPrefs.isDailyUpdated()) {
+                Timber.d("clearing the store because isDailyUpdated needed");
+                StoreManager.clearCurrentStore();
+                mCurrentStore = null;
+            }
         }
     }
 
     private void prepareData() {
-        boolean init = initSideMenu();
-        initReportsMenu();
-        setCurrentSalesman();
-        Utilities.forceShowOverflowIcon(this);
+        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+        if(file.exists()) {
+            boolean init = initSideMenu();
+            initReportsMenu();
+            setCurrentSalesman();
+            Utilities.forceShowOverflowIcon(this);
 
-        findViewById(R.id.btn_sell_sheets).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Sell sheets");
-                startActivityForResult(new Intent(MainActivity.this, SellSheetsDialog.class), SellSheetsDialog.RESULT_CODE);
+            findViewById(R.id.btn_sell_sheets).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Sell sheets");
+                    startActivityForResult(new Intent(MainActivity.this, SellSheetsDialog.class), SellSheetsDialog.RESULT_CODE);
+                }
+            });
+
+            if (!init) {
+                switchFragment(new CategoryFragment(), CategoryFragment.TAG);
             }
-        });
-
-        if (!init) {
-            switchFragment(new CategoryFragment(), CategoryFragment.TAG);
         }
     }
 
@@ -375,14 +383,9 @@ public class MainActivity extends AppCompatActivity {
                 File file = new File(BedesseeDatabase.getDatabaseFile(directory));
                 if(file.exists()){
                     getApplicationContext().deleteDatabase(file.getAbsolutePath());
-                    Toast.makeText(getApplicationContext(),"Db Files deleted successfully",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), FilePickerActivity.class);
-                    intent.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false);
-                    intent.putExtra(FilePickerActivity.EXTRA_START_PATH, Environment.getExternalStorageDirectory().getPath());
-                    intent.putExtra(FilePickerActivity.EXTRA_ALLOW_CREATE_DIR, false);
-                    intent.putExtra(FilePickerActivity.EXTRA_MODE, FilePickerActivity.MODE_DIR);
-                    intent.putExtra(FilePickerActivity.EXTRA_TITLE, "PLEASE SELECT A DATA FOLDER...");
-                    startActivityForResult(intent, 23);
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 }
             default:
 
