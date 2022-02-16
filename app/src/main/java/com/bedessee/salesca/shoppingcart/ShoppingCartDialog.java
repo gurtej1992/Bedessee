@@ -64,7 +64,7 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         }
 
         findViewById(R.id.btnViewStatement).setOnClickListener(this);
-        findViewById(R.id.btnSave).setOnClickListener(this);
+//        findViewById(R.id.btnSave).setOnClickListener(this);
         findViewById(R.id.btnCheckout).setOnClickListener(this);
         findViewById(R.id.btn_close).setOnClickListener(this);
 
@@ -111,15 +111,16 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.btn_close:
-                setResult(RESULT_CODE_CONTINUED);
-                finish();
-                break;
-
-            case R.id.btnSave:
                 saveCommentAndContact();
                 setResult(RESULT_CODE_CONTINUED);
                 finish();
                 break;
+
+//            case R.id.btnSave:
+//                saveCommentAndContact();
+//                setResult(RESULT_CODE_CONTINUED);
+//                finish();
+//                break;
 
             case R.id.btnCheckout:
 

@@ -320,7 +320,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.daily_update:
                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
                 startActivityForResult(UpdateActivity.newIntent(this), UpdateActivity.REQUEST_CODE);
-                //signOut(true);
                 return true;
 
             case R.id.past_order:

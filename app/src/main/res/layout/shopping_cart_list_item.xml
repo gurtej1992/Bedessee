@@ -43,6 +43,7 @@
             android:checked="true"
             android:enabled="false"
             android:text="@string/case_mode"
+            android:layout_marginTop="-1dp"
             android:textAllCaps="true" />
 
         <RadioButton
@@ -50,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
+            android:layout_marginTop = "-20dp"
             android:text="@string/piece_mode"
             android:textAllCaps="true" />
 
@@ -79,6 +81,7 @@
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
         android:maxLines="3"
+        android:layout_marginEnd="@dimen/gutter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
@@ -103,10 +106,10 @@
         android:tint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/textView_totalFull"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView_brand"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintLeft_toRightOf="@+id/textView_totalQtySold"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
 
@@ -118,10 +121,11 @@
         android:text="$12"
         android:textColor="@color/tabs_divider"
         android:textSize="@dimen/subtitle_1_text_size"
+        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/textView_totalFull"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/textView_description"
+        app:layout_constraintLeft_toRightOf="@+id/textView_totalQtySold"
+        app:layout_constraintTop_toTopOf="@+id/textView_totalQtySold"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
@@ -133,7 +137,7 @@
         android:textSize="@dimen/subtitle_1_text_size"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView_totalQtySold"
+        app:layout_constraintRight_toLeftOf="@+id/btnRemoveItem"
         app:layout_constraintLeft_toRightOf="@+id/textView_totalCase"
         app:layout_constraintTop_toTopOf="@+id/textView_totalCase"
         app:layout_constraintVertical_bias="0.0" />
@@ -143,12 +147,14 @@
         style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btnRemoveItem"
+        app:layout_constraintRight_toLeftOf="@+id/textView_totalCase"
         app:layout_constraintLeft_toRightOf="@+id/textView_totalFull"
-        app:layout_constraintTop_toTopOf="@+id/textView_totalFull"
+        app:layout_constraintTop_toTopOf="@+id/textView_description"
+        app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintVertical_bias="0.0"
         tools:text="Total quantity sold: 0" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
