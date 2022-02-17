@@ -29,7 +29,7 @@ class LaunchActivity : AppCompatActivity() {
         textView = findViewById<View>(R.id.textView) as TextView
         textView!!.setText("")
 
-        val period: Long = 100
+        val period: Long = 50
         timer = Timer()
         timer!!.schedule(object : TimerTask() {
             var i:Int=1
