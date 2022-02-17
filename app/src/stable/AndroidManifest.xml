@@ -5,7 +5,7 @@
         android:icon="@drawable/ic_launcher_var_original">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.bedessee.sales21.provider.File"
+            android:authorities="com.bedessee.salesca.provider.File"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
