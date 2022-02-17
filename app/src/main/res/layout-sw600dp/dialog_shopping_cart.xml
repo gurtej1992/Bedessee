@@ -75,8 +75,7 @@
             android:id="@+id/case_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Case $"
-            android:paddingRight="@dimen/gutter"
+            android:text="Case $  "
             android:textSize="@dimen/subtitle_1_text_size"
             android:textColor="@color/tabs_divider"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -89,10 +88,8 @@
             android:id="@+id/total_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total $"
+            android:text="Total $  "
             android:textSize="@dimen/subtitle_1_text_size"
-            android:paddingRight="@dimen/gutter"
-            android:layout_marginRight="@dimen/gutter"
             android:textColor="@color/tabs_divider"
             app:layout_constraintRight_toLeftOf="@+id/view"
             app:layout_constraintLeft_toRightOf="@+id/case_amount"
@@ -110,6 +107,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/total_amount"
         app:layout_constraintTop_toTopOf="parent"
+            tools:text="Total quantity sold: 0"
             app:layout_constraintVertical_bias="0.0" />
 
 
