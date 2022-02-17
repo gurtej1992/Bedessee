@@ -127,44 +127,49 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
-        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
-        if(file.exists()) {
-            mFragmentManager = getSupportFragmentManager();
+        if(directory != null){
+            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+            if(file.exists()) {
+                mFragmentManager = getSupportFragmentManager();
 
-            deleteExpiredSavedOrders();
-            checkForExistingSavedOrder();
-            Utilities.getScreenDimensInPx(this);
-            prepareData();
+                deleteExpiredSavedOrders();
+                checkForExistingSavedOrder();
+                Utilities.getScreenDimensInPx(this);
+                prepareData();
 
-            // Clear the store if the app is not updated
-            SharedPrefsManager sharedPrefs = new SharedPrefsManager(getApplicationContext());
-            if (!sharedPrefs.isDailyUpdated()) {
-                Timber.d("clearing the store because isDailyUpdated needed");
-                StoreManager.clearCurrentStore();
-                mCurrentStore = null;
+                // Clear the store if the app is not updated
+                SharedPrefsManager sharedPrefs = new SharedPrefsManager(getApplicationContext());
+                if (!sharedPrefs.isDailyUpdated()) {
+                    Timber.d("clearing the store because isDailyUpdated needed");
+                    StoreManager.clearCurrentStore();
+                    mCurrentStore = null;
+                }
             }
         }
+
     }
 
     private void prepareData() {
         String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
-        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
-        if(file.exists()) {
-            boolean init = initSideMenu();
-            initReportsMenu();
-            setCurrentSalesman();
-            Utilities.forceShowOverflowIcon(this);
+        if(directory != null) {
+            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+            if (file.exists()) {
+                boolean init = initSideMenu();
+                initReportsMenu();
+                setCurrentSalesman();
+                Utilities.forceShowOverflowIcon(this);
 
-            findViewById(R.id.btn_sell_sheets).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Sell sheets");
-                    startActivityForResult(new Intent(MainActivity.this, SellSheetsDialog.class), SellSheetsDialog.RESULT_CODE);
+                findViewById(R.id.btn_sell_sheets).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Sell sheets");
+                        startActivityForResult(new Intent(MainActivity.this, SellSheetsDialog.class), SellSheetsDialog.RESULT_CODE);
+                    }
+                });
+
+                if (!init) {
+                    switchFragment(new CategoryFragment(), CategoryFragment.TAG);
                 }
-            });
-
-            if (!init) {
-                switchFragment(new CategoryFragment(), CategoryFragment.TAG);
             }
         }
     }
@@ -175,16 +180,18 @@ public class MainActivity extends AppCompatActivity {
         super.onPostResume();
         final Store store = StoreManager.getCurrentStore();
         String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
-        File file = new File(BedesseeDatabase.getDatabaseFile(directory));
-        if (file.exists()) {
-            if (store == null || mCurrentStore == null) {
-                loadSalesMan();
+        if(directory != null) {
+            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+            if (file.exists()) {
+                if (store == null || mCurrentStore == null) {
+                    loadSalesMan();
+                }
+                if (store != null && mCurrentStore != null &&
+                        !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
+                    loadSalesMan();
+                }
+                Timber.d("MainActivity onPostResume");
             }
-            if (store != null && mCurrentStore != null &&
-                    !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
-                loadSalesMan();
-            }
-            Timber.d("MainActivity onPostResume");
         }
     }
 
@@ -381,16 +388,15 @@ public class MainActivity extends AppCompatActivity {
                         })
                         .create()
                         .show();
-
+                return true;
             case R.id.clear:
                 String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
                 File file = new File(BedesseeDatabase.getDatabaseFile(directory));
                 if(file.exists()){
                     getApplicationContext().deleteDatabase(file.getAbsolutePath());
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+                    signOut(true);
                 }
+                return true;
             default:
 
                 return super.onOptionsItemSelected(item);

@@ -44,14 +44,14 @@ android {
             applicationId "com.bedessee.salesca"
             resValue "string", "app_name", "Sales"
         }
-        stableUS {
-            applicationId "com.bedessee.sales21.us"
-            resValue "string", "app_name", "Sales US"
-        }
-        beta {
-            applicationId "com.bedessee.sales22"
-            resValue "string", "app_name", "Sales B"
-        }
+//        stableUS {
+//            applicationId "com.bedessee.sales21.us"
+//            resValue "string", "app_name", "Sales US"
+//        }
+//        beta {
+//            applicationId "com.bedessee.sales22"
+//            resValue "string", "app_name", "Sales B"
+//        }
     }
 
     applicationVariants.all { variant ->

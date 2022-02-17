@@ -34,7 +34,7 @@
 <!--        </activity>-->
 
         <activity
-            android:name=".LaunchActivity"
+            android:name="com.bedessee.salesca.LaunchActivity"
             android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
