@@ -120,6 +120,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             Timber.e(e);
         }
+        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+        if(directory != null) {
+            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+            if (!file.exists()) {
+                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
+                startActivityForResult(UpdateActivity.newIntent(this), UpdateActivity.REQUEST_CODE);
+            }
+        }
+        else{
+            signOut(true);
+        }
 
     }
 

@@ -69,7 +69,8 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
         viewHolder.descriptionTextView.setText(text+"\n"+order.getProduct().getOtherInfo() +"\n"+order.getProduct().getOtherInfo2());
         viewHolder.removeView.setVisibility(View.GONE);
         viewHolder.edtQty.setText("0");
-        viewHolder.textView_totalCase.setText("$"+order.getProduct().getCasePrice());
+        viewHolder.textView_totalCase.setVisibility(View.GONE);
+        viewHolder.textView_totalFull.setVisibility(View.GONE);
         viewHolder.edtQty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +121,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
         EditText edtQty;
         RadioButton radioCase;
         RadioButton radioPiece;
-        EditText textView_totalCase;
+        TextView textView_totalCase;
         TextView textView_totalFull;
 
         // We also create a constructor that accepts the entire item row
