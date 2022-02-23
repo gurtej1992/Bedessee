@@ -8,6 +8,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.order.GMailUtils;
@@ -32,7 +35,7 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
 
     final public static String KEY_SHOPPING_CART = "shopping_cart_key";
 
-    ListView shoppingCartListView;
+    RecyclerView shoppingCartListView;
 
     private ShoppingCart mShoppingCart;
 
@@ -52,7 +55,9 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         }
 
         shoppingCartListView = findViewById(R.id.listView_shoppingCart);
-        ShoppingCartAdapter shoppingCartAdapter = new ShoppingCartAdapter(this, R.layout.shopping_cart_list_item, R.id.textView_brand, mShoppingCart.getProducts());
+        ShoppingCartAdapter shoppingCartAdapter = new ShoppingCartAdapter(this, mShoppingCart.getProducts());
+        shoppingCartListView.setLayoutManager(new LinearLayoutManager(this));
+        shoppingCartListView.setItemAnimator(new DefaultItemAnimator());
         shoppingCartListView.setAdapter(shoppingCartAdapter);
 
         ((EditText) findViewById(R.id.edtComment)).setText(mShoppingCart.getComment());

@@ -124,7 +124,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView_shoppingCart"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -136,7 +136,7 @@
         app:layout_constraintTop_toBottomOf="@id/constraint" >
 
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <EditText
         android:id="@+id/edtContact"
