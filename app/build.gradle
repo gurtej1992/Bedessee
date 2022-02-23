@@ -53,11 +53,6 @@ android {
 //            resValue "string", "app_name", "Sales B"
 //        }
     }
-    packagingOptions {
-        resources {
-            excludes += ['META-INF/LICENSE', 'META-INF/LICENSE.txt', 'META-INF/NOTICE', 'META-INF/NOTICE.txt', 'META-INF/DEPENDENCIES']
-        }
-    }
 
     applicationVariants.all { variant ->
         variant.outputs.all {
@@ -67,6 +62,13 @@ android {
         }
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -126,7 +128,7 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.18'
 
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
-    implementation 'com.github.ghost1372:Mzip-Android:0.4.0'
+    compile 'com.github.ghost1372:Mzip-Android:0.4.0'
 }
 
 apply plugin: 'com.google.firebase.crashlytics'
