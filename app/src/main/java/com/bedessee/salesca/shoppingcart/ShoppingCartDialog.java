@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,6 +58,7 @@ public class ShoppingCartDialog extends AppCompatActivity implements View.OnClic
         shoppingCartListView = findViewById(R.id.listView_shoppingCart);
         ShoppingCartAdapter shoppingCartAdapter = new ShoppingCartAdapter(this, mShoppingCart.getProducts());
         shoppingCartListView.setLayoutManager(new LinearLayoutManager(this));
+        shoppingCartListView.addItemDecoration(new DividerItemDecoration(shoppingCartListView.getContext(), DividerItemDecoration.VERTICAL));
         shoppingCartListView.setItemAnimator(new DefaultItemAnimator());
         shoppingCartListView.setAdapter(shoppingCartAdapter);
 

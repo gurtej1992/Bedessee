@@ -48,12 +48,12 @@
     <string name="quantity_initial_value">0</string>
     <string name="quantity_hint">0</string>
     <string name="order_history">Order History</string>
-    <string name="view_statement_shopping_cart">View Statement</string>
+    <string name="view_statement_shopping_cart">View Statement (PDF)</string>
     <string name="continue_shopping">Continue Shopping (Save Changes)</string>
     <string name="checkout_shopping_cart">Checkout (Send Order)</string>
     <string name="cancel_shopping_cart">Cancel (Don\'t Save Changes)</string>
     <string name="any_comments">Any comments?</string>
-    <string name="please_enter_store_contact_here">PLEASE ENTER STORE CONTACT HERE</string>
+    <string name="please_enter_store_contact_here">Please Enter Store Contact Here</string>
     <string name="upc_dialog_title">%d PRODUCTS found by search for \"%s\" </string>
     <string name="switch_store_dialog_title">Changing stores will remove all items from your shopping cart.</string>
     <string name="switch_store_dialog_message">Are you sure you want to continue?</string>
