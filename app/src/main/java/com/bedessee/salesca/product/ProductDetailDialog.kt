@@ -23,6 +23,8 @@ import com.bedessee.salesca.provider.ProviderUtils
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
 import com.bedessee.salesca.store.StoreManager
 import com.bedessee.salesca.utilities.FieldUtilities.Companion.setupField
+import com.bedessee.salesca.utilities.FileUtilities.Companion.getFile
+import com.bedessee.salesca.utilities.FileUtilities.Companion.openPDF
 import com.bedessee.salesca.utilities.ProductEnteredFrom
 import com.bedessee.salesca.utilities.Utilities
 import com.bedessee.salesca.utilities.ViewUtilities
@@ -120,6 +122,20 @@ class ProductDetailDialog : DialogFragment() {
                 MixPanelManager.trackButtonClick(context, "Button Click: Image Share")
                 Utilities.shareImage(context, "file://${file.absolutePath}")
             }
+        view.btn_code.setOnClickListener {
+
+            val file = getFile(
+                context!!, product.number!!, "PDF",
+                "barcode"
+            )
+
+            if (file.exists()) {
+                openPDF(context!!, file)
+            }
+            else{
+                Toast.makeText(context,"No barcode found!",Toast.LENGTH_SHORT).show()
+            }
+        }
 
             view.btn_zoom.setOnClickListener {
                 MixPanelManager.trackButtonClick(context, "Button Click: Image Zoo ")
@@ -273,6 +289,7 @@ class ProductDetailDialog : DialogFragment() {
             view.findViewById<View>(R.id.imageView_close).setOnClickListener {
                 dismiss()
             }
+
 
         return view
     }

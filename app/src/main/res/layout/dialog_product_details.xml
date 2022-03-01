@@ -45,13 +45,30 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+        android:layout_marginEnd="60dp"
         android:adjustViewBounds="true"
         android:background="?android:selectableItemBackground"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="@+id/control_bar"
         app:layout_constraintEnd_toStartOf="@id/btn_share"
         app:layout_constraintTop_toTopOf="@+id/control_bar"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ic_eye"
+        tools:ignore="ContentDescription" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_code"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:adjustViewBounds="true"
+        android:background="?android:selectableItemBackground"
+        android:scaleType="fitXY"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/control_bar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_zoom"
+        app:layout_constraintTop_toTopOf="@+id/control_bar"
+        app:srcCompat="@drawable/icon_barcode"
         tools:ignore="ContentDescription" />
 
     <androidx.appcompat.widget.AppCompatImageButton
