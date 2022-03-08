@@ -121,6 +121,8 @@
         android:text="$12"
         android:textColor="@color/tabs_divider"
         android:textSize="@dimen/subtitle_1_text_size"
+        android:focusable="false"
+        android:cursorVisible="false"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/textView_totalFull"

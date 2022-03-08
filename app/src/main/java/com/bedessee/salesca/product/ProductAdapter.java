@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.FilterQueryProvider;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -110,6 +111,10 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         viewHolder.mTextUomUnit.setVisibility(showUom ? View.VISIBLE : View.GONE);
         viewHolder.mTextPriceUnit.setVisibility(showUom ? View.VISIBLE : View.GONE);
 
+        viewHolder.add = view.findViewById(R.id.add);
+        viewHolder.product_type = view.findViewById(R.id.product_type);
+
+
         view.setTag(viewHolder);
 
         return view;
@@ -155,17 +160,26 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         holder.mTextViewBrand.setText(product.getBrand() + "\n" + product.getDescription());
         holder.mTextUomUnit.setText(product.getPieceUom());
         holder.mTextPriceUnit.setText(product.getPiecePrice());
+        holder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.mQtySelector.setVisibility(View.VISIBLE);
+            }
+        });
 
         Integer priceColor = Utilities.parseSaveColor(product.getLPriceColor());
         if (priceColor != null) {
             holder.mTextPriceUnit.setTextColor(priceColor);
             holder.mTextUomUnit.setTextColor(priceColor);
+            holder.product_type.setBackgroundColor(priceColor);
         }
 
         Integer priceBackgroundColor = Utilities.parseSaveColor(product.getLPriceBackgroundColor());
         if (priceBackgroundColor != null) {
             holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);
             holder.mTextUomUnit.setBackgroundColor(priceBackgroundColor);
+            holder.product_type.setBackgroundColor(priceBackgroundColor);
+
         }
 
         FieldUtilities.Companion.setupField(
@@ -361,6 +375,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
                         public void onClick(View v) {
                             if (StoreManager.isStoreSelected()) {
                                 holder.mQtySelector.incrementQty();
+                                holder.mBtnAddToCart.performClick();
                             } else {
                                 Toast.makeText(mContext, "Please select store to continue.", Toast.LENGTH_SHORT).show();
                             }
@@ -394,12 +409,13 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
 
     static class ViewHolder {
         RelativeLayout mItemBody;
-        ImageView mImageView;
+        ImageView mImageView,add;
         TextView mTextViewBrand;
         TextView mTextUom;
         TextView mTextUomUnit;
         TextView mTextPriceUnit;
         Button mBtnAddToCart;
+        ImageButton product_type;
         QtySelector mQtySelector;
     }
 

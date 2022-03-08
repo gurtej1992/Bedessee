@@ -60,7 +60,7 @@ public class QtySelector extends FrameLayout {
 
     @SuppressLint("InflateParams")
     private void init(final Context context) {
-        addView(parentView = LayoutInflater.from(context).inflate(R.layout.view_qty_selector, null));
+        addView(parentView = LayoutInflater.from(context).inflate(R.layout.qty_selector, null));
 
         final EditText editText = findViewById(R.id.editText);
 

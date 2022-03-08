@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+  <corners android:bottomLeftRadius="@dimen/gutter"
+      android:bottomRightRadius="@dimen/gutter"
+      android:topLeftRadius="@dimen/gutter"
+      android:topRightRadius="@dimen/gutter"/>
+
+    <solid android:color="#6e27fe"></solid>
+
+
+</shape>
