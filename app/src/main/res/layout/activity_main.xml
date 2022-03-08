@@ -48,10 +48,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/layout_menu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ListView
                 android:id="@+id/listView_filters"

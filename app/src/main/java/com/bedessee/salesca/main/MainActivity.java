@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView toolbarSubtitle;
     private Store mCurrentStore;
     private Boolean isFirstTime = true;
+    private ImageView menu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,13 +115,24 @@ public class MainActivity extends AppCompatActivity {
         toolbarSubtitle = findViewById(R.id.toolbar_subtitle);
 
         // This wil mimic the old ActionBar app icon.
-        try {
-            String packageName = getApplicationContext().getPackageName();
-            Drawable icon = getPackageManager().getApplicationIcon(packageName);
-            ((ImageView) findViewById(R.id.iconToolbar)).setImageDrawable(icon);
-        } catch (PackageManager.NameNotFoundException e) {
-            Timber.e(e);
-        }
+//        try {
+//            String packageName = getApplicationContext().getPackageName();
+//            Drawable icon = getPackageManager().getApplicationIcon(packageName);
+//            ((ImageView) findViewById(R.id.iconToolbar)).setImageDrawable(icon);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Timber.e(e);
+//        }
+        LinearLayout linearMLayout = (LinearLayout) findViewById(R.id.layout_menu);
+       menu =  (ImageView) findViewById(R.id.iconToolbar);
+       menu.setImageResource(R.drawable.ic_menu_24);
+       menu.setOnClickListener(view -> {
+           if(linearMLayout.getVisibility() == View.GONE){
+               linearMLayout.setVisibility(View.VISIBLE);
+           }
+           else{
+               linearMLayout.setVisibility(View.GONE);
+           }
+       });
         String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
         if(directory != null) {
             File file = new File(BedesseeDatabase.getDatabaseFile(directory));
