@@ -3,22 +3,17 @@ package com.bedessee.salesca.main;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Menu;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,13 +23,6 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.IntentCompat;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.backorder.BackOrderActivity;
@@ -53,6 +41,7 @@ import com.bedessee.salesca.product.category.CategoryFragment;
 import com.bedessee.salesca.provider.BedesseeDatabase;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
+import com.bedessee.salesca.reportsmenu.ReportFragment;
 import com.bedessee.salesca.reportsmenu.ReportsMenu;
 import com.bedessee.salesca.reportsmenu.ReportsMenuAdapter;
 import com.bedessee.salesca.salesman.Salesman;
@@ -70,7 +59,18 @@ import com.bedessee.salesca.store.WebViewer;
 import com.bedessee.salesca.update.UpdateActivity;
 import com.bedessee.salesca.utilities.ReportsUtilities;
 import com.bedessee.salesca.utilities.Utilities;
-import com.nononsenseapps.filepicker.FilePickerActivity;
+import com.google.android.material.navigation.NavigationView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -84,66 +84,489 @@ import timber.log.Timber;
 
 import static com.bedessee.salesca.backorder.BackOrderActivity.getBackOrderFile;
 
-/**
- * Main Activity for application.
- */
+
 public class MainActivity extends AppCompatActivity {
+    DrawerLayout drawer;
+    NavigationView navigationView;
+    RecyclerView lst_menu_items;
+    public MainDrawerAdapter mainMenuAdapter;
+    private FragmentManager mFragmentManager;
+    private Store mCurrentStore;
+    private TextView toolbarTitle;
+    private TextView toolbarSubtitle;
+    private Boolean isFirstTime = true;
+    private boolean mShowBalanceDialog;
+    private Salesman mSalesman;
+    private static boolean reportsOpen;
+    private static boolean reportsSpinnerInit;
+    ImageView drawericon,search,storeicon,menuicon,home_icon,cart_icon,report_icon,tool_icon;
+    TextView home_txt,cart_txt,report_txt,tool_txt;
+    LinearLayout home,cart,report,tools;
 
     private static final String TAG = "MainActivity";
 
-    public MainMenuAdapter mainMenuAdapter;
-    public Menu mMenu;
-    private FragmentManager mFragmentManager;
-    private static boolean reportsSpinnerInit;
-    private static boolean reportsOpen;
-    private boolean mShowBalanceDialog;
-    private Salesman mSalesman;
-    private Spinner reportsSpinner;
-    private TextView toolbarTitle;
-    private TextView toolbarSubtitle;
-    private Store mCurrentStore;
-    private Boolean isFirstTime = true;
-    private ImageView menu;
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setSupportActionBar(findViewById(R.id.toolbar));
-
+        setContentView(R.layout.activity_main2);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        lst_menu_items = findViewById(R.id.lst_menu_items);
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarSubtitle = findViewById(R.id.toolbar_subtitle);
+        drawericon = findViewById(R.id.drawer);
+        search = findViewById(R.id.search);
+        storeicon = findViewById(R.id.select_store);
+        menuicon = findViewById(R.id.popup_menu);
+        home_icon = findViewById(R.id.home_icon);
+        cart_icon = findViewById(R.id.cart_icon);
+        report_icon = findViewById(R.id.report_icon);
+        tool_icon = findViewById(R.id.tool_icon);
+        home_txt = findViewById(R.id.home_txt);
+        cart_txt = findViewById(R.id.cart_txt);
+        report_txt = findViewById(R.id.report_txt);
+        tool_txt = findViewById(R.id.tool_txt);
+        home = findViewById(R.id.home);
+        cart = findViewById(R.id.cart);
+        report = findViewById(R.id.report);
+        tools = findViewById(R.id.tools);
 
-        // This wil mimic the old ActionBar app icon.
-//        try {
-//            String packageName = getApplicationContext().getPackageName();
-//            Drawable icon = getPackageManager().getApplicationIcon(packageName);
-//            ((ImageView) findViewById(R.id.iconToolbar)).setImageDrawable(icon);
-//        } catch (PackageManager.NameNotFoundException e) {
-//            Timber.e(e);
-//        }
-        LinearLayout linearMLayout = (LinearLayout) findViewById(R.id.layout_menu);
-       menu =  (ImageView) findViewById(R.id.iconToolbar);
-       menu.setImageResource(R.drawable.ic_menu_24);
-       menu.setOnClickListener(view -> {
-           if(linearMLayout.getVisibility() == View.GONE){
-               linearMLayout.setVisibility(View.VISIBLE);
-           }
-           else{
-               linearMLayout.setVisibility(View.GONE);
-           }
-       });
+        drawericon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+
+            }
+        });
+        home_icon.setImageResource(R.drawable.ic_home);
+        cart_icon.setImageResource(R.drawable.ic_cartight);
+        report_icon.setImageResource(R.drawable.ic_documentlight);
+        tool_icon.setImageResource(R.drawable.ic_toolslight);
+        home_txt.setTextColor(getResources().getColor(R.color.white));
+        cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+        report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+        tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+
+
+
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                home_icon.setImageResource(R.drawable.ic_homelight);
+                cart_icon.setImageResource(R.drawable.ic_cartight);
+                report_icon.setImageResource(R.drawable.ic_document);
+                tool_icon.setImageResource(R.drawable.ic_toolslight);
+                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                report_txt.setTextColor(getResources().getColor(R.color.white));
+                tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                switchFragment(ReportFragment.getInstance(), ReportFragment.TAG);
+            }
+        });
+
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                home_icon.setImageResource(R.drawable.ic_homelight);
+                cart_icon.setImageResource(R.drawable.ic_cart);
+                report_icon.setImageResource(R.drawable.ic_documentlight);
+                tool_icon.setImageResource(R.drawable.ic_toolslight);
+                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                tool_txt.setTextColor(getResources().getColor(R.color.white));
+                if (StoreManager.isStoreSelected()) {
+                    MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
+                    startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                } else {
+                    MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store -NO STORE SELECTED");
+                    Toast.makeText(MainActivity.this, "Please select store to continue.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        tools.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                home_icon.setImageResource(R.drawable.ic_homelight);
+                cart_icon.setImageResource(R.drawable.ic_cartight);
+                report_icon.setImageResource(R.drawable.ic_documentlight);
+                tool_icon.setImageResource(R.drawable.ic_tools);
+                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                cart_txt.setTextColor(getResources().getColor(R.color.white));
+                report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                switchFragment(new ToolFragment(), ToolFragment.TAG);
+            }
+        });
+        storeicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mShowBalanceDialog = true;
+                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store");
+                StoreSelector.open(MainActivity.this);
+            }
+        });
+        menuicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, v);
+                popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+                popup.getMenu().findItem(R.id.version).setTitle("V " + Utilities.getVersionString(MainActivity.this));
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        final SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
+                        switch (item.getItemId()) {
+                            case R.id.daily_update:
+                                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
+                                startActivityForResult(UpdateActivity.newIntent(MainActivity.this), UpdateActivity.REQUEST_CODE);
+                                return true;
+
+                            case R.id.past_order:
+                                final Intent pastSalesIntent = new Intent(MainActivity.this, PastOrderActivity.class);
+                                startActivity(pastSalesIntent);
+                                return true;
+                            case R.id.back_order:
+                                openBackOrderActivity();
+                                return true;
+
+                            case R.id.exit:
+                                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: EXIT APP");
+                                finish();
+                                System.exit(0);
+                                return true;
+
+                            case R.id.version:
+                                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: APP VERSION");
+                                final SharedPrefsManager sharedPref = new SharedPrefsManager(MainActivity.this);
+                                final boolean isNewMatchLogic = sharedPref.getUseNewLikeLogic().equals("YES");
+                                final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                                alertDialog.setMessage("Data folder:\n\n" + sharedPrefsManager.getSugarSyncDir() + "\n\n" + "LAST DAILY UPDATE: " + sharedPref.getLastDailyUpdate()
+                                        + "\n\n" + "DEVICE DATE: " + sharedPref.getDeviceDate()
+                                        + "\n\n" + "FORCE DAILY UPDATE: " + sharedPref.getForceDailyUpdate() + "\n\n" + "(LIKE MATCH " + (isNewMatchLogic ? "ON" : "OFF") + ")");
+                                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CLOSE",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(final DialogInterface dialog, final int which) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+                                alertDialog.show();
+                                return true;
+
+                            case R.id.shopping_cart:
+                                startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                                return true;
+
+                            case R.id.force_crash:
+                                new AlertDialog.Builder(MainActivity.this).setTitle("Are you sure want to crash the app?")
+                                        .setMessage("This is for Testing, Force crash will crash the app.")
+                                        .setPositiveButton("YES",
+                                                new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        throw new RuntimeException("Test Crash"); // Force a crash
+                                                        // Perform Action & Dismiss dialog
+                                                        // dialog.dismiss();
+                                                    }
+                                                })
+                                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                // Do nothing
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .create()
+                                        .show();
+                                return true;
+                            case R.id.clear:
+                                String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+                                File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+                                if(file.exists()){
+                                    getApplicationContext().deleteDatabase(file.getAbsolutePath());
+                                    signOut(true);
+                                }
+                                return true;
+                            default:
+
+                                return false;
+                        }
+                    }
+                });
+
+                popup.show();//showing popup menu
+            }
+        });
+
+
         String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
         if(directory != null) {
             File file = new File(BedesseeDatabase.getDatabaseFile(directory));
             if (!file.exists()) {
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
+                MixPanelManager.trackButtonClick(this, "Button click: Top menu: DAILY UPDATE");
                 startActivityForResult(UpdateActivity.newIntent(this), UpdateActivity.REQUEST_CODE);
             }
         }
         else{
             signOut(true);
         }
+
+
+    }
+
+    private void openBackOrderActivity() {
+        final Intent backOrderIntent = new Intent(MainActivity.this, BackOrderActivity.class);
+        startActivity(backOrderIntent);
+    }
+
+
+
+    private boolean initSideMenu() {
+        Timber.d("initSideMenu");
+        final ListView listViewFilters = findViewById(R.id.listView_filters);
+        final List<SideMenu> sideMenus = new ArrayList<>();
+        sideMenus.add(new SideMenu("NO", "#000000", "0", "PRODUCTS", "0", ""));
+        sideMenus.add(new SideMenu("NO", "#000000", "0", "BRANDS", "0", ""));
+        sideMenus.add(new SideMenu("NO", "#000000", "0", "CATEGORIES", "0", ""));
+
+        sideMenus.add(new SideMenu("NO", "#000000", "0", "UPC", "0", ""));
+        sideMenus.add(new SideMenu("NO", "#000000", "0", "ORDER HISTORY", "0", ""));
+
+        final Cursor cursorSideMenu = getContentResolver().query(Contract.SideMenu.CONTENT_URI, null, null, null, Contract.SideMenuColumns.COLUMN_SORT + " ASC");
+        if (cursorSideMenu != null) {
+            while (cursorSideMenu.moveToNext()) {
+                sideMenus.add(ProviderUtils.cursorToSideMenu(cursorSideMenu));
+            }
+            cursorSideMenu.close();
+        }
+
+
+
+        Timber.d("initializing the menu adapter with #%s", sideMenus);
+
+        mainMenuAdapter = new MainDrawerAdapter(this, sideMenus) {
+            @Override
+            protected void onClickView(int pos) {
+                selectItem(pos);
+            }
+        };
+        lst_menu_items.setLayoutManager(new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false));
+        lst_menu_items.setAdapter(mainMenuAdapter);
+
+        for (SideMenu sideMenu : sideMenus) {
+            if ("YES".equals(sideMenu.getOpenByDefault())) {
+                selectItem(sideMenus.indexOf(sideMenu));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void selectItem(final int position) {
+        switch (position) {
+            case 0:
+                MixPanelManager.trackButtonClick(this, "Button click: Left Menu: Products");
+                switchFragment(ProductFragment.getInstance(), ProductFragment.TAG);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case 1:
+                MixPanelManager.trackButtonClick(this, "Button click: Left Menu: Brands");
+                switchFragment(BrandFragment.getInstance(), BrandFragment.TAG);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case 2:
+                MixPanelManager.trackButtonClick(this, "Button click: Left Menu: Categories");
+                switchFragment(CategoryFragment.getInstance(), CategoryFragment.TAG);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case 3:
+                upcClicked();
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+            case 4:
+                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: ORDER HISTORY");
+                DialogFragment dialog = new OrderHistoryDialog();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                dialog.show(fragmentManager, "sd");
+                fragmentManager.executePendingTransactions();
+                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        Store store = StoreManager.getCurrentStore();
+                        if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
+                            displayStoreInActionBar();
+                        }
+                    }
+                });
+                drawer.closeDrawer(GravityCompat.START);
+            default:
+                final String status = mainMenuAdapter.mMenuItems.get(position).getStatusCode();
+                final ProductFragment productFragment = ProductFragment.getInstance();
+                productFragment.setFilter(status);
+                switchFragment(productFragment, ProductFragment.TAG);
+                drawer.closeDrawer(GravityCompat.START);
+                break;
+
+        }
+    }
+    public void switchFragment(final androidx.fragment.app.Fragment fragment, final String tag) {
+        mFragmentManager.beginTransaction()
+                .replace(R.id.frame_container, fragment, tag)
+                .addToBackStack(tag)
+                .commitAllowingStateLoss();
+    }
+
+    private void upcClicked() {
+        MixPanelManager.trackButtonClick(this, "Button click: Top menu: UPC");
+        DialogNumberPad.Companion.newInstance("UPC Search", new DialogNumberPad.OnStringSelectedListener() {
+            @Override
+            public void onSelected(@NotNull String value) {
+                if (value.length() > 2) {
+                    loadUpcDialog(value);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please enter minimum 3 digits", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, "").show(getSupportFragmentManager(), TAG);
+    }
+
+    private void displayStoreInActionBar() {
+
+        Salesman loggedInUser = null;
+
+        final SharedPrefsManager sharedPrefs = new SharedPrefsManager(this);
+
+        final Cursor userCursor = getContentResolver().query(Contract.User.CONTENT_URI, null, Contract.UserColumns.COLUMN_NAME + " = ?", new String[]{sharedPrefs.getLoggedInUser()}, null);
+        if (userCursor != null && userCursor.moveToFirst()) {
+            loggedInUser = ProviderUtils.CursorToSalesman(userCursor);
+            userCursor.close();
+        }
+
+
+            if (loggedInUser != null) {
+                toolbarTitle.setText(loggedInUser.getName());
+
+                final boolean isStoreSelected = StoreManager.isStoreSelected();
+                final Store store = StoreManager.getCurrentStore();
+                mCurrentStore = store;
+                if (isStoreSelected || store != null) {
+                    proceedToDisplayStore(store);
+                } else {
+                    final Store savedStore = StoreManager.getLastStore(getApplicationContext());
+                    if (savedStore != null) {
+                        StoreManager.setCurrentStore(getApplicationContext(), savedStore);
+                        mCurrentStore = savedStore;
+                        proceedToDisplayStore(savedStore);
+                    } else {
+                        toolbarSubtitle.setText("NO STORE SELECTED");
+//                        if (mMenu != null) {
+//                            ((Button) mMenu.findItem(R.id.select_store).getActionView()).setText("Select Store");
+//                        }
+                    }
+                }
+            }
+
+    }
+
+    private void proceedToDisplayStore(Store store){
+        toolbarSubtitle.setText(store.getName());
+        if (isFirstTime) {
+            isFirstTime = false;
+            return;
+        }
+
+        // on new stores the info on store is empty
+
+        if (store.isOpenAccountStatusPopUp()
+                && mShowBalanceDialog
+                && store.getLastCollectDate() != null) {
+
+            GenericDialog.Companion.outstandingDialogInstance(
+                    this, store.getOutstandingBalanceDue(),
+                    store.getLastCollectDate(),
+                    store.getStatementUrl(),
+                    new GenericDialog.OnDismissListener() {
+                        @Override
+                        public void onDismiss() {
+                            File file = getBackOrderFile(getApplicationContext(), store);
+
+                            if (file.exists()) {
+                                // RESTRICTING TO OPEN PDF
+                                // openBackOrderActivity();
+                            }
+
+                            if (store.isOpenDefaultReport()) {
+                                //    ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
+                            }
+                        }
+                    }).show(getSupportFragmentManager(), TAG);
+            mShowBalanceDialog = false;
+//            ((Button) mMenu.findItem(R.id.select_store).getActionView()).setText("Change Store");
+        } else if (store.isOpenDefaultReport()) {
+            ReportsUtilities.Companion.openFirstDefaultOpenReport(this, store);
+        }
+    }
+
+
+    private void loadUpcDialog(final String number) {
+        final int loaderNumber = (int) Long.parseLong(number.replaceFirst("^0+(?!$)", ""));
+        LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
+
+            @Override
+            public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+                Timber.e("onCreateLoader");
+                return new CursorLoader(MainActivity.this, Contract.Product.CONTENT_URI, null, Contract.ProductColumns.COLUMN_UPC + " LIKE '%" + number + "%'", null, null);
+            }
+
+            @Override
+            public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+                final List<Product> products = new ArrayList<>();
+                while (data.moveToNext()) {
+
+                    Product product = ProviderUtils.cursorToProduct(data);
+
+                    if (number.length() < 7) {
+                        final int subStringIndex = product.getUPC().length() - 7;
+                        if (product.getUPC().substring(subStringIndex).contains(number)) {
+                            products.add(product);
+                        }
+                    } else {
+                        if (number.contains(product.getUPC())) {
+                            products.add(product);
+                        }
+                    }
+                }
+
+                if (products.size() == 0) {
+                    GenericDialog.Companion.newInstance(
+                            getString(R.string.no_results_found_for_upc_search, number),
+                            "",
+                            null,
+                            null).show(getSupportFragmentManager(), TAG);
+                } else {
+                    SpecialProductDialog.Companion.create(products, number).show(getSupportFragmentManager(), "TAG");
+                }
+
+                data.close();
+                loader.deliverCancellation();
+                getLoaderManager().destroyLoader(loaderNumber);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<Cursor> loader) {
+                Timber.e("onLoaderReset");
+            }
+        };
+        getLoaderManager().initLoader(loaderNumber, null, loaderCallbacks);
+    }
+
+    public void signOut(Boolean launchLoginScreen){
+        final SharedPrefsManager sharedPrefs = new SharedPrefsManager(this);
+        sharedPrefs.removeLoggedInUser();
+        if(launchLoginScreen){
+            Intent intent=new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+        }
+        finish();
 
     }
 
@@ -179,14 +602,14 @@ public class MainActivity extends AppCompatActivity {
             File file = new File(BedesseeDatabase.getDatabaseFile(directory));
             if (file.exists()) {
                 boolean init = initSideMenu();
-                initReportsMenu();
                 setCurrentSalesman();
                 Utilities.forceShowOverflowIcon(this);
 
-                findViewById(R.id.btn_sell_sheets).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.sell_sheet_btn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Sell sheets");
+                        MixPanelManager.trackButtonClick(MainActivity.this
+                                , "Button click: Sell sheets");
                         startActivityForResult(new Intent(MainActivity.this, SellSheetsDialog.class), SellSheetsDialog.RESULT_CODE);
                     }
                 });
@@ -196,240 +619,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        final Store store = StoreManager.getCurrentStore();
-        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
-        if(directory != null) {
-            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
-            if (file.exists()) {
-                if (store == null || mCurrentStore == null) {
-                    loadSalesMan();
-                }
-                if (store != null && mCurrentStore != null &&
-                        !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
-                    loadSalesMan();
-                }
-                Timber.d("MainActivity onPostResume");
-            }
-        }
-    }
-
-    private void loadSalesMan(){
-        mSalesman = SalesmanManager.getCurrentSalesman(this);
-        displayStoreInActionBar();
-        clearReportMenu();
-    }
-
-    @Override
-    public void onBackPressed() {
-        /* Check is back stack > 1 b/c first transaction just loads the landing page. If the
-         * back stack is NOT > 1 (i.e. we're at the landing page), the app should never close
-         * by the user clicking the back button, as per client's request.*/
-        if (mFragmentManager.getBackStackEntryCount() > 1) {
-            mFragmentManager.popBackStack();
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-
-            case ShoppingCartDialog.RESULT_CODE_CONTINUED: {
-                //Do nothing...
-            }
-            break;
-
-            case ShoppingCartDialog.RESULT_CODE_CHECKED_OUT: {
-                ShoppingCart.setCurrentOrderId(MainActivity.this, null);
-                NewStoreDialog.getInstance().clearAll();
-            }
-            break;
-
-            case SellSheetsDialog.RESULT_CODE:
-                break;
-        }
-
-        switch (requestCode) {
-            case UpdateActivity.REQUEST_CODE: {
-                // unselect store after update
-                StoreManager.clearCurrentStore();
-                prepareData();
-                //this will prevent the reports to show up
-                isFirstTime = true;
-            }
-            break;
-            case ShoppingCartDialog.REQUEST_CODE:{
-
-            }
-
-            case OrderHistoryDialog.REQUEST_CODE: {
-                if (resultCode == OrderHistoryDialog.RESULT_CODE_LOAD) {
-                    mShowBalanceDialog = true;
-                }
-            }
-            break;
-
-            case WebViewer.REQUEST_CODE: {
-                ((Spinner) findViewById(R.id.spinner_reports)).setSelection(0);
-                reportsOpen = false;
-            }
-            break;
-
-            case StoreSelector.REQUEST_CODE: {
-                if (resultCode == StoreSelector.RESULT_CODE_JUST_LOOKING) {
-                    mShowBalanceDialog = false;
-                } else {
-                    if (resultCode == Activity.RESULT_OK) {
-                        final ProductFragment productFragment = ProductFragment.getInstance();
-                        productFragment.setFilter("NP");
-                        switchFragment(productFragment, ProductFragment.TAG);
-                    }
-                }
-            }
-            break;
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-
-        mMenu = menu;
-
-        /* Init actionbar buttons */
-        View.OnClickListener actionBarButtonsClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.select_store:
-                        mShowBalanceDialog = true;
-                        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store");
-                        StoreSelector.open(MainActivity.this);
-                    break;
-                    case R.id.shopping_cart:
-                        if (StoreManager.isStoreSelected()) {
-                            MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
-                            startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
-                        } else {
-                            MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store -NO STORE SELECTED");
-                            Toast.makeText(MainActivity.this, "Please select store to continue.", Toast.LENGTH_SHORT).show();
-                        }
-                    break;
-                }
-            }
-        };
-
-        /* Store select launcher */
-        final Button selectStoreButton = (Button) mMenu.findItem(R.id.select_store).getActionView();
-        selectStoreButton.setText("Select Store");
-        selectStoreButton.setOnClickListener(actionBarButtonsClickListener);
-
-        /* Shopping cart launcher */
-        final Button shoppingCartButton = (Button) mMenu.findItem(R.id.shopping_cart).getActionView();
-        shoppingCartButton.setText("Shopping Cart");
-        shoppingCartButton.setOnClickListener(actionBarButtonsClickListener);
-
-        /* Set version # */
-        mMenu.findItem(R.id.version).setTitle("V " + Utilities.getVersionString(MainActivity.this));
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        final SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
-
-        switch (item.getItemId()) {
-
-            case R.id.daily_update:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
-                startActivityForResult(UpdateActivity.newIntent(this), UpdateActivity.REQUEST_CODE);
-                return true;
-
-            case R.id.past_order:
-                final Intent pastSalesIntent = new Intent(MainActivity.this, PastOrderActivity.class);
-                startActivity(pastSalesIntent);
-                return true;
-            case R.id.back_order:
-                openBackOrderActivity();
-                return true;
-
-            case R.id.exit:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: EXIT APP");
-                finish();
-                System.exit(0);
-                return true;
-
-            case R.id.version:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: APP VERSION");
-                final SharedPrefsManager sharedPref = new SharedPrefsManager(this);
-                final boolean isNewMatchLogic = sharedPref.getUseNewLikeLogic().equals("YES");
-                final AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                alertDialog.setMessage("Data folder:\n\n" + sharedPrefsManager.getSugarSyncDir() + "\n\n" + "LAST DAILY UPDATE: " + sharedPref.getLastDailyUpdate()
-                        + "\n\n" + "DEVICE DATE: " + sharedPref.getDeviceDate()
-                        + "\n\n" + "FORCE DAILY UPDATE: " + sharedPref.getForceDailyUpdate() + "\n\n" + "(LIKE MATCH " + (isNewMatchLogic ? "ON" : "OFF") + ")");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog, final int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-                return true;
-
-            case R.id.shopping_cart:
-                    startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
-                return true;
-
-            case R.id.force_crash:
-                new AlertDialog.Builder(this).setTitle("Are you sure want to crash the app?")
-                        .setMessage("This is for Testing, Force crash will crash the app.")
-                        .setPositiveButton("YES",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        throw new RuntimeException("Test Crash"); // Force a crash
-                                        // Perform Action & Dismiss dialog
-                                       // dialog.dismiss();
-                                    }
-                                })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Do nothing
-                                dialog.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
-                return true;
-            case R.id.clear:
-                String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
-                File file = new File(BedesseeDatabase.getDatabaseFile(directory));
-                if(file.exists()){
-                    getApplicationContext().deleteDatabase(file.getAbsolutePath());
-                    signOut(true);
-                }
-                return true;
-            default:
-
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void openBackOrderActivity() {
-        final Intent backOrderIntent = new Intent(MainActivity.this, BackOrderActivity.class);
-        startActivity(backOrderIntent);
     }
 
     private void setCurrentSalesman() {
@@ -443,118 +632,6 @@ public class MainActivity extends AppCompatActivity {
                 mSalesman = salesmanStore.getSalesman();
                 SalesmanManager.setCurrentSalesman(this, mSalesman);
             }
-        }
-    }
-
-
-    private boolean initSideMenu() {
-        Timber.d("initSideMenu");
-        final ListView listViewFilters = findViewById(R.id.listView_filters);
-        final ArrayList<SideMenu> sideMenus = new ArrayList<>();
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "PRODUCTS", "0", ""));
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "BRANDS", "0", ""));
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "CATEGORIES", "0", ""));
-
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "UPC", "0", ""));
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "ORDER HISTORY", "0", ""));
-
-        final Cursor cursorSideMenu = getContentResolver().query(Contract.SideMenu.CONTENT_URI, null, null, null, Contract.SideMenuColumns.COLUMN_SORT + " ASC");
-        if (cursorSideMenu != null) {
-            while (cursorSideMenu.moveToNext()) {
-                sideMenus.add(ProviderUtils.cursorToSideMenu(cursorSideMenu));
-            }
-            cursorSideMenu.close();
-        }
-
-        Timber.d("initializing the menu adapter with #%s", sideMenus);
-
-        mainMenuAdapter = new MainMenuAdapter(this, android.R.layout.simple_spinner_dropdown_item, sideMenus);
-        listViewFilters.setAdapter(mainMenuAdapter);
-        listViewFilters.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectItem(position);
-            }
-        });
-
-        for (SideMenu sideMenu : sideMenus) {
-            if ("YES".equals(sideMenu.getOpenByDefault())) {
-                selectItem(sideMenus.indexOf(sideMenu));
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void initReportsMenu() {
-        final List<ReportsMenu> reportsMenus = new ArrayList<>();
-        final List<String> reportsMenuTitles = new ArrayList<>();
-        final Cursor reportsCursor = getContentResolver().query(Contract.ReportsMenu.CONTENT_URI, null, null, null, null);
-
-        reportsMenus.add(null);
-        reportsMenuTitles.add("Select Report");
-
-        SpinnerAdapter spinnerAdapter = null;
-        if (reportsCursor != null && reportsCursor.moveToFirst()) {
-            for (int i = 0; i < reportsCursor.getCount(); i++) {
-                final ReportsMenu sideMenu = ProviderUtils.cursorToReportsMenu(reportsCursor);
-                reportsMenus.add(sideMenu);
-
-                reportsCursor.moveToNext();
-            }
-            // WTF, first item is null
-            reportsMenus.remove(0);
-            // This will sort by natural order, the menus should come with number as first char.
-            Collections.sort(reportsMenus, new Comparator<ReportsMenu>() {
-                @Override
-                public int compare(ReportsMenu o1, ReportsMenu o2) {
-                    int o1Number = Character.getNumericValue(o1.getSideMenuDisplay().charAt(0));
-                    int o2Number = Character.getNumericValue(o2.getSideMenuDisplay().charAt(0));
-                    return o1Number - o2Number;
-                }
-            });
-            List<String> menuList = new ArrayList<>();
-
-            for (ReportsMenu menu : reportsMenus) {
-                menuList.add(menu.getSideMenuDisplay());
-            }
-            reportsMenuTitles.addAll(menuList);
-            spinnerAdapter = new ReportsMenuAdapter(this, reportsMenuTitles);
-        }
-
-        if (spinnerAdapter != null) {
-            reportsSpinner = findViewById(R.id.spinner_reports);
-            reportsSpinner.setAdapter(spinnerAdapter);
-            reportsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (reportsSpinnerInit && !reportsOpen && position > 0) {
-                        final Store store = StoreManager.getCurrentStore();
-                        if (store != null && store.getStatementUrl() != null) {
-                            reportsOpen = true;
-                            ReportsMenu reportsMenu = reportsMenus.get(position - 1);
-                            ReportsUtilities.Companion.openReportMenu(MainActivity.this, reportsMenu, store);
-                            reportsOpen = false;
-                        } else {
-                            Utilities.shortToast(MainActivity.this, "Please select a store first");
-                            clearReportMenu();
-                        }
-                    } else {
-                        reportsSpinnerInit = true;
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        }
-    }
-
-    public void clearReportMenu() {
-        reportsOpen = false;
-        if (reportsSpinner != null) {
-            reportsSpinner.setSelection(0);
         }
     }
 
@@ -639,227 +716,103 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-
-    /**
-     * Loads the upc dialog with the specified upc code (#number)
-     *
-     * @param number upc code
-     */
-    private void loadUpcDialog(final String number) {
-        final int loaderNumber = (int) Long.parseLong(number.replaceFirst("^0+(?!$)", ""));
-        LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
-
-            @Override
-            public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-                Timber.e("onCreateLoader");
-                return new CursorLoader(MainActivity.this, Contract.Product.CONTENT_URI, null, Contract.ProductColumns.COLUMN_UPC + " LIKE '%" + number + "%'", null, null);
-            }
-
-            @Override
-            public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-                final List<Product> products = new ArrayList<>();
-                while (data.moveToNext()) {
-
-                    Product product = ProviderUtils.cursorToProduct(data);
-
-                    if (number.length() < 7) {
-                        final int subStringIndex = product.getUPC().length() - 7;
-                        if (product.getUPC().substring(subStringIndex).contains(number)) {
-                            products.add(product);
-                        }
-                    } else {
-                        if (number.contains(product.getUPC())) {
-                            products.add(product);
-                        }
-                    }
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        final Store store = StoreManager.getCurrentStore();
+        String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
+        if(directory != null) {
+            File file = new File(BedesseeDatabase.getDatabaseFile(directory));
+            if (file.exists()) {
+                if (store == null || mCurrentStore == null) {
+                    loadSalesMan();
                 }
-
-                if (products.size() == 0) {
-                    GenericDialog.Companion.newInstance(
-                            getString(R.string.no_results_found_for_upc_search, number),
-                            "",
-                            null,
-                            null).show(getSupportFragmentManager(), TAG);
-                } else {
-                    SpecialProductDialog.Companion.create(products, number).show(getSupportFragmentManager(), "TAG");
+                if (store != null && mCurrentStore != null &&
+                        !mCurrentStore.getBaseNumber().equals(store.getBaseNumber())) {
+                    loadSalesMan();
                 }
-
-                data.close();
-                loader.deliverCancellation();
-                getLoaderManager().destroyLoader(loaderNumber);
+                Timber.d("MainActivity onPostResume");
             }
-
-            @Override
-            public void onLoaderReset(Loader<Cursor> loader) {
-                Timber.e("onLoaderReset");
-            }
-        };
-        getLoaderManager().initLoader(loaderNumber, null, loaderCallbacks);
+        }
     }
 
+    private void loadSalesMan(){
+        mSalesman = SalesmanManager.getCurrentSalesman(this);
+        displayStoreInActionBar();
 
-    private void displayStoreInActionBar() {
+    }
 
-        Salesman loggedInUser = null;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
 
-        final SharedPrefsManager sharedPrefs = new SharedPrefsManager(this);
+            case ShoppingCartDialog.RESULT_CODE_CONTINUED: {
+                //Do nothing...
+            }
+            break;
 
-        final Cursor userCursor = getContentResolver().query(Contract.User.CONTENT_URI, null, Contract.UserColumns.COLUMN_NAME + " = ?", new String[]{sharedPrefs.getLoggedInUser()}, null);
-        if (userCursor != null && userCursor.moveToFirst()) {
-            loggedInUser = ProviderUtils.CursorToSalesman(userCursor);
-            userCursor.close();
+            case ShoppingCartDialog.RESULT_CODE_CHECKED_OUT: {
+                ShoppingCart.setCurrentOrderId(MainActivity.this, null);
+                NewStoreDialog.getInstance().clearAll();
+            }
+            break;
+
+            case SellSheetsDialog.RESULT_CODE:
+                break;
         }
 
-        final ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            if (loggedInUser != null) {
-                toolbarTitle.setText(loggedInUser.getName());
+        switch (requestCode) {
+            case UpdateActivity.REQUEST_CODE: {
+                // unselect store after update
+                StoreManager.clearCurrentStore();
+                prepareData();
+                //this will prevent the reports to show up
+                isFirstTime = true;
+            }
+            break;
+            case ShoppingCartDialog.REQUEST_CODE:{
 
-                final boolean isStoreSelected = StoreManager.isStoreSelected();
-                final Store store = StoreManager.getCurrentStore();
-                mCurrentStore = store;
-                if (isStoreSelected || store != null) {
-                    proceedToDisplayStore(store);
+            }
+
+            case OrderHistoryDialog.REQUEST_CODE: {
+                if (resultCode == OrderHistoryDialog.RESULT_CODE_LOAD) {
+                    mShowBalanceDialog = true;
+                }
+            }
+            break;
+
+            case WebViewer.REQUEST_CODE: {
+//                ((Spinner) findViewById(R.id.spinner_reports)).setSelection(0);
+//                reportsOpen = false;
+            }
+            break;
+
+            case StoreSelector.REQUEST_CODE: {
+                if (resultCode == StoreSelector.RESULT_CODE_JUST_LOOKING) {
+                    mShowBalanceDialog = false;
                 } else {
-                    final Store savedStore = StoreManager.getLastStore(getApplicationContext());
-                    if (savedStore != null) {
-                        StoreManager.setCurrentStore(getApplicationContext(), savedStore);
-                        mCurrentStore = savedStore;
-                        proceedToDisplayStore(savedStore);
-                    } else {
-                        toolbarSubtitle.setText("NO STORE SELECTED");
-                        if (mMenu != null) {
-                            ((Button) mMenu.findItem(R.id.select_store).getActionView()).setText("Select Store");
-                        }
+                    if (resultCode == Activity.RESULT_OK) {
+                        final ProductFragment productFragment = ProductFragment.getInstance();
+                        productFragment.setFilter("NP");
+                        switchFragment(productFragment, ProductFragment.TAG);
                     }
                 }
             }
-            actionBar.setDisplayShowTitleEnabled(false);
-        }
-    }
-
-    private void proceedToDisplayStore(Store store){
-        toolbarSubtitle.setText(store.getName());
-        if (isFirstTime) {
-            isFirstTime = false;
-            return;
-        }
-
-        // on new stores the info on store is empty
-
-        if (store.isOpenAccountStatusPopUp()
-                && mShowBalanceDialog
-                && store.getLastCollectDate() != null) {
-
-            GenericDialog.Companion.outstandingDialogInstance(
-                    this, store.getOutstandingBalanceDue(),
-                    store.getLastCollectDate(),
-                    store.getStatementUrl(),
-                    new GenericDialog.OnDismissListener() {
-                        @Override
-                        public void onDismiss() {
-                            File file = getBackOrderFile(getApplicationContext(), store);
-
-                            if (file.exists()) {
-                                // RESTRICTING TO OPEN PDF
-                               // openBackOrderActivity();
-                            }
-
-                            if (store.isOpenDefaultReport()) {
-                            //    ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
-                            }
-                        }
-                    }).show(getSupportFragmentManager(), TAG);
-            mShowBalanceDialog = false;
-            ((Button) mMenu.findItem(R.id.select_store).getActionView()).setText("Change Store");
-        } else if (store.isOpenDefaultReport()) {
-            ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
-        }
-    }
-    /**
-     * Swaps fragments in the main content view. Temporarily switches all fragments to
-     * FragmentBrandsList.
-     *
-     * @param position Position of list item.
-     */
-    private void selectItem(final int position) {
-        switch (position) {
-            case 0:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Left Menu: Products");
-                switchFragment(ProductFragment.getInstance(), ProductFragment.TAG);
-            break;
-            case 1:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Left Menu: Brands");
-                switchFragment(BrandFragment.getInstance(), BrandFragment.TAG);
-            break;
-            case 2:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Left Menu: Categories");
-                switchFragment(CategoryFragment.getInstance(), CategoryFragment.TAG);
-            break;
-            case 3:
-                upcClicked();
-            break;
-            case 4:
-                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: ORDER HISTORY");
-                DialogFragment dialog = new OrderHistoryDialog();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialog.show(fragmentManager, "sd");
-                fragmentManager.executePendingTransactions();
-                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Store store = StoreManager.getCurrentStore();
-                        if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
-                            displayStoreInActionBar();
-                        }
-                    }
-                });
-            default:
-                final String status = mainMenuAdapter.getItem(position).getStatusCode();
-                final ProductFragment productFragment = ProductFragment.getInstance();
-                productFragment.setFilter(status);
-                switchFragment(productFragment, ProductFragment.TAG);
             break;
         }
     }
 
-    /**
-     * Helper method to swap fragments into main content frame.
-     *
-     * @param fragment Fragment to switch to.
-     * @param tag      Tag of fragment.
-     */
-    public void switchFragment(final androidx.fragment.app.Fragment fragment, final String tag) {
-        mFragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment, tag)
-                .addToBackStack(tag)
-                .commitAllowingStateLoss();
-    }
-
-    private void upcClicked() {
-        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: UPC");
-        DialogNumberPad.Companion.newInstance("UPC Search", new DialogNumberPad.OnStringSelectedListener() {
-            @Override
-            public void onSelected(@NotNull String value) {
-                if (value.length() > 2) {
-                    loadUpcDialog(value);
-                } else {
-                    Toast.makeText(MainActivity.this, "Please enter minimum 3 digits", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, "").show(getSupportFragmentManager(), TAG);
-    }
-
-    public void signOut(Boolean launchLoginScreen){
-        final SharedPrefsManager sharedPrefs = new SharedPrefsManager(this);
-        sharedPrefs.removeLoggedInUser();
-        if(launchLoginScreen){
-           Intent intent=new Intent(getApplicationContext(),Login.class);
-           startActivity(intent);
+    @Override
+    public void onBackPressed() {
+        /* Check is back stack > 1 b/c first transaction just loads the landing page. If the
+         * back stack is NOT > 1 (i.e. we're at the landing page), the app should never close
+         * by the user clicking the back button, as per client's request.*/
+        if (mFragmentManager.getBackStackEntryCount() > 1) {
+            mFragmentManager.popBackStack();
         }
-       finish();
-
     }
+
+
 
 }
