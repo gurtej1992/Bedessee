@@ -13,104 +13,99 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
 
     <application
-        android:requestLegacyExternalStorage="true"
-        android:name="com.bedessee.salesca.BedesseeApp"
+        android:name=".BedesseeApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/MaterialAppTheme"
         tools:ignore="GoogleAppIndexingWarning, LockedOrientationActivity"
         tools:replace="android:icon">
-
-<!--        Because of this i was seeing two apps-->
-<!--        <activity-->
-<!--            android:name="com.bedessee.salesca.login.Login"-->
-<!--            android:label="@string/app_name"-->
-<!--            android:screenOrientation="landscape">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-
         <activity
-            android:name="com.bedessee.salesca.LaunchActivity"
-            android:theme="@style/LaunchTheme"
-            android:screenOrientation="landscape">
+            android:name=".main.MainActivity2"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/MaterialAppTheme.NoActionBar"></activity>
+        <!-- Because of this i was seeing two apps -->
+        <!-- <activity -->
+        <!-- android:name="com.bedessee.salesca.login.Login" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:screenOrientation="landscape"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity
+            android:name=".LaunchActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/LaunchTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.nononsenseapps.filepicker.FilePickerActivity"
             android:label="sdf"
             android:theme="@style/FilePicker.Theme">
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.bedessee.salesca.main.MainActivity"
+            android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@style/MaterialAppTheme" />
-
         <activity
-            android:name="com.bedessee.salesca.admin.AdminSettings"
+            android:name=".admin.AdminSettings"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
-                <activity
-                    android:name="com.bedessee.salesca.login.Login"
-                    android:label="@string/app_name"
-                    android:screenOrientation="landscape" />
         <activity
-            android:name="com.bedessee.salesca.shoppingcart.ShoppingCartDialog"
+            android:name=".login.Login"
+            android:label="@string/app_name"
             android:screenOrientation="landscape" />
-
         <activity
-            android:name="com.bedessee.salesca.update.UpdateActivity"
+            android:name=".shoppingcart.ShoppingCartDialog"
             android:screenOrientation="landscape" />
-
         <activity
-            android:name="com.bedessee.salesca.store.StoreSelector"
+            android:name=".update.UpdateActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".store.StoreSelector"
             android:screenOrientation="landscape"
             android:theme="@style/MaterialDialogAppTheme" />
-
         <activity
-            android:name="com.bedessee.salesca.customview.MarginCalculator"
+            android:name=".customview.MarginCalculator"
             android:screenOrientation="landscape"
             android:theme="@style/MaterialDialogAppTheme" />
-
         <activity
-            android:name="com.bedessee.salesca.orderhistory.OrderHistoryDialog"
-            android:screenOrientation="landscape" />
-
-        <activity
-            android:name="com.bedessee.salesca.pastorder.PastOrderActivity"
+            android:name=".orderhistory.OrderHistoryDialog"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.bedessee.salesca.backorder.BackOrderActivity"
+            android:name=".pastorder.PastOrderActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.bedessee.salesca.store.WebViewer"
+            android:name=".backorder.BackOrderActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".store.WebViewer"
             android:screenOrientation="landscape"
-            android:theme="@style/MaterialAppTheme"/>
-
+            android:theme="@style/MaterialAppTheme" />
         <activity
-            android:name="com.bedessee.salesca.sellsheets.SellSheetsDialog"
+            android:name=".sellsheets.SellSheetsDialog"
             android:screenOrientation="portrait" />
-
-        <activity android:name="com.bedessee.salesca.product.FullScreenImageActivity" />
+        <activity android:name=".product.FullScreenImageActivity" />
 
         <provider
-            android:name="com.bedessee.salesca.provider.Provider"
+            android:name=".provider.Provider"
             android:authorities="${applicationId}.provider"
             android:enabled="true"
             android:exported="false"
             android:syncable="true" />
     </application>
+
 </manifest>
