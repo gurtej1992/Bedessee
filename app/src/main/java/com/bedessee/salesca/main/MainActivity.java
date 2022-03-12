@@ -148,21 +148,23 @@ public class MainActivity extends AppCompatActivity {
         report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
         tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
 
+        home.setOnClickListener(v -> {
+            final ProductFragment productFragment = ProductFragment.getInstance();
+            productFragment.setFilter("HM");
+            switchFragment(productFragment, ProductFragment.TAG);
+        });
 
 
-        report.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                home_icon.setImageResource(R.drawable.ic_homelight);
-                cart_icon.setImageResource(R.drawable.ic_cartight);
-                report_icon.setImageResource(R.drawable.ic_document);
-                tool_icon.setImageResource(R.drawable.ic_toolslight);
-                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                report_txt.setTextColor(getResources().getColor(R.color.white));
-                tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                switchFragment(ReportFragment.getInstance(), ReportFragment.TAG);
-            }
+        report.setOnClickListener(v -> {
+            home_icon.setImageResource(R.drawable.ic_homelight);
+            cart_icon.setImageResource(R.drawable.ic_cartight);
+            report_icon.setImageResource(R.drawable.ic_document);
+            tool_icon.setImageResource(R.drawable.ic_toolslight);
+            home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+            cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+            report_txt.setTextColor(getResources().getColor(R.color.white));
+            tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+            switchFragment(ReportFragment.getInstance(), ReportFragment.TAG);
         });
 
         cart.setOnClickListener(new View.OnClickListener() {
