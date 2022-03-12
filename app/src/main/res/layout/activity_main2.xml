@@ -19,28 +19,70 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        android:alpha="0.5"
+        android:alpha="1"
         >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lst_menu_items"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/conLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/product_item_bg"
-            android:textColor="@color/white"
-            android:id="@+id/sell_sheet_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/gutter"
-            android:text="SELL SHEETS"/>
-    </RelativeLayout>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lst_menu_items"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/sell_sheet_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <Button
+                android:id="@+id/sell_sheet_btn"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_marginBottom="55dp"
+                android:background="@drawable/product_item_bg"
+                android:text="SELL SHEETS"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorAccent"
+                android:orientation="horizontal"
+                android:padding="@dimen/gutter"
+                app:layout_constraintBottom_toTopOf="@+id/lst_menu_items"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_launcher_var_original" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/default_margin"
+                    android:text="Bedessee"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

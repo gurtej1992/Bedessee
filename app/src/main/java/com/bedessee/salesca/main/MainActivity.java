@@ -58,6 +58,7 @@ import com.bedessee.salesca.store.StoreSelector;
 import com.bedessee.salesca.store.WebViewer;
 import com.bedessee.salesca.update.UpdateActivity;
 import com.bedessee.salesca.utilities.ReportsUtilities;
+import com.bedessee.salesca.utilities.SpacesItemDecoration;
 import com.bedessee.salesca.utilities.Utilities;
 import com.google.android.material.navigation.NavigationView;
 
@@ -351,6 +352,8 @@ public class MainActivity extends AppCompatActivity {
         lst_menu_items.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
         lst_menu_items.setAdapter(mainMenuAdapter);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.default_margin);
+        lst_menu_items.addItemDecoration(new SpacesItemDecoration(spacingInPixels,false));
 
         for (SideMenu sideMenu : sideMenus) {
             if ("YES".equals(sideMenu.getOpenByDefault())) {

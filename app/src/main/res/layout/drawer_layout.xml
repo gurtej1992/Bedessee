@@ -11,11 +11,12 @@
         android:layout_height="45dp"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/primary_text"
         android:textSize="@dimen/subtitle_1_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 
