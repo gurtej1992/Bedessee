@@ -8,7 +8,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bedessee.salesca.main.MainActivity
-import kotlinx.android.synthetic.main.activity_launch.*
 import java.lang.String
 import java.util.*
 

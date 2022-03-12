@@ -21,10 +21,10 @@
         android:theme="@style/MaterialAppTheme"
         tools:ignore="GoogleAppIndexingWarning, LockedOrientationActivity"
         tools:replace="android:icon">
-        <activity
-            android:name=".main.MainActivity2"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/MaterialAppTheme.NoActionBar"></activity>
+<!--        <activity-->
+<!--            android:name=".main.MainActivity2"-->
+<!--            android:label="@string/title_activity_main2"-->
+<!--            android:theme="@style/MaterialAppTheme.NoActionBar"></activity>-->
         <!-- Because of this i was seeing two apps -->
         <!-- <activity -->
         <!-- android:name="com.bedessee.salesca.login.Login" -->
@@ -58,6 +58,7 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="landscape"
             android:theme="@style/MaterialAppTheme" />
         <activity
