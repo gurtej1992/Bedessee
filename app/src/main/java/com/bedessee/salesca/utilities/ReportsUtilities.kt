@@ -45,7 +45,7 @@ class ReportsUtilities {
 
         private fun notSuccessfullyOpen(context: Context) {
             if (context is MainActivity) {
-                context.clearReportMenu()
+               // context.clearReportMenu()
             }
         }
 

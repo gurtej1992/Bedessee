@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.SpinnerAdapter;
 
 import com.bedessee.salesca.R;
-import com.bedessee.salesca.main.MainActivity2;
+//import com.bedessee.salesca.main.MainActivity2;
 import com.bedessee.salesca.product.brand.BrandFragment;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;

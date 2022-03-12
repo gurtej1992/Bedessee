@@ -54,8 +54,8 @@ class ToolFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
        val v:View= inflater.inflate(R.layout.fragment_tool, container, false)
-        recyclerView = view!!.findViewById<View>(R.id.recyclerView) as RecyclerView
-        init(getContext()!!)
+        recyclerView = requireView().findViewById<View>(R.id.recyclerView) as RecyclerView
+        init(requireContext())
         return v;
     }
 
@@ -155,7 +155,7 @@ class ToolFragment : Fragment() {
         }
         recyclerView!!.layoutManager = LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false)
-        recyclerView!!.adapter = reportAdapter
+        recyclerView!!.adapter = toolAdapter
     }
 
     private fun showClearDialog(clearAction: String){
