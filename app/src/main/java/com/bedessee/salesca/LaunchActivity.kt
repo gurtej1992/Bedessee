@@ -3,6 +3,7 @@ package com.bedessee.salesca
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +29,11 @@ class LaunchActivity : AppCompatActivity() {
         progressBar!!.setProgress(0)
         textView = findViewById<View>(R.id.textView) as TextView
         textView!!.setText("")
-
+        val landLogo = findViewById<ImageView>(R.id.landLogo);
+        landLogo.animate().apply {
+            duration = 2000
+            rotationYBy(360f)
+        }.start()
         val period: Long = 25
         timer = Timer()
         timer!!.schedule(object : TimerTask() {

@@ -772,7 +772,10 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }).show(getSupportFragmentManager(), TAG);
             mShowBalanceDialog = false;
-            ((Button) mMenu.findItem(R.id.select_store).getActionView()).setText("Change Store");
+            ((Button) mMenu.findItem(R.id.select_store).getActionView
+
+
+                    ()).setText("Change Store");
         } else if (store.isOpenDefaultReport()) {
             ReportsUtilities.Companion.openFirstDefaultOpenReport(MainActivity.this, store);
         }

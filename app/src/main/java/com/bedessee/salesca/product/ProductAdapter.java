@@ -415,7 +415,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         TextView mTextUomUnit;
         TextView mTextPriceUnit;
         Button mBtnAddToCart;
-        ImageButton product_type;
+        View product_type;
         QtySelector mQtySelector;
     }
 
