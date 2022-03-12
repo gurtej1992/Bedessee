@@ -94,7 +94,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
         final GridView gridView = rootView.findViewById(R.id.gridView);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
-
+        mEditSearchReference.get().clearFocus();
         rootView.findViewById(R.id.btnClearSearch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
