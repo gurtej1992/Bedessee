@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="@dimen/subtitle_1_text_size"
-                android:textColor="@color/unselected_tab"
+                android:textColor="@color/divider"
                 android:text="CART"
                 android:id="@+id/cart_txt"/>
 
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="@dimen/subtitle_1_text_size"
-                android:textColor="@color/unselected_tab"
+                android:textColor="@color/divider"
                 android:text="REPORT"
                 android:id="@+id/report_txt"/>
 
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:textSize="@dimen/subtitle_1_text_size"
-                android:textColor="@color/unselected_tab"
+                android:textColor="@color/divider"
                 android:text="TOOL"
                 android:id="@+id/tool_txt"/>
 

@@ -35,9 +35,9 @@ import java.io.File
 import java.net.URL
 
 class ToolFragment : Fragment() {
-    var recyclerView: RecyclerView? = null
     var toolAdapter: ToolAdapter? = null
     val TAG = "ReportList"
+    var recyclerView:RecyclerView?=null
     private var instance: ReportFragment? = null
     fun getInstance(): ReportFragment? {
         if (instance == null) {
@@ -54,7 +54,8 @@ class ToolFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
        val v:View= inflater.inflate(R.layout.fragment_tool, container, false)
-        recyclerView = requireView().findViewById<View>(R.id.recyclerView) as RecyclerView
+      recyclerView = v.findViewById(R.id.recyclerView)
+
         init(requireContext())
         return v;
     }
@@ -153,7 +154,7 @@ class ToolFragment : Fragment() {
             }
 
         }
-        recyclerView!!.layoutManager = LinearLayoutManager(getContext(),
+        recyclerView !!.layoutManager = LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false)
         recyclerView!!.adapter = toolAdapter
     }

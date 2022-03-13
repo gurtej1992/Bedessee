@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -131,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
         cart = findViewById(R.id.cart);
         report = findViewById(R.id.report);
         tools = findViewById(R.id.tools);
-
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+        );
         drawericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,16 +142,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        home_icon.setImageResource(R.drawable.ic_home);
-        cart_icon.setImageResource(R.drawable.ic_cartight);
-        report_icon.setImageResource(R.drawable.ic_documentlight);
-        tool_icon.setImageResource(R.drawable.ic_toolslight);
-        home_txt.setTextColor(getResources().getColor(R.color.white));
-        cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-        report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-        tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+
 
         home.setOnClickListener(v -> {
+            home_icon.setImageResource(R.drawable.ic_home);
+            cart_icon.setImageResource(R.drawable.ic_cartight);
+            report_icon.setImageResource(R.drawable.ic_documentlight);
+            tool_icon.setImageResource(R.drawable.ic_toolslight);
+            home_txt.setTextColor(getResources().getColor(R.color.white));
+            cart_txt.setTextColor(getResources().getColor(R.color.divider));
+            report_txt.setTextColor(getResources().getColor(R.color.divider));
+            tool_txt.setTextColor(getResources().getColor(R.color.divider));
             final ProductFragment productFragment = ProductFragment.getInstance();
             productFragment.setFilter("HM");
             switchFragment(productFragment, ProductFragment.TAG);
@@ -160,10 +164,10 @@ public class MainActivity extends AppCompatActivity {
             cart_icon.setImageResource(R.drawable.ic_cartight);
             report_icon.setImageResource(R.drawable.ic_document);
             tool_icon.setImageResource(R.drawable.ic_toolslight);
-            home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-            cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+            home_txt.setTextColor(getResources().getColor(R.color.divider));
+            cart_txt.setTextColor(getResources().getColor(R.color.divider));
             report_txt.setTextColor(getResources().getColor(R.color.white));
-            tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+            tool_txt.setTextColor(getResources().getColor(R.color.divider));
             switchFragment(ReportFragment.getInstance(), ReportFragment.TAG);
         });
 
@@ -174,10 +178,10 @@ public class MainActivity extends AppCompatActivity {
                 cart_icon.setImageResource(R.drawable.ic_cart);
                 report_icon.setImageResource(R.drawable.ic_documentlight);
                 tool_icon.setImageResource(R.drawable.ic_toolslight);
-                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                cart_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                tool_txt.setTextColor(getResources().getColor(R.color.white));
+                home_txt.setTextColor(getResources().getColor(R.color.divider));
+                cart_txt.setTextColor(getResources().getColor(R.color.white));
+                report_txt.setTextColor(getResources().getColor(R.color.divider));
+                tool_txt.setTextColor(getResources().getColor(R.color.divider));
                 if (StoreManager.isStoreSelected()) {
                     MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
                     startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
@@ -194,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
                 cart_icon.setImageResource(R.drawable.ic_cartight);
                 report_icon.setImageResource(R.drawable.ic_documentlight);
                 tool_icon.setImageResource(R.drawable.ic_tools);
-                home_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                cart_txt.setTextColor(getResources().getColor(R.color.white));
-                report_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
-                tool_txt.setTextColor(getResources().getColor(R.color.unselected_tab));
+                home_txt.setTextColor(getResources().getColor(R.color.divider));
+                cart_txt.setTextColor(getResources().getColor(R.color.divider));
+                report_txt.setTextColor(getResources().getColor(R.color.divider));
+                tool_txt.setTextColor(getResources().getColor(R.color.white));
                 switchFragment(new ToolFragment(), ToolFragment.TAG);
             }
         });
