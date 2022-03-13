@@ -3,6 +3,8 @@ package com.bedessee.salesca.product;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,14 +173,39 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         if (priceColor != null) {
             holder.mTextPriceUnit.setTextColor(priceColor);
             holder.mTextUomUnit.setTextColor(priceColor);
-            holder.product_type.setBackgroundColor(priceColor);
+          //  holder.product_type.setBackgroundColor(priceColor);
         }
 
         Integer priceBackgroundColor = Utilities.parseSaveColor(product.getLPriceBackgroundColor());
         if (priceBackgroundColor != null) {
+            switch(product.getLPriceBackgroundColor().toLowerCase()) {
+                case "#800080":
+                    // purple
+                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_purple));
+                    break;
+                case "#229954":
+                    // green
+                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_green));
+                    break;
+                case "#ff0000":
+                    // rea
+                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_red));
+                    break;
+                case "#0000ff":
+                    // blue
+                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_blue));
+                    break;
+                case "#8a2be2":
+                    // blue
+                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_lavender));
+                    break;
+                default:
+                    // code block
+                    holder.product_type.setBackgroundColor(Color.GRAY);
+            }
             holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);
             holder.mTextUomUnit.setBackgroundColor(priceBackgroundColor);
-            holder.product_type.setBackgroundColor(priceBackgroundColor);
+
 
         }
 

@@ -100,7 +100,7 @@
         android:layout_below="@+id/textView_brand"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/gutter"
-        android:background="@drawable/product_type_bg"
+        android:background="@drawable/product_type_purple"
         tools:ignore="TouchTargetSizeCheck" />
 
 <!--    <com.bedessee.salesca.customview.QtySelector-->

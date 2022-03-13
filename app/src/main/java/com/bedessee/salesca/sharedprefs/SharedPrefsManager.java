@@ -166,6 +166,7 @@ public class SharedPrefsManager {
     }
 
     public void setLinkToProdImages(final String path) {
+
         mEditor.putString(KEY_LINK_TO_PROD_IMGS, path).apply();
     }
 
