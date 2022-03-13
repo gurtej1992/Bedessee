@@ -176,10 +176,15 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
 
                 final String filter = getFilterWhereClause();
-
-                final String whereClause = Contract.ProductColumns.COLUMN_BRAND + " LIKE '%" + s + "%'" + " OR " +
-                        Contract.ProductColumns.COLUMN_NUMBER + " LIKE '%" + s + "%'" + " OR " +
-                        Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
+                String whereClause;
+                if(upcBox.isChecked()){
+                    whereClause = Contract.ProductColumns.COLUMN_UPC + " LIKE '%" + s + "%'";
+                }
+                else{
+                     whereClause = Contract.ProductColumns.COLUMN_BRAND + " LIKE '%" + s + "%'" + " OR " +
+                            Contract.ProductColumns.COLUMN_NUMBER + " LIKE '%" + s + "%'" + " OR " +
+                            Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
+                }
 
                 mAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
             }
