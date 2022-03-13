@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -18,14 +17,12 @@ import com.bedessee.salesca.admin.AdminSettings
 import com.bedessee.salesca.customview.*
 import com.bedessee.salesca.login.Login
 import com.bedessee.salesca.mixpanel.MixPanelManager
-import com.bedessee.salesca.reportsmenu.ReportAdapter
 import com.bedessee.salesca.reportsmenu.ReportFragment
-import com.bedessee.salesca.reportsmenu.ReportsMenu
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
-import com.bedessee.salesca.store.StoreManager
 import com.bedessee.salesca.store.WebViewer
+import com.bedessee.salesca.utilities.DividerItemDecoration
 import com.bedessee.salesca.utilities.FolderClearUp
-import com.bedessee.salesca.utilities.ReportsUtilities.Companion.openReportMenu
+import com.bedessee.salesca.utilities.SpacesItemDecoration
 import com.bedessee.salesca.utilities.Utilities
 import com.tonyodev.fetch2.NetworkType
 import com.tonyodev.fetch2.Priority
@@ -55,6 +52,15 @@ class ToolFragment : Fragment() {
         // Inflate the layout for this fragment
        val v:View= inflater.inflate(R.layout.fragment_tool, container, false)
       recyclerView = v.findViewById(R.id.recyclerView)
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.default_margin)
+        if (recyclerView != null){
+            recyclerView!!.addItemDecoration(SpacesItemDecoration(spacingInPixels, true))
+            recyclerView!!.addItemDecoration(
+                DividerItemDecoration(
+                    activity
+                )
+            )
+        }
 
         init(requireContext())
         return v;
