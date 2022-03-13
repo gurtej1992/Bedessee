@@ -20,7 +20,9 @@ import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
+import com.bedessee.salesca.utilities.DividerItemDecoration;
 import com.bedessee.salesca.utilities.ReportsUtilities;
+import com.bedessee.salesca.utilities.SpacesItemDecoration;
 import com.bedessee.salesca.utilities.Utilities;
 
 import java.util.ArrayList;
@@ -69,8 +71,8 @@ ReportAdapter reportAdapter;
         final List<String> reportsMenuTitles = new ArrayList<>();
         final Cursor reportsCursor = getActivity().getContentResolver().query(Contract.ReportsMenu.CONTENT_URI, null, null, null, null);
 
-        reportsMenus.add(null);
-        reportsMenuTitles.add("Select Report");
+//        reportsMenus.add(null);
+//        reportsMenuTitles.add("Select Report");
 
       //  SpinnerAdapter spinnerAdapter = null;
         if (reportsCursor != null && reportsCursor.moveToFirst()) {
@@ -100,25 +102,24 @@ ReportAdapter reportAdapter;
             reportAdapter = new ReportAdapter(getContext(), reportsMenuTitles) {
                 @Override
                 protected void onClickView(int pos) {
-                    if ( pos > 0) {
                         final Store store = StoreManager.getCurrentStore();
                         if (store != null && store.getStatementUrl() != null) {
 
-                            ReportsMenu reportsMenu = reportsMenus.get(pos - 1);
+                            ReportsMenu reportsMenu = reportsMenus.get(pos);
                             ReportsUtilities.Companion.openReportMenu(getContext(), reportsMenu, store);
 
                         } else {
                             Utilities.shortToast(getContext(), "Please select a store first");
 
                         }
-                    } else {
-
                     }
-                }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                     LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(reportAdapter);
+            int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.default_margin);
+            recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels,true));
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         }
 
 
