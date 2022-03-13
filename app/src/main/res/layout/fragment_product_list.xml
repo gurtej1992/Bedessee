@@ -1,32 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
         <EditText
             android:id="@+id/editText_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:hint="Filter"
-            android:singleLine="true"
+            android:imeActionLabel="Search"
             android:imeOptions="actionDone"
             android:inputType="text"
-            android:imeActionLabel="Search"/>
+            android:singleLine="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnClearSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnClearSearch"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="10dp"
-            android:layout_gravity="right|center_vertical"
-            android:background="@android:drawable/ic_notification_clear_all" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="@android:drawable/ic_notification_clear_all"
+            app:layout_constraintEnd_toStartOf="@+id/checkBoxUPC"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-    </FrameLayout>
+        <CheckBox
+            android:id="@+id/checkBoxUPC"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:text="UPC"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ListView
         android:id="@+id/listView"

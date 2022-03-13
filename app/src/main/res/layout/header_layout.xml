@@ -64,20 +64,21 @@
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
     <ImageView
+        android:id="@+id/search"
         android:layout_width="30dp"
         android:layout_height="30dp"
-      android:layout_marginRight="@dimen/gutter"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_search"
-        android:id="@+id/search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/popup_menu"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
+        android:id="@+id/select_store"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginRight="@dimen/gutter"
+        android:layout_marginEnd="12dp"
         android:src="@drawable/ic_store"
-        android:id="@+id/select_store"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintTop_toTopOf="parent" />

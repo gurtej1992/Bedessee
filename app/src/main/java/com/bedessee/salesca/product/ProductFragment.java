@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,8 +47,9 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private Category2 mCategory;
     private Status mStatus;
     private String mStatusString;
+    CheckBox upcBox;
+    String currentHint = "";
     public static boolean shouldRestartLoaderOnResume = true;
-
     private ProductAdapter mAdapter;
 
     private static ProductFragment instance;
@@ -93,8 +96,10 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         View rootView = inflater.inflate(R.layout.fragment_product_list, container, false);
 
         final GridView gridView = rootView.findViewById(R.id.gridView);
+        upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();
+
         rootView.findViewById(R.id.btnClearSearch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +108,15 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                     editText.setText(null);
                 }
             }
+        });
+        upcBox.setOnClickListener(v->{
+            if(!upcBox.isChecked()){
+                mEditSearchReference.get().setHint(currentHint);
+            }
+            else{
+                mEditSearchReference.get().setHint("Enter UPC");
+            }
+
         });
 
         int[] dimens = Utilities.getScreenDimensInPx(getActivity());
@@ -188,6 +202,17 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
             }
         });
 
+        View sview = getActivity().findViewById(R.id.search);
+        View searchBar = rootView.findViewById(R.id.searchBar);
+        sview.setOnClickListener(v -> {
+            if(searchBar.getVisibility() == View.VISIBLE){
+                searchBar.setVisibility(View.GONE);
+            }
+            else{
+                searchBar.setVisibility(View.VISIBLE);
+            }
+        } );
+
         return rootView;
     }
 
@@ -230,6 +255,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
     private void appendSearchbarHint(String string) {
         mEditSearchReference.get().setHint(mEditSearchReference.get().getHint() + " >> " + string);
+        currentHint = mEditSearchReference.get().getHint().toString();
     }
 
 
