@@ -41,7 +41,6 @@
                 android:id="@+id/sell_sheet_btn"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                android:layout_marginBottom="55dp"
                 android:background="@drawable/product_item_bg"
                 android:text="SELL SHEETS"
                 android:textColor="@color/white"

@@ -1,5 +1,7 @@
 package com.bedessee.salesca.product;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
@@ -211,10 +213,23 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         View searchBar = rootView.findViewById(R.id.searchBar);
         sview.setOnClickListener(v -> {
             if(searchBar.getVisibility() == View.VISIBLE){
-                searchBar.setVisibility(View.GONE);
+                searchBar.animate()
+                        .translationY(0)
+                        .alpha(0.0f)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                searchBar.setVisibility(View.GONE);
+                            }
+                        });
             }
             else{
                 searchBar.setVisibility(View.VISIBLE);
+                searchBar.setAlpha(0.0f);
+                searchBar.animate()
+                        .alpha(1.0f)
+                        .setListener(null);
             }
         } );
 
