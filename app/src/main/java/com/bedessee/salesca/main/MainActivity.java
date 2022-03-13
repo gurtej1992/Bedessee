@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         report = findViewById(R.id.report);
         tools = findViewById(R.id.tools);
         getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
         );
         drawericon.setOnClickListener(new View.OnClickListener() {
             @Override
