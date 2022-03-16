@@ -16,10 +16,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
+import com.bedessee.salesca.reportsmenu.ReportFragment;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.ViewUtilities;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -34,14 +38,22 @@ interface OrderLoaderListener {
     void onLoaded(List<SavedOrder> orders);
 }
 
-public class OrderHistoryDialog extends DialogFragment {
+public class OrderHistoryDialog extends Fragment {
 
     final public static int REQUEST_CODE = 3803;
     final public static int RESULT_CODE_LOAD = 2;
     private List<SavedOrder> orders = new ArrayList<>();
     private SwitchMaterial switchMaterial;
-    private ListView listView;
+    private RecyclerView listView;
     private ProgressBar progressBar;
+    public final static String TAG = "OrderList";
+    private static OrderHistoryDialog instance;
+    public static OrderHistoryDialog getInstance() {
+        if (instance == null) {
+            instance = new OrderHistoryDialog();
+        }
+        return instance;
+    }
 
     class OrderListener implements OrderLoaderListener {
         @Override
@@ -50,7 +62,7 @@ public class OrderHistoryDialog extends DialogFragment {
 
             if (orders.isEmpty()) {
                 Toast.makeText(requireContext(), "There is no order history available", Toast.LENGTH_SHORT).show();
-                dismiss();
+//                dismiss();
             } else {
                 showAll();
 
@@ -98,7 +110,9 @@ public class OrderHistoryDialog extends DialogFragment {
     }
 
     private void updateOrders(Context context, List<SavedOrder> orders){
-        listView.setAdapter(new OrderItemAdapter(context, new ArrayList<>(orders), getDialog()));
+        listView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false));
+        listView.setAdapter(new OrderItemAdapter(context, new ArrayList<>(orders)));
         listView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
@@ -129,7 +143,8 @@ public class OrderHistoryDialog extends DialogFragment {
         view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
+
+                //dismiss();
             }
         });
 
@@ -139,7 +154,7 @@ public class OrderHistoryDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        ViewUtilities.Companion.setActivityWindowSize(getDialog().getWindow());
+       // ViewUtilities.Companion.setActivityWindowSize(getDialog().getWindow());
     }
 
     private static class LoadOrders extends AsyncTask<Void, Void, List<SavedOrder>> {

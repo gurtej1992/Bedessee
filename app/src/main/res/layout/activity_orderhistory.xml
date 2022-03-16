@@ -10,6 +10,7 @@
         android:id="@+id/control_bar"
         android:layout_width="0dp"
         android:layout_height="@dimen/dialog_number_pad_control_buttons_size"
+        android:visibility="gone"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dialog_number_pad_control_buttons_margin"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/control_bar"
         app:layout_constraintStart_toStartOf="@+id/control_bar"
         app:layout_constraintTop_toTopOf="@+id/control_bar"
@@ -36,6 +38,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/white"
         android:checked="true"
+        android:visibility="gone"
         android:text="all stores  "/>
 
     <TextView
@@ -45,13 +48,14 @@
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:text="@string/order_history"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/control_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/btn_close"
         app:layout_constraintTop_toTopOf="@id/control_bar" />
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"

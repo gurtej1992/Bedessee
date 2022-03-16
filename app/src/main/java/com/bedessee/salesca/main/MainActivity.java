@@ -393,20 +393,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: ORDER HISTORY");
-                DialogFragment dialog = new OrderHistoryDialog();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialog.show(fragmentManager, "sd");
-                fragmentManager.executePendingTransactions();
-                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Store store = StoreManager.getCurrentStore();
-                        if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
-                            displayStoreInActionBar();
-                        }
-                    }
-                });
+                switchFragment(OrderHistoryDialog.getInstance(), OrderHistoryDialog.TAG);
+
                 drawer.closeDrawer(GravityCompat.START);
+                break;
             default:
                 final String status = mainMenuAdapter.mMenuItems.get(position).getStatusCode();
                 final ProductFragment productFragment = ProductFragment.getInstance();
@@ -787,6 +777,10 @@ public class MainActivity extends AppCompatActivity {
             case OrderHistoryDialog.REQUEST_CODE: {
                 if (resultCode == OrderHistoryDialog.RESULT_CODE_LOAD) {
                     mShowBalanceDialog = true;
+                    Store store = StoreManager.getCurrentStore();
+                    if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
+                        displayStoreInActionBar();
+                    }
                 }
             }
             break;

@@ -8,15 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.customview.GenericDialog;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
+import com.bedessee.salesca.reportsmenu.ReportAdapter;
 import com.bedessee.salesca.salesmanstore.SalesmanStore;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
 import com.bedessee.salesca.store.Store;
@@ -30,53 +34,41 @@ import java.util.Collections;
 
 import timber.log.Timber;
 
-public class OrderItemAdapter extends BaseAdapter {
+public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.ViewHolder> {
     public static final String TAG = "OrderItemAdapter";
     final private Context mContext;
     private ArrayList<SavedOrder> mSavedOrders;
-    private Dialog parentDialog;
+    //private Dialog parentDialog;
 
-    OrderItemAdapter(Context context, ArrayList<SavedOrder> savedOrders, Dialog parentDialog) {
+    OrderItemAdapter(Context context, ArrayList<SavedOrder> savedOrders) {
         mContext = context;
         mSavedOrders = savedOrders;
         Collections.sort(mSavedOrders, null);
-        this.parentDialog = parentDialog;
-    }
-
-    @Override
-    public int getCount() {
-        return mSavedOrders.size();
+        //this.parentDialog = parentDialog;
     }
 
 
+    @NonNull
     @Override
-    public SavedOrder getItem(int position) {
-        return mSavedOrders.get(position);
+    public OrderItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.order_line_item, parent, false);
+
+        return new ViewHolder(itemView);
     }
 
-
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        final SavedOrder order = getItem(position);
-
-        convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_line_item, parent, false);
-
+    public void onBindViewHolder(@NonNull OrderItemAdapter.ViewHolder holder, int position) {
+        final SavedOrder order = mSavedOrders.get(position);
         if (order.getStartTime() != null) {
-            ((TextView) convertView.findViewById(R.id.date)).setText(DateFormat.getDateTimeInstance().format(order.getStartTime()));
+           holder.date.setText(DateFormat.getDateTimeInstance().format(order.getStartTime()));
         }
 
         final String storeName = order.getId().split("_")[0];
 
-        ((TextView) convertView.findViewById(R.id.customer)).setText(mContext.getString(R.string.order_item_title, storeName, order.getNumProducts()));
+        holder.customer.setText(mContext.getString(R.string.order_item_title, storeName, order.getNumProducts()));
 
-        convertView.findViewById(R.id.btn_delete_order).setOnClickListener(new View.OnClickListener() {
+       holder.btn_delete_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GenericDialog.Companion.newInstance(
@@ -89,14 +81,14 @@ public class OrderItemAdapter extends BaseAdapter {
                                 mSavedOrders.remove(order);
                                 notifyDataSetChanged();
 
-                                parentDialog.dismiss();
+                                // parentDialog.dismiss();
                             }
                         },"OK", null, "NO")
-                .show(((AppCompatActivity) mContext).getSupportFragmentManager(), "df");
+                        .show(((AppCompatActivity) mContext).getSupportFragmentManager(), "df");
             }
         });
 
-        convertView.findViewById(R.id.btn_load_order).setOnClickListener(new View.OnClickListener() {
+        holder.btn_load_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Timber.d("context is instance of AppCompatActivity: " + (mContext instanceof AppCompatActivity));
@@ -122,12 +114,29 @@ public class OrderItemAdapter extends BaseAdapter {
                             cursor.close();
                         }
 
-                        parentDialog.dismiss();
+                        // parentDialog.dismiss();
                     }
                 }).show(((AppCompatActivity) mContext).getSupportFragmentManager(), TAG);
             }
         });
+    }
 
-        return convertView;
+
+    @Override
+    public int getItemCount() {
+        return mSavedOrders.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView date,customer;
+        Button btn_delete_order,btn_load_order;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            date =(TextView)itemView.findViewById(R.id.date);
+            customer =(TextView)itemView.findViewById(R.id.customer);
+            btn_delete_order =(Button) itemView.findViewById(R.id.btn_delete_order);
+            btn_load_order =(Button) itemView.findViewById(R.id.btn_load_order);
+
+        }
     }
 }
