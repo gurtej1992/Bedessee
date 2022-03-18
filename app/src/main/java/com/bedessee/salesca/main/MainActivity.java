@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView drawericon,search,storeicon,menuicon,home_icon,cart_icon,report_icon,tool_icon;
     TextView home_txt,cart_txt,report_txt,tool_txt;
     LinearLayout home,cart,report,tools;
+    String from="";
 
     private static final String TAG = "MainActivity";
 
@@ -135,6 +136,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
         );
+        Intent i=getIntent();
+        from=i.getStringExtra("from");
+
         drawericon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,6 +147,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(from.equalsIgnoreCase("order")){
+            home_icon.setImageResource(R.drawable.ic_homelight);
+            cart_icon.setImageResource(R.drawable.ic_cart);
+            report_icon.setImageResource(R.drawable.ic_documentlight);
+            tool_icon.setImageResource(R.drawable.ic_toolslight);
+            home_txt.setTextColor(getResources().getColor(R.color.divider));
+            cart_txt.setTextColor(getResources().getColor(R.color.white));
+            report_txt.setTextColor(getResources().getColor(R.color.divider));
+            tool_txt.setTextColor(getResources().getColor(R.color.divider));
+            if (StoreManager.isStoreSelected()) {
+                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
+                //startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                switchFragment(new ShoppingCartDialog(), ShoppingCartDialog.TAG);
+
+            } else {
+                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store -NO STORE SELECTED");
+                Toast.makeText(MainActivity.this, "Please select store to continue.", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         home.setOnClickListener(v -> {
             home_icon.setImageResource(R.drawable.ic_home);
@@ -171,6 +194,8 @@ public class MainActivity extends AppCompatActivity {
             switchFragment(ReportFragment.getInstance(), ReportFragment.TAG);
         });
 
+
+
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,7 +209,9 @@ public class MainActivity extends AppCompatActivity {
                 tool_txt.setTextColor(getResources().getColor(R.color.divider));
                 if (StoreManager.isStoreSelected()) {
                     MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
-                    startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                    //startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                    switchFragment(new ShoppingCartDialog(), ShoppingCartDialog.TAG);
+
                 } else {
                     MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store -NO STORE SELECTED");
                     Toast.makeText(MainActivity.this, "Please select store to continue.", Toast.LENGTH_SHORT).show();
@@ -260,7 +287,9 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.shopping_cart:
-                                startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                                switchFragment(new ShoppingCartDialog(), ShoppingCartDialog.TAG);
+
+                               // startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
                                 return true;
 
                             case R.id.force_crash:
@@ -398,10 +427,38 @@ public class MainActivity extends AppCompatActivity {
                 drawer.closeDrawer(GravityCompat.START);
                 break;
             default:
-                final String status = mainMenuAdapter.mMenuItems.get(position).getStatusCode();
-                final ProductFragment productFragment = ProductFragment.getInstance();
-                productFragment.setFilter(status);
-                switchFragment(productFragment, ProductFragment.TAG);
+                if(from.equalsIgnoreCase("order")){
+                    home_icon.setImageResource(R.drawable.ic_homelight);
+                    cart_icon.setImageResource(R.drawable.ic_cart);
+                    report_icon.setImageResource(R.drawable.ic_documentlight);
+                    tool_icon.setImageResource(R.drawable.ic_toolslight);
+                    home_txt.setTextColor(getResources().getColor(R.color.divider));
+                    cart_txt.setTextColor(getResources().getColor(R.color.white));
+                    report_txt.setTextColor(getResources().getColor(R.color.divider));
+                    tool_txt.setTextColor(getResources().getColor(R.color.divider));
+                    if (StoreManager.isStoreSelected()) {
+                        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Shopping Cart");
+                        //startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                        switchFragment(new ShoppingCartDialog(), ShoppingCartDialog.TAG);
+
+                    } else {
+                        MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: Select Store -NO STORE SELECTED");
+                        Toast.makeText(MainActivity.this, "Please select store to continue.", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    home_icon.setImageResource(R.drawable.ic_home);
+                    cart_icon.setImageResource(R.drawable.ic_cartight);
+                    report_icon.setImageResource(R.drawable.ic_documentlight);
+                    tool_icon.setImageResource(R.drawable.ic_toolslight);
+                    home_txt.setTextColor(getResources().getColor(R.color.white));
+                    cart_txt.setTextColor(getResources().getColor(R.color.divider));
+                    report_txt.setTextColor(getResources().getColor(R.color.divider));
+                    tool_txt.setTextColor(getResources().getColor(R.color.divider));
+                    final String status = mainMenuAdapter.mMenuItems.get(position).getStatusCode();
+                    final ProductFragment productFragment = ProductFragment.getInstance();
+                    productFragment.setFilter(status);
+                    switchFragment(productFragment, ProductFragment.TAG);
+                }
                 drawer.closeDrawer(GravityCompat.START);
                 break;
 

@@ -9,11 +9,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.customview.ItemType;
+import com.bedessee.salesca.main.MainActivity;
+import com.bedessee.salesca.product.ProductFragment;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
 import com.bedessee.salesca.shoppingcart.ShoppingCartDialog;
@@ -128,8 +132,13 @@ public class BackOrderActivity extends AppCompatActivity implements BackOrderQua
                     progress.setVisibility(View.GONE);
 
                     Toast.makeText(getApplicationContext(),"Added "  + productsQuantities.size() + " products", Toast.LENGTH_SHORT).show();
-                    startActivityForResult(new Intent(BackOrderActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
+                   //startActivityForResult(new Intent(BackOrderActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
                     finish();
+                    Intent intent=new Intent(BackOrderActivity.this,MainActivity.class);
+                    intent.putExtra("from","order");
+                    startActivity(intent);
+
+
                 }
             });
         }

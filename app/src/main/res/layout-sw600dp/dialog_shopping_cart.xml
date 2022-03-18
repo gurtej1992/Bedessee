@@ -11,6 +11,7 @@
         android:layout_height="@dimen/dialog_number_pad_control_buttons_size"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

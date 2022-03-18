@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bedessee.salesca.main.MainActivity
 import java.lang.String
 import java.util.*
+import kotlin.Int
+import kotlin.Long
+import kotlin.apply
 
 class LaunchActivity : AppCompatActivity() {
     var progressBar:ProgressBar?=null
@@ -48,6 +51,7 @@ class LaunchActivity : AppCompatActivity() {
                     //closing the timer
                     timer!!.cancel()
                     val intent = Intent(this@LaunchActivity, MainActivity::class.java)
+                    intent.putExtra("from", "home")
                     startActivity(intent)
                     // close this activity
                     finish()
