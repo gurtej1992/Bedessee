@@ -119,37 +119,10 @@ public class Utilities {
                 /* User added same item type */
                 if (shoppingCartProduct.getItemType().equals(itemType)) {
                     GenericDialog.OnClickListener replaceClickListener = null;
-                    if (selectedQty != shoppingCartProduct.getQuantity()) {
-                        replaceClickListener = new GenericDialog.OnClickListener() {
-                            @Override
-                            public void onClick(@NotNull DialogFragment dialog) {
-                                final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() + selectedQty, itemType);
-                                productToSave2.setEnteredPrice(price);
-                                final SavedItem savedItem2 = new SavedItem(orderId, productToSave2);
-                                final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem2);
-
-                                shoppingCartProduct.setQuantity(selectedQty);
-                                shoppingCartProduct.setItemType(itemType);
-                                shoppingCartProduct.setEnteredPrice(price);
-
-                                context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, values, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
-                                Toast.makeText(context, "Added " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
-                                if (onProductUpdatedListener != null) {
-                                    onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
-                                }
-                            }
-                        };
-                    }
-
-                    incrementProductInShoppingCart(TAG, context, shoppingCartProduct, selectedQty,
-                            //Increment click listener
-                            new GenericDialog.OnClickListener() {
-                                @Override
-                                public void onClick(@NotNull DialogFragment dialog) {
-                                    final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() + selectedQty, itemType);
+                                                        final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() + selectedQty, itemType);
                                     productToSave2.setEnteredPrice(price);
-                                    final SavedItem savedItem2 = new SavedItem(orderId, productToSave2);
-                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem2);
+                                    //final SavedItem savedItem2 = new SavedItem(orderId, productToSave2);
+                                    //final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem2);
 
                                     shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() + selectedQty);
                                     shoppingCartProduct.setItemType(itemType);
@@ -160,12 +133,57 @@ public class Utilities {
                                     if (onProductUpdatedListener != null) {
                                         onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
                                     }
-                                }
-                            }, replaceClickListener
-                    );
+//                    if (selectedQty != shoppingCartProduct.getQuantity()) {
+//                        replaceClickListener = new GenericDialog.OnClickListener() {
+//                            ///ON REPLACE
+//                            @Override
+//
+//                            public void onClick(@NotNull DialogFragment dialog) {
+//                                final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() + selectedQty, itemType);
+//                                productToSave2.setEnteredPrice(price);
+//                                final SavedItem savedItem2 = new SavedItem(orderId, productToSave2);
+//                                final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem2);
+//
+//                                shoppingCartProduct.setQuantity(selectedQty);
+//                                shoppingCartProduct.setItemType(itemType);
+//                                shoppingCartProduct.setEnteredPrice(price);
+//
+//                                context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, values, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+//                                Toast.makeText(context, "Added " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
+//                                if (onProductUpdatedListener != null) {
+//                                    onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+//                                }
+//                            }
+//                        };
+//                    }
+
+//                    incrementProductInShoppingCart(TAG, context, shoppingCartProduct, selectedQty,
+//                            //Increment click listener
+//                            //ON ADD MORE
+//                            new GenericDialog.OnClickListener() {
+//                                @Override
+//                                public void onClick(@NotNull DialogFragment dialog) {
+//                                    final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() + selectedQty, itemType);
+//                                    productToSave2.setEnteredPrice(price);
+//                                    final SavedItem savedItem2 = new SavedItem(orderId, productToSave2);
+//                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem2);
+//
+//                                    shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() + selectedQty);
+//                                    shoppingCartProduct.setItemType(itemType);
+//                                    shoppingCartProduct.setEnteredPrice(price);
+//
+//                                    context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, values, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+//                                    Toast.makeText(context, "Added " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
+//                                    if (onProductUpdatedListener != null) {
+//                                        onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+//                                    }
+//                                }
+//                            }, replaceClickListener
+//                    );
                 }
 
                 /* User added different item type */
+                //FIRST TIME
                 else {
                     shoppingCartProduct.setEnteredPrice(price);
                     switchProductTypeInCart(TAG, context, shoppingCartProduct, selectedQty, itemType, new GenericDialog.OnClickListener() {
@@ -234,7 +252,7 @@ public class Utilities {
     }
 
     private static void incrementProductInShoppingCart(String TAG, Context context, ShoppingCartProduct shoppingCartProduct, int newQty, GenericDialog.OnClickListener clickListener, GenericDialog.OnClickListener replaceClickListener) {
-
+///POPUP ALREADY EXIST
         final int currQty = shoppingCartProduct.getQuantity();
         final String itemTypeName = shoppingCartProduct.getItemType().name();
 

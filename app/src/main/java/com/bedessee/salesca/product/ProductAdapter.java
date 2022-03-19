@@ -26,11 +26,15 @@ import com.bedessee.salesca.mixpanel.MixPanelManager;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
+import com.bedessee.salesca.shoppingcart.ShoppingCart;
+import com.bedessee.salesca.shoppingcart.ShoppingCartProduct;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.BitmapWorkerTask;
 import com.bedessee.salesca.utilities.FieldUtilities;
 import com.bedessee.salesca.utilities.ProductEnteredFrom;
 import com.bedessee.salesca.utilities.Utilities;
+
+import java.util.ArrayList;
 
 public class ProductAdapter extends CursorAdapter implements Filterable {
 
@@ -162,6 +166,8 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         holder.mTextViewBrand.setText(product.getBrand() + "\n" + product.getDescription());
         holder.mTextUomUnit.setText(product.getPieceUom());
         holder.mTextPriceUnit.setText(product.getPiecePrice());
+
+        //Add Button click listen to open dialog with quantity
         holder.add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -403,6 +409,12 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
                             if (StoreManager.isStoreSelected()) {
                                 holder.mQtySelector.incrementQty();
                                 holder.mBtnAddToCart.performClick();
+                                ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
+                                int count = 0;
+                                for (ShoppingCartProduct product : mProducts) {
+                                    count = count + product.getQuantity();
+                                }
+                                Log.d("sdsadsa","Size "+count);
                             } else {
                                 Toast.makeText(mContext, "Please select store to continue.", Toast.LENGTH_SHORT).show();
                             }

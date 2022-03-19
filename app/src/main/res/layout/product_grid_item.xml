@@ -15,14 +15,15 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
     <ImageView
+        android:id="@+id/add"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:src="@drawable/ic_add"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/gutter"
-        android:id="@+id/add"/>
+        android:src="@drawable/ic_add" />
     <com.bedessee.salesca.customview.QtySelector
         android:id="@+id/list_item_qty_selector"
         android:layout_width="150dp"

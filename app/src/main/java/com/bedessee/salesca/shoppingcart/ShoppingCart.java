@@ -42,7 +42,10 @@ public class ShoppingCart implements Serializable {
         }
         return sCurrentShoppingCart;
     }
+    public static int getTotalQuantity(){
 
+        return 0;
+    }
     public static void setCurrentOrderId(final Context context, final String currentOrderId) {
         sCurrentOrderId = currentOrderId;
 
