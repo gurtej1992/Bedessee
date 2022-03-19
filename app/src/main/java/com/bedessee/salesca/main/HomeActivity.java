@@ -265,6 +265,10 @@ public class HomeActivity extends AppCompatActivity {
             case OrderHistoryDialog.REQUEST_CODE: {
                 if (resultCode == OrderHistoryDialog.RESULT_CODE_LOAD) {
                     mShowBalanceDialog = true;
+//                    Store store = StoreManager.getCurrentStore();
+//                    if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
+//                        displayStoreInActionBar();
+//                    }
                 }
             }
             break;
@@ -795,19 +799,19 @@ public class HomeActivity extends AppCompatActivity {
             break;
             case 4:
                 MixPanelManager.trackButtonClick(HomeActivity.this, "Button click: Top menu: ORDER HISTORY");
-                DialogFragment dialog = new OrderHistoryDialog();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                dialog.show(fragmentManager, "sd");
-                fragmentManager.executePendingTransactions();
-                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        Store store = StoreManager.getCurrentStore();
-                        if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
-                            displayStoreInActionBar();
-                        }
-                    }
-                });
+//                DialogFragment dialog = new OrderHistoryDialog();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                dialog.show(fragmentManager, "sd");
+//                fragmentManager.executePendingTransactions();
+//                dialog.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+////                        Store store = StoreManager.getCurrentStore();
+////                        if (mCurrentStore!=null && store != null && store.getBaseNumber() != null && !(store.getBaseNumber().equals(mCurrentStore.getBaseNumber()))) {
+////                            displayStoreInActionBar();
+////                        }
+//                    }
+//                });
             default:
                 final String status = mainMenuAdapter.getItem(position).getStatusCode();
                 final ProductFragment productFragment = ProductFragment.getInstance();

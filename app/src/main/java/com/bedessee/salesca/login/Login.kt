@@ -136,7 +136,9 @@ class Login : Activity() {
 
             MixPanelManager.trackSuccessfulLogin(this, true)
 
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this@Login, MainActivity::class.java)
+            intent.putExtra("from", "home")
+            startActivity(intent)
             finish()
         } else if(sharedPrefsManager.sugarSyncDir != null) {
             Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
@@ -286,7 +288,9 @@ class Login : Activity() {
 
                 MixPanelManager.trackSuccessfulLogin(this, false)
 
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this@Login, MainActivity::class.java)
+                intent.putExtra("from", "home")
+                startActivity(intent)
                 finish()
 
             } else {
@@ -442,8 +446,10 @@ class Login : Activity() {
         setIsAdmin(loggedInUser.email)
 
         MixPanelManager.trackSuccessfulLogin(this, false)
+        val intent = Intent(this@Login, MainActivity::class.java)
+        intent.putExtra("from", "home")
+        startActivity(intent)
 
-        startActivity(Intent(this, MainActivity::class.java))
         finish()
 
     }

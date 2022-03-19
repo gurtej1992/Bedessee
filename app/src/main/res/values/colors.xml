@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red">#FF0000</color>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#6200EE</color>
     <color name="colorPrimaryLight">#B3E5FC</color>
     <color name="colorAccent">#6200EE</color>
     <color name="colorAccentDark">#5403C6</color>
@@ -10,7 +10,7 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
-    <color name="tabs_divider">#017DC2</color>
+    <color name="tabs_divider">#6200EE</color>
     <color name="dark_grey">#4d4d4d</color>
     <color name="unselected_tab">#d3d3d3</color>
     <color name="white">#FFFFFF</color>
