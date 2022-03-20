@@ -1,8 +1,9 @@
 package com.bedessee.salesca.shoppingcart
 
-import android.annotation.SuppressLint
+import android.R.string
 import android.content.Context
 import android.text.TextUtils
+import android.text.TextUtils.split
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,8 @@ import com.bedessee.salesca.customview.GenericDialog.Companion.newInstance
 import com.bedessee.salesca.customview.ItemType
 import com.bedessee.salesca.provider.Contract
 import com.bedessee.salesca.utilities.Utilities
+import org.apache.commons.lang3.StringUtils.split
+
 
 class ShoppingCartAdapter(
          val mContext: Context,
@@ -76,10 +79,31 @@ class ShoppingCartAdapter(
         // holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
 
-        val f: Float = java.lang.Float.valueOf(product.casePrice.toString())
+        val f:Float
+        if(holder.radioCase.isChecked){
+            f = java.lang.Float.valueOf(product.casePrice.toString())
+            holder.totalCase.setText("$" + String.format("%.2f",f))
+            holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())))
 
-        holder.totalCase.setText("$" + String.format("%.2f",f))
-        holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())))
+        }else{
+            val parts: List<String> = product.piecePrice.toString().split(" ")
+            if(parts.size==2){
+                val part1 = parts.first() // 004
+
+                val part2 = parts[1]
+                f = java.lang.Float.valueOf(part2)
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * part2!!.toDouble())))
+
+            }else{
+                f = java.lang.Float.valueOf(product.piecePrice.toString())
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.piecePrice!!.toDouble())))
+
+            }
+
+        }
+
 
 
         holder.removeItem.setOnClickListener {
@@ -107,7 +131,12 @@ class ShoppingCartAdapter(
                         notifyDataSetChanged()
                         ShoppingCart.getCurrentShoppingCart().productChanged();
                     }
-                    holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
+                     if(holder.radioCase.isChecked){
+                         holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
+
+                     }else {
+                         holder.Price.setText("$" + String.format("%.2f", qty * product.piecePrice!!.toDouble()))
+                     }
 
                 }
             }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)

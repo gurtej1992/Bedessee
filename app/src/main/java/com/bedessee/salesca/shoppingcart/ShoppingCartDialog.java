@@ -56,6 +56,7 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
 
     private ShoppingCart mShoppingCart;
     EditText edtComment,edtContact;
+    TextView case_amount;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,6 +78,9 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         shoppingCartListView.setAdapter(shoppingCartAdapter);
         edtComment=(EditText) view.findViewById(R.id.edtComment);
         edtContact=(EditText) view.findViewById(R.id.edtContact);
+        case_amount=(TextView) view.findViewById(R.id.case_amount);
+
+
 
         edtComment.setText(mShoppingCart.getComment());
         edtContact.setText(mShoppingCart.getContact());
