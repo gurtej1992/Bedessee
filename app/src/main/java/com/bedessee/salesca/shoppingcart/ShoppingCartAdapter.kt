@@ -96,9 +96,12 @@ class ShoppingCartAdapter(
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * part2!!.toDouble())))
 
             }else{
+                val part1 = parts.first() // 004
+
+                val part2 = parts[1]
                 f = java.lang.Float.valueOf(product.piecePrice.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
-                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.piecePrice!!.toDouble())))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * part2!!.toDouble())))
 
             }
 
@@ -131,11 +134,29 @@ class ShoppingCartAdapter(
                         notifyDataSetChanged()
                         ShoppingCart.getCurrentShoppingCart().productChanged();
                     }
+                    val f:Float
                      if(holder.radioCase.isChecked){
                          holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
 
                      }else {
-                         holder.Price.setText("$" + String.format("%.2f", qty * product.piecePrice!!.toDouble()))
+                         val parts: List<String> = product.piecePrice.toString().split(" ")
+                         if(parts.size==2){
+                             val part1 = parts.first() // 004
+
+                             val part2 = parts[1]
+                             f = java.lang.Float.valueOf(part2)
+                             holder.totalCase.setText("$" + String.format("%.2f",f))
+                             holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                         }else{
+                             val part1 = parts.first() // 004
+
+                             val part2 = parts[1]
+                             f = java.lang.Float.valueOf(product.piecePrice.toString())
+                             holder.totalCase.setText("$" + String.format("%.2f",f))
+                             holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                         }
                      }
 
                 }
