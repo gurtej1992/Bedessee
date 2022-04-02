@@ -14,8 +14,8 @@ android {
         minSdkVersion 22
         multiDexEnabled true
         //noinspection HighAppVersionCode
-        versionCode 20220302
-        versionName '2022-03-13'
+        versionCode 20220322
+        versionName '2022-03-22'
     }
 
     signingConfigs {
@@ -135,6 +135,8 @@ dependencies {
 
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     implementation 'com.github.ghost1372:Mzip-Android:0.4.0'
+    implementation 'androidx.room:room-runtime:2.4.2'
+    annotationProcessor 'androidx.room:room-compiler:2.4.2'
 }
 
 apply plugin: 'com.google.firebase.crashlytics'

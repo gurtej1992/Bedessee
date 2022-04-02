@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
+import com.bedessee.salesca.database.Database;
 import com.bedessee.salesca.main.MainActivity;
+import com.bedessee.salesca.modal.ShoppingCartNew;
 import com.bedessee.salesca.order.GMailUtils;
 import com.bedessee.salesca.orderhistory.OrderHistoryDialog;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
@@ -158,6 +160,8 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                 } else {
                     saveCommentAndContact();
                     ShoppingCart shoppingCart = mShoppingCart;
+                    ShoppingCartNew x = new ShoppingCartNew();
+                    //Database.getInstance(getContext()).orderDeo().insertOrder();
                     shoppingCart.stopTimer();
                     ShoppingCart.setCurrentOrderId(getActivity(), null);
                     NewStoreDialog.getInstance().clearAll();
