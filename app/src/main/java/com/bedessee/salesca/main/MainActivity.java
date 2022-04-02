@@ -292,27 +292,27 @@ public class MainActivity extends AppCompatActivity {
                                // startActivityForResult(new Intent(MainActivity.this, ShoppingCartDialog.class), ShoppingCartDialog.REQUEST_CODE);
                                 return true;
 
-                            case R.id.force_crash:
-                                new AlertDialog.Builder(MainActivity.this).setTitle("Are you sure want to crash the app?")
-                                        .setMessage("This is for Testing, Force crash will crash the app.")
-                                        .setPositiveButton("YES",
-                                                new DialogInterface.OnClickListener() {
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        throw new RuntimeException("Test Crash"); // Force a crash
-                                                        // Perform Action & Dismiss dialog
-                                                        // dialog.dismiss();
-                                                    }
-                                                })
-                                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                // Do nothing
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .create()
-                                        .show();
-                                return true;
+                           // case R.id.force_crash:
+//                                new AlertDialog.Builder(MainActivity.this).setTitle("Are you sure want to crash the app?")
+//                                        .setMessage("This is for Testing, Force crash will crash the app.")
+//                                        .setPositiveButton("YES",
+//                                                new DialogInterface.OnClickListener() {
+//                                                    public void onClick(DialogInterface dialog, int which) {
+//                                                        throw new RuntimeException("Test Crash"); // Force a crash
+//                                                        // Perform Action & Dismiss dialog
+//                                                        // dialog.dismiss();
+//                                                    }
+//                                                })
+//                                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                // Do nothing
+//                                                dialog.dismiss();
+//                                            }
+//                                        })
+//                                        .create()
+//                                        .show();
+//                                return true;
                             case R.id.clear:
                                 String directory = new SharedPrefsManager(getApplicationContext()).getSugarSyncDir();
                                 File file = new File(BedesseeDatabase.getDatabaseFile(directory));
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         sideMenus.add(new SideMenu("NO", "#000000", "0", "BRANDS", "0", ""));
         sideMenus.add(new SideMenu("NO", "#000000", "0", "CATEGORIES", "0", ""));
 
-        sideMenus.add(new SideMenu("NO", "#000000", "0", "UPC", "0", ""));
+       // sideMenus.add(new SideMenu("NO", "#000000", "0", "UPC", "0", ""));
         sideMenus.add(new SideMenu("NO", "#000000", "0", "ORDER HISTORY", "0", ""));
 
         final Cursor cursorSideMenu = getContentResolver().query(Contract.SideMenu.CONTENT_URI, null, null, null, Contract.SideMenuColumns.COLUMN_SORT + " ASC");
@@ -416,11 +416,11 @@ public class MainActivity extends AppCompatActivity {
                 switchFragment(CategoryFragment.getInstance(), CategoryFragment.TAG);
                 drawer.closeDrawer(GravityCompat.START);
                 break;
+//            case 3:
+//                upcClicked();
+//                drawer.closeDrawer(GravityCompat.START);
+//                break;
             case 3:
-                upcClicked();
-                drawer.closeDrawer(GravityCompat.START);
-                break;
-            case 4:
                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: ORDER HISTORY");
                 switchFragment(OrderHistoryDialog.getInstance(), OrderHistoryDialog.TAG);
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".admin.AdminPanel">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/price"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Show level Price"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/clear1"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:paddingLeft="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Clear 1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/clear2"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Clear 2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/sign_out"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Sign Out"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/force_crash"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Force Crash"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+</LinearLayout>

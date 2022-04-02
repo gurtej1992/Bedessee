@@ -8,6 +8,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -114,9 +115,13 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         upcBox.setOnClickListener(v->{
             if(!upcBox.isChecked()){
                 mEditSearchReference.get().setHint(currentHint);
+                mEditSearchReference.get().setInputType(InputType.TYPE_CLASS_TEXT);
+                mEditSearchReference.get().setSelection(mEditSearchReference.get().getText().length());
             }
             else{
                 mEditSearchReference.get().setHint("Enter UPC");
+                mEditSearchReference.get().setInputType(InputType.TYPE_CLASS_NUMBER);
+                mEditSearchReference.get().setSelection(mEditSearchReference.get().getText().length());
             }
 
         });

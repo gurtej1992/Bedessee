@@ -23,10 +23,10 @@
         app:showAsAction="never"
         android:showAsAction="never"
         tools:ignore="AppCompatResource" />
-    <item android:id="@+id/force_crash"
-        android:icon="@drawable/ic_action_person"
-        android:title="Force Crash"
-        android:showAsAction="never" />
+<!--    <item android:id="@+id/force_crash"-->
+<!--        android:icon="@drawable/ic_action_person"-->
+<!--        android:title="Force Crash"-->
+<!--        android:showAsAction="never" />-->
     <item android:id="@+id/exit"
           android:icon="@drawable/ic_action_person"
           android:title="Exit App"

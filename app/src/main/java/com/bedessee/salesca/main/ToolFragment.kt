@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bedessee.salesca.R
+import com.bedessee.salesca.admin.AdminPanel
 import com.bedessee.salesca.admin.AdminSettings
 import com.bedessee.salesca.customview.*
 import com.bedessee.salesca.login.Login
@@ -67,7 +68,7 @@ class ToolFragment : Fragment() {
     }
 
     private fun init(context: Context) {
-        val utilsStrings = arrayOf("Util", "Calc", "Margin", "GMail", "Load old", "Admin", "Clear1", "Clear2", "Wipe Data", "Sign Out", "New?").toMutableList()
+        val utilsStrings = arrayOf("Util", "Calc", "Margin", "Load old", "Admin", "Wipe Data", "New?").toMutableList()
         val noLogin = SharedPrefsManager(context).noLogin
         if (noLogin != null) {
             if (noLogin.menuLabel1 != null) {
@@ -86,16 +87,16 @@ class ToolFragment : Fragment() {
                     }
                     /* Launch markup calc */
                     2 -> context.startActivity(Intent(context, MarginCalculator::class.java))
+//                    3 -> {
+//                        /* Launch GMail */
+//                        val intent = context.packageManager.getLaunchIntentForPackage("com.google.android.gm")
+//                        context.startActivity(intent)
+//                    }
                     3 -> {
-                        /* Launch GMail */
-                        val intent = context.packageManager.getLaunchIntentForPackage("com.google.android.gm")
-                        context.startActivity(intent)
-                    }
-                    4 -> {
                         /* Load prev update */
                         UpdateSelector().show((context as AppCompatActivity).supportFragmentManager, "Test")
                     }
-                    5 -> {
+                    4 -> {
                         /* Admin menu */
                         val secretPin = SharedPrefsManager(context).adminPin
 
@@ -110,25 +111,25 @@ class ToolFragment : Fragment() {
                                     context.startActivity(
                                             Intent(
                                                     context,
-                                                    AdminSettings::class.java
+                                                    AdminPanel::class.java
                                             )
                                     )
-                                } else {
+                               } else {
                                     Utilities.shortToast(context, "Sorry, wrong pin!")
                                 }
                             }
                         }, formatNumber = false, allowDecimals = true, showHint = false)
                                 .show((context as AppCompatActivity).supportFragmentManager, "Test")
                     }
-                    6 -> {
-                        val clearAction = FolderClearUp.clear_folder_json
-                        showClearDialog(clearAction)
-                    }
-                    7 -> {
-                        val clearAction = FolderClearUp.general_cleanup
-                        showClearDialog(clearAction)
-                    }
-                    8 -> GenericDialog.newInstance(
+//                    6 -> {
+//                        val clearAction = FolderClearUp.clear_folder_json
+//                        showClearDialog(clearAction)
+//                    }
+//                    7 -> {
+//                        val clearAction = FolderClearUp.general_cleanup
+//                        showClearDialog(clearAction)
+//                    }
+                    5 -> GenericDialog.newInstance(
                             context.getString(R.string.wipe_data_message),
                             "",
                             object : GenericDialog.OnClickListener {
@@ -138,18 +139,18 @@ class ToolFragment : Fragment() {
                             },
                             null
                     ).show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
-                    9 -> {
-                        MixPanelManager.trackButtonClick(getContext(), "Button click: Top menu: SIGN OUT")
-                        signOut(true)
-                    }
-                    10 -> showWhatsNew()
-                    11 -> {
+//                    9 -> {
+//                        MixPanelManager.trackButtonClick(getContext(), "Button click: Top menu: SIGN OUT")
+//                        signOut(true)
+//                    }
+                    6 -> showWhatsNew()
+                    7 -> {
                         noLogin?.let {
                             FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
                             fetchRequest(context, it.link1)
                         }
                     }
-                    12 -> {
+                    8 -> {
                         noLogin?.let {
                             FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
                             fetchRequest(context, it.link2)
