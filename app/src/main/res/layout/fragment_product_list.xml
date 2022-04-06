@@ -63,12 +63,11 @@
         android:padding="5dp"
         android:dividerHeight="5dp"
         android:visibility="gone"/>
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_items_found"
-        android:numColumns="5"
         android:background="#C0C0C0"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"/>

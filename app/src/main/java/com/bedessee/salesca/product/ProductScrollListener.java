@@ -7,9 +7,9 @@ import android.widget.AbsListView;
  */
 public class ProductScrollListener implements AbsListView.OnScrollListener {
 
-    private ProductAdapter mAdapter;
+    private ProductDummyAdapter mAdapter;
 
-    public ProductScrollListener(ProductAdapter adapter) {
+    public ProductScrollListener(ProductDummyAdapter adapter) {
         mAdapter = adapter;
     }
 

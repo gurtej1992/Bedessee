@@ -25,6 +25,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
@@ -53,7 +55,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     CheckBox upcBox;
     String currentHint = "";
     public static boolean shouldRestartLoaderOnResume = true;
-    private ProductAdapter mAdapter;
+    private ProductDummyAdapter mAdapter;
 
     private static ProductFragment instance;
 
@@ -98,7 +100,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        final GridView gridView = rootView.findViewById(R.id.gridView);
+        final RecyclerView gridView = rootView.findViewById(R.id.gridView);
         upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();
@@ -128,11 +130,12 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
         int[] dimens = Utilities.getScreenDimensInPx(getActivity());
 
-        mAdapter = new ProductAdapter(getContext(), dimens);
-        mAdapter.setListener(new ProductAdapter.Listener() {
+
+        mAdapter = new ProductDummyAdapter(getContext(),null, dimens);
+        mAdapter.setListener(new ProductDummyAdapter.Listener() {
             @Override
             public void onClick(Product product) {
-                MixPanelManager.selectProduct(getActivity(), product.getBrand() + " " + product.getDescription());
+                                MixPanelManager.selectProduct(getActivity(), product.getBrand() + " " + product.getDescription());
                 final ProductDetailDialog productDetailDialog = ProductDetailDialog.Companion.create(product, new Runnable() {
                     @Override
                     public void run() {
@@ -141,9 +144,24 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 });
 
                 productDetailDialog.show(requireFragmentManager(), TAG);
+
             }
         });
-
+//        mAdapter.setListener(new ProductAdapter.Listener() {
+//            @Override
+//            public void onClick(Product product) {
+//                MixPanelManager.selectProduct(getActivity(), product.getBrand() + " " + product.getDescription());
+//                final ProductDetailDialog productDetailDialog = ProductDetailDialog.Companion.create(product, new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        shouldRestartLoaderOnResume = false;
+//                    }
+//                });
+//
+//                productDetailDialog.show(requireFragmentManager(), TAG);
+//            }
+//        });
+gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
         gridView.setAdapter(mAdapter);
 
         final int loaderId;
@@ -169,7 +187,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
 
         ProductScrollListener gridScrollListener = new ProductScrollListener(mAdapter);
-        gridView.setOnScrollListener(gridScrollListener);
+        //gridView.setOnScrollListener(gridScrollListener);
 
         mEditSearchReference.get().addTextChangedListener(new TextWatcher() {
             @Override
@@ -193,7 +211,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                             Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
                 }
 
-                mAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
+                mAdapter.mCursorAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
             }
 
             @Override
@@ -334,14 +352,14 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor != null) {
-            mAdapter.changeCursor(cursor);
+            mAdapter.mCursorAdapter.changeCursor(cursor);
         }
     }
 
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mAdapter.changeCursor(null);
+        mAdapter.mCursorAdapter.changeCursor(null);
     }
 
 

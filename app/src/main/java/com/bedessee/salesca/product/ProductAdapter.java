@@ -49,6 +49,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
     private Listener listener;
 
 
+
     public ProductAdapter(final Context context, int[] screenDimens) {
         super(context, null, false);
         mContext = context;
