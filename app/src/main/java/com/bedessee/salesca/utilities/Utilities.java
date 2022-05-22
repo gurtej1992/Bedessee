@@ -235,9 +235,9 @@ public class Utilities {
                 if (!f1.exists()) {
                     f1.mkdirs();
                 }
-
+                SavedOrder order1=new SavedOrder(order.getId(),order.getStore(),order.getStartTime(),order.getEndTime(),order.isClosed(),order.getNumProducts()+1);
                 Gson gson = new GsonBuilder().create();
-                String json = gson.toJson(order);
+                String json = gson.toJson(order1);
                 Log.e("@@@@","get json"+json);
                 try {
                     JSONObject jsonObj = new JSONObject(json);

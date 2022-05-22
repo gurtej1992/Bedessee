@@ -135,6 +135,7 @@ class ShoppingCartAdapter(
                         notifyDataSetChanged()
                         ShoppingCart.getCurrentShoppingCart().productChanged();
                     }
+                    holder.edtQty.setText(getQuantity(shoppingCartProduct))
                     val f:Float
                      if(holder.radioCase.isChecked){
                          holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -199,7 +200,7 @@ gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mAdapter.mCursorAdapter.getFilter().filter(s);
+              //  mAdapter.mCursorAdapter.getFilter().filter(s);
 
                 MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
 
@@ -213,8 +214,10 @@ gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
                             Contract.ProductColumns.COLUMN_NUMBER + " LIKE '%" + s + "%'" + " OR " +
                             Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
                 }
-
-              //  mAdapter.mCursorAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
+                //
+                String filterWhere = filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")";
+                Log.e("LOLLLOL",filterWhere);
+                mAdapter.mCursorAdapter.getFilter().filter(filterWhere);
             }
 
             @Override

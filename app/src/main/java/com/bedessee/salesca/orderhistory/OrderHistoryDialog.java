@@ -1,6 +1,7 @@
 package com.bedessee.salesca.orderhistory;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -182,35 +183,42 @@ public class OrderHistoryDialog extends Fragment {
                 final File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
                 Timber.d("file path:%s", file.getAbsolutePath());
                 if(file.exists()) {
-//                    readFromFile(requireContext(), file);
-//                    String data="["+readFromFile(requireContext(),file)+"]";
-//                    JSONArray jsonArray = null;
-//                    try {
-//                        jsonArray= new JSONArray(data);
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject explrObject = jsonArray.getJSONObject(i);
-//                            Log.e("@#@#","json data"+explrObject);
-//                        }
-//                        final List<SavedOrder> savedOrders = new Gson().fromJson(data, new TypeToken<List<SavedOrder>>() {
+                    readFromFile(requireContext(), file);
+                    String data="["+readFromFile(requireContext(),file)+"]";
+                    String newData = data.replace("}{","},{");
+                    Log.e("@#@#",newData);
+                    JSONArray jsonArray = null;
+                    try {
+                        jsonArray= new JSONArray(data);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject explrObject = jsonArray.getJSONObject(i);
+                            Log.e("@#@#","json data"+explrObject);
+                        }
+                        final List<SavedOrder> savedOrders = new Gson().fromJson(data, new TypeToken<List<SavedOrder>>() {
+                        }.getType());
+                        for (SavedOrder order : savedOrders) {
+                            if (order != null) {
+                                final ContentValues values = ProviderUtils.savedOrderToContentValues(order);
+                                requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                            }
+                           // orders.add(order);
+                        }
+
+                        //listView.getAdapter().notifyDataSetChanged();
+                        updateOrders(requireContext(), orders);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+//                            String readFile = loadJSONFromFile(file);
+//                            Log.e("@#@#","json data"+readFile);
+//                            final List<SavedOrder> savedOrders = new Gson().fromJson(readFile, new TypeToken<List<SavedOrder>>() {
 //                        }.getType());
 //                        for (SavedOrder order : savedOrders) {
 //                            orders.add(order);
 //                        }
 //                        //listView.getAdapter().notifyDataSetChanged();
 //                        updateOrders(requireContext(), orders);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-
-                            String readFile = loadJSONFromFile(file);
-                            Log.e("@#@#","json data"+readFile);
-                            final List<SavedOrder> savedOrders = new Gson().fromJson(readFile, new TypeToken<List<SavedOrder>>() {
-                        }.getType());
-                        for (SavedOrder order : savedOrders) {
-                            orders.add(order);
-                        }
-                        //listView.getAdapter().notifyDataSetChanged();
-                        updateOrders(requireContext(), orders);
 
                         }
 
