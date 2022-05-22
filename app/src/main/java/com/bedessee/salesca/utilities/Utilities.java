@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.ViewConfiguration;
@@ -39,15 +40,26 @@ import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
 import com.bedessee.salesca.shoppingcart.ShoppingCartProduct;
 import com.bedessee.salesca.store.StoreManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -218,11 +230,41 @@ public class Utilities {
                     contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
                     context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
                 }
+                String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
+                File f1 = new File(baseFilePath , "orderhistory");
+                if (!f1.exists()) {
+                    f1.mkdirs();
+                }
+
+                Gson gson = new GsonBuilder().create();
+                String json = gson.toJson(order);
+                Log.e("@@@@","get json"+json);
+                try {
+                    JSONObject jsonObj = new JSONObject(json);
+                    Log.e("@@@@","get jsonobject"+jsonObj);
+                    writeToFile(json,baseFilePath);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             context.getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
         }
 
+    }
+
+
+
+    private static void writeToFile(String data,String path) {
+        try {
+            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json"),true);
+            outputStreamWriter.write(data.getBytes(StandardCharsets.UTF_8));
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
     public static FragmentManager getFragmentManager(Context context) {

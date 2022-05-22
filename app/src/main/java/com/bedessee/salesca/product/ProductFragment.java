@@ -104,6 +104,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();
+        Utilities.hideSoftKeyboard(requireActivity());
 
         rootView.findViewById(R.id.btnClearSearch).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +112,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 EditText editText = mEditSearchReference.get();
                 if (editText != null) {
                     editText.setText(null);
+                    Utilities.hideSoftKeyboard(requireActivity());
                 }
             }
         });
@@ -197,6 +199,7 @@ gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mAdapter.mCursorAdapter.getFilter().filter(s);
 
                 MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
 
@@ -211,7 +214,7 @@ gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
                             Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
                 }
 
-                mAdapter.mCursorAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
+              //  mAdapter.mCursorAdapter.getFilter().filter(filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")");
             }
 
             @Override

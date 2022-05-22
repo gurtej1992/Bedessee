@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
+import com.bedessee.salesca.customview.ItemType;
 import com.bedessee.salesca.database.Database;
 import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.modal.ShoppingCartNew;
@@ -34,6 +35,8 @@ import com.bedessee.salesca.utilities.Utilities;
 import com.bedessee.salesca.utilities.ViewUtilities;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Dialog for shopping cart.
@@ -117,12 +120,28 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
 
     private void updatePrice(View view){
 
+
         double sum=0;
         for(int i=0;i<mShoppingCart.getProducts().size();i++){
-             sum=sum+(double)mShoppingCart.getProducts().get(i).getQuantity()*Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+                if(mShoppingCart.getProducts().get(i).getItemType()== ItemType.CASE){
+                   sum= sum+(double)mShoppingCart.getProducts().get(i).getQuantity()*Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+                }else {
+                    List<String> parts= Arrays.asList(mShoppingCart.getProducts().get(i).getProduct().getPiecePrice().toString().split(" "));
+                    Log.e("@#@#","get price"+parts);
+                    if(parts.size()==2) {
+                        String part1 = parts.get(0);
+                        String parts2 = parts.get(1);
+                        sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(parts2);
+                    }else {
+                        String part1 = parts.get(0);
+                        String parts2 = parts.get(1);
+                        sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(parts2);
+                    }
+                }
+            ((TextView) view.findViewById(R.id.order_total_price)).setText("$ " + String.format("%.2f",sum));
+
         }
         double total_price = Math.round(sum * 100.0) / 100.0;
-        ((TextView) view.findViewById(R.id.order_total_price)).setText("$ " + total_price);
     }
 
     @Override

@@ -29,6 +29,18 @@
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
 
+    <Button
+        android:id="@+id/importorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:text="Import Order"
+        app:layout_constraintBottom_toBottomOf="@+id/switch_stores"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_stores"
         android:layout_marginRight="10dp"
@@ -38,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/white"
         android:checked="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:text="all stores  "/>
 
     <TextView
@@ -63,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/control_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/importorder" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

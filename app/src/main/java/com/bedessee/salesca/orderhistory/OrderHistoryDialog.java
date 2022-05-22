@@ -5,9 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,15 +23,40 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
+import com.bedessee.salesca.backorder.OrderProduct;
+import com.bedessee.salesca.customview.ItemType;
+import com.bedessee.salesca.order.PastOrderQuantity;
+import com.bedessee.salesca.pastorder.PastOrderActivity;
+import com.bedessee.salesca.pastorder.PastOrderAdapter;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.reportsmenu.ReportFragment;
+import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
+import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.ViewUtilities;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import timber.log.Timber;
 
 /**
  * Activity that shows a list of the user's saved orders
@@ -45,6 +72,7 @@ public class OrderHistoryDialog extends Fragment {
     private List<SavedOrder> orders = new ArrayList<>();
     private SwitchMaterial switchMaterial;
     private RecyclerView listView;
+    private Button importOrder;
     private ProgressBar progressBar;
     public final static String TAG = "OrderList";
     private static OrderHistoryDialog instance;
@@ -55,40 +83,51 @@ public class OrderHistoryDialog extends Fragment {
         return instance;
     }
 
+
     class OrderListener implements OrderLoaderListener {
         @Override
         public void onLoaded(List<SavedOrder> orderList) {
-            orders = orderList;
+            final Store store = StoreManager.getCurrentStore();
+            if (store == null) {
+                Toast.makeText(requireContext(), "Please select store", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+            }else {
+                orders = orderList;
 
-            if (orders.isEmpty()) {
-                Toast.makeText(requireContext(), "There is no order history available", Toast.LENGTH_SHORT).show();
+                if (orders.isEmpty()) {
+
+                    Toast.makeText(requireContext(), "There is no order history available", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
 //                dismiss();
-            } else {
-                showAll();
-
-                if (orders.size() == 1) {
-                    switchMaterial.setVisibility(View.GONE);
                 } else {
-                    String number = StoreManager.getCurrentStore().getBaseNumber();
-                    boolean currentStoreOrder = false;
-                    boolean otherStore = false;
+                    showAll();
 
-                    // let's check if it contains an order of current store
-                    if (number != null) {
-                        for(SavedOrder order: orders) {
-                            if (order.getStore().equals(number)) {
-                               currentStoreOrder = true;
-                            } else {
-                               otherStore = true;
+                    if (orders.size() == 1) {
+                        switchMaterial.setVisibility(View.GONE);
+                    } else {
+
+                        String number = StoreManager.getCurrentStore().getBaseNumber();
+                        boolean currentStoreOrder = false;
+                        boolean otherStore = false;
+
+                        // let's check if it contains an order of current store
+                        if (number != null) {
+                            for (SavedOrder order : orders) {
+                                if (order.getStore().equals(number)) {
+                                    currentStoreOrder = true;
+                                } else {
+                                    otherStore = true;
+                                }
                             }
+                        }
+
+                        if (currentStoreOrder && otherStore) {
+                            switchMaterial.setVisibility(View.VISIBLE);
+                        } else {
+                            switchMaterial.setVisibility(View.GONE);
                         }
                     }
 
-                    if (currentStoreOrder && otherStore) {
-                        switchMaterial.setVisibility(View.VISIBLE);
-                    } else {
-                        switchMaterial.setVisibility(View.GONE);
-                    }
                 }
             }
         }
@@ -124,10 +163,65 @@ public class OrderHistoryDialog extends Fragment {
         new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
 
         switchMaterial = view.findViewById(R.id.switch_stores);
+        importOrder = view.findViewById(R.id.importorder);
         if (StoreManager.getCurrentStore() == null) {
             switchMaterial.setVisibility(View.GONE);
+            importOrder.setVisibility(View.GONE);
+
+        }else {
+            importOrder.setVisibility(View.VISIBLE);
+
         }
         listView = view.findViewById(R.id.list);
+
+        importOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String baseFilePath = new SharedPrefsManager(requireContext()).getSugarSyncDir();
+
+                final File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
+                Timber.d("file path:%s", file.getAbsolutePath());
+                if(file.exists()) {
+//                    readFromFile(requireContext(), file);
+//                    String data="["+readFromFile(requireContext(),file)+"]";
+//                    JSONArray jsonArray = null;
+//                    try {
+//                        jsonArray= new JSONArray(data);
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject explrObject = jsonArray.getJSONObject(i);
+//                            Log.e("@#@#","json data"+explrObject);
+//                        }
+//                        final List<SavedOrder> savedOrders = new Gson().fromJson(data, new TypeToken<List<SavedOrder>>() {
+//                        }.getType());
+//                        for (SavedOrder order : savedOrders) {
+//                            orders.add(order);
+//                        }
+//                        //listView.getAdapter().notifyDataSetChanged();
+//                        updateOrders(requireContext(), orders);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+
+                            String readFile = loadJSONFromFile(file);
+                            Log.e("@#@#","json data"+readFile);
+                            final List<SavedOrder> savedOrders = new Gson().fromJson(readFile, new TypeToken<List<SavedOrder>>() {
+                        }.getType());
+                        for (SavedOrder order : savedOrders) {
+                            orders.add(order);
+                        }
+                        //listView.getAdapter().notifyDataSetChanged();
+                        updateOrders(requireContext(), orders);
+
+                        }
+
+
+                else {
+                    Toast.makeText(requireContext(), "No Order History found", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
         progressBar = view.findViewById(R.id.progress_bar);
         switchMaterial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -140,6 +234,7 @@ public class OrderHistoryDialog extends Fragment {
             }
         });
 
+
         view.findViewById(R.id.btn_close).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,10 +246,64 @@ public class OrderHistoryDialog extends Fragment {
         return view;
     }
 
+    public String loadJSONFromFile(File fileName) {
+        String json;
+        try {
+            InputStream is = new FileInputStream(fileName);
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, StandardCharsets.UTF_8);
+
+
+        } catch (IOException ex) {
+            Timber.e(ex);
+            return null;
+        }
+        return json;
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
        // ViewUtilities.Companion.setActivityWindowSize(getDialog().getWindow());
+    }
+
+    private String readFromFile(Context context,File file) {
+
+        String ret = "";
+        try {
+            InputStream inputStream = new FileInputStream(file);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append(receiveString);
+                }
+
+                inputStream.close();
+                ret = stringBuilder.toString();
+                Log.e("@@@","get source"+ret);
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("@@@", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("@@@", "Can not read file: " + e.toString());
+        }
+
+        return ret;
     }
 
     private static class LoadOrders extends AsyncTask<Void, Void, List<SavedOrder>> {

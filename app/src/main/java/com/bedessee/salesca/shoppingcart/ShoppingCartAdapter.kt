@@ -67,6 +67,7 @@ class ShoppingCartAdapter(
        return mShoppingCartProducts.size
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val shoppingCartProduct = mShoppingCartProducts[position]
         val product = shoppingCartProduct!!.product

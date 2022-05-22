@@ -1,9 +1,11 @@
 package com.bedessee.salesca.utilities
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
+import android.os.Environment
 import androidx.core.content.ContextCompat.startActivity
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.reportsmenu.ReportsMenu
@@ -77,6 +79,34 @@ class ReportsUtilities {
                             reportsMenu.popupType,
                             reportsMenu.deviceFolder
                         ).absolutePath)
+
+//                        val uri2 = Uri.fromFile(
+//                            File(
+//                                FileUtilities.getFile(
+//                                    context,
+//                                    store.baseNumber,
+//                                    reportsMenu.popupType,
+//                                    reportsMenu.deviceFolder
+//                                ).absolutePath
+//                                        + File.separator + "new folder" + "/index.html"
+//                            )
+//                        )
+//                        val intent = Intent(ACTION_VIEW, uri2)
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                        intent.setClassName(
+//                            "com.android.chrome",
+//                            "com.google.android.apps.chrome.Main"
+//                        )
+//
+//                        try {
+//                            context.startActivity(intent)
+//                        } catch (ex: ActivityNotFoundException) {
+//                            try {
+//                                intent.setPackage(null)
+//                                context.startActivity(intent)
+//                            } catch (e: Exception) {
+//                            }
+//                        }
 
                     }
                 }

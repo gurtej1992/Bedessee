@@ -21,6 +21,7 @@ import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
 import com.bedessee.salesca.product.ProductFragment;
 import com.bedessee.salesca.provider.Contract;
+import com.bedessee.salesca.utilities.Utilities;
 
 /**
  * Fragment that shows the list of BRANDS. From here, the user can click on a brand to go back
@@ -59,11 +60,13 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
 
 
         final EditText editText = rootView.findViewById(R.id.editText_search);
+        Utilities.hideSoftKeyboard(requireActivity());
 
         rootView.findViewById(R.id.btnClearSearch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText.setText(null);
+                Utilities.hideSoftKeyboard(requireActivity());
             }
         });
 
@@ -91,6 +94,7 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Utilities.hideSoftKeyboard(requireActivity());
         ProductFragment productFragment = new ProductFragment();
         final Brand brand = mBrandAdapter.getItem(position);
         MixPanelManager.selectBrand(getActivity(), brand.getName());

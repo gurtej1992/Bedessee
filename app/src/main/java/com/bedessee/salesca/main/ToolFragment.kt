@@ -86,7 +86,7 @@ class ToolFragment : Fragment() {
                         Utilities.launchRegularCalculator(context)
                     }
                     /* Launch markup calc */
-                    2 -> context.startActivity(Intent(context, MarginCalculator::class.java))
+                    2-> context.startActivity(Intent(context, MarginCalculator::class.java))
 //                    3 -> {
 //                        /* Launch GMail */
 //                        val intent = context.packageManager.getLaunchIntentForPackage("com.google.android.gm")
