@@ -47,13 +47,13 @@ public class SellSheetsFragment extends Fragment implements View.OnClickListener
 
         final View view = inflater.inflate(R.layout.sell_sheets_item, container, false);
 
-        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
-        String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+//        String orient= sh.getString("orientation","landscape");
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
 
         ImageView imageView = view.findViewById(R.id.product_image);
 

@@ -26,13 +26,7 @@ public class SellSheetsDialog extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_catalog_pages);
-        SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
-        String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+
         // Instantiate a ViewPager and a PagerAdapter.
         ViewPager pager = findViewById(R.id.pager);
         PagerAdapter pagerAdapter = new SellSheetsPagerAdapter(this, getSupportFragmentManager());

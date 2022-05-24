@@ -19,11 +19,6 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouchBase
 class FullScreenImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //Setup Window
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-
         val sh = getSharedPreferences("setting", MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
         requestedOrientation = if (orient == "landscape") {
@@ -31,6 +26,11 @@ class FullScreenImageActivity : AppCompatActivity() {
         } else {
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
+        //Setup Window
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+
+
         //Setup View
         val imageViewTouch = ImageViewTouch(this, null)
         imageViewTouch.displayType = ImageViewTouchBase.DisplayType.FIT_TO_SCREEN

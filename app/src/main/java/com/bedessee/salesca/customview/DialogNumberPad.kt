@@ -198,13 +198,7 @@ class DialogNumberPad : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         val view = inflater.inflate(R.layout.dialog_number_pad, container, false)
-        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
-        val orient = sh.getString("orientation", "landscape")
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+
         btnPoint = view.btn_point
         btn0 = view.btn_0
         btnCase = view.btn_case

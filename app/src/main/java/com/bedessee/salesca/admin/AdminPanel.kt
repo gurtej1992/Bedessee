@@ -17,6 +17,7 @@ import com.bedessee.salesca.R
 import com.bedessee.salesca.customview.GenericDialog
 import com.bedessee.salesca.customview.UtilitiesSpinner
 import com.bedessee.salesca.login.Login
+import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
 import com.bedessee.salesca.utilities.FolderClearUp
@@ -35,6 +36,7 @@ class AdminPanel : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_admin_panel)
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         price = findViewById<View>(R.id.price) as TextView
         clear1 = findViewById<View>(R.id.clear1) as TextView
         clear2 = findViewById<View>(R.id.clear2) as TextView
@@ -161,6 +163,11 @@ class AdminPanel : AppCompatActivity() {
         if (launchLoginScreen) {
             this?.startActivity(Intent(this, Login::class.java))
         }
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
         finish()
     }
 }
