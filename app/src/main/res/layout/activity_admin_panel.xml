@@ -6,24 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".admin.AdminPanel">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:id="@+id/price"
-        android:paddingTop="@dimen/gutter"
-        android:paddingBottom="@dimen/gutter"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
-        android:textSize="@dimen/field_text_size"
-        android:text="Show level Price"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +17,8 @@
         android:paddingLeft="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
         android:text="Clear 1"/>
+
+
 
     <View
         android:layout_width="match_parent"
@@ -53,28 +37,12 @@
         android:textSize="@dimen/field_text_size"
         android:text="Clear 2"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:id="@+id/sign_out"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
-        android:paddingTop="@dimen/gutter"
-        android:paddingBottom="@dimen/gutter"
-        android:textSize="@dimen/field_text_size"
-        android:text="Sign Out"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/unselected_tab"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,6 +54,77 @@
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
         android:text="Force Crash"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/Num_Columns"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Number of Columns"/>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/set_ornt"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Set Orientation"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/price"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Show level Price"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/sign_out"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Sign Out"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

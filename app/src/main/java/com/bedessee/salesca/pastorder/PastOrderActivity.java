@@ -1,5 +1,8 @@
 package com.bedessee.salesca.pastorder;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +44,13 @@ public class PastOrderActivity extends AppCompatActivity implements QuantityChan
         ViewUtilities.Companion.setTheme(this, getWindow());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_order);
+        SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         ViewUtilities.Companion.setActivityWindowSize(getWindow());
         findViewById(R.id.add_all).setVisibility(View.GONE);
 

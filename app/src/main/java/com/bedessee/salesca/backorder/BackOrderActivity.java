@@ -2,6 +2,8 @@ package com.bedessee.salesca.backorder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -53,6 +55,13 @@ public class BackOrderActivity extends AppCompatActivity implements BackOrderQua
         ViewUtilities.Companion.setTheme(this, getWindow());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_past_order);
+        SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
+       String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         ViewUtilities.Companion.setActivityWindowSize(getWindow());
 
         final Store store = StoreManager.getCurrentStore();

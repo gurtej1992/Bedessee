@@ -2,6 +2,8 @@ package com.bedessee.salesca.sellsheets;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +46,15 @@ public class SellSheetsFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.sell_sheets_item, container, false);
+
+        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         ImageView imageView = view.findViewById(R.id.product_image);
 
         int [] dimens = Utilities.getScreenDimensInPx(getActivity());

@@ -3,6 +3,8 @@ package com.bedessee.salesca.orderhistory;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.reportsmenu.ReportFragment;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
+import com.bedessee.salesca.shoppingcart.ShoppingCart;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.ViewUtilities;
@@ -54,6 +57,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -161,6 +165,13 @@ public class OrderHistoryDialog extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_orderhistory, container, false);
+        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
 
         switchMaterial = view.findViewById(R.id.switch_stores);
@@ -187,28 +198,37 @@ public class OrderHistoryDialog extends Fragment {
                     String data="["+readFromFile(requireContext(),file)+"]";
                     String newData = data.replace("}{","},{");
                     Log.e("@#@#",newData);
-                    JSONArray jsonArray = null;
-                    try {
-                        jsonArray= new JSONArray(data);
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject explrObject = jsonArray.getJSONObject(i);
-                            Log.e("@#@#","json data"+explrObject);
-                        }
-                        final List<SavedOrder> savedOrders = new Gson().fromJson(data, new TypeToken<List<SavedOrder>>() {
+//                    JSONArray jsonArray = null;
+//                    try {
+//                        jsonArray= new JSONArray(data);
+//                        for (int i = 0; i < jsonArray.length(); i++) {
+//                            JSONObject explrObject = jsonArray.getJSONObject(i);
+//                            Log.e("@#@#","json data"+explrObject);
+//                        }
+                        final List<SavedOrder> savedOrders = new Gson().fromJson(newData, new TypeToken<List<SavedOrder>>() {
                         }.getType());
                         for (SavedOrder order : savedOrders) {
                             if (order != null) {
-                                final ContentValues values = ProviderUtils.savedOrderToContentValues(order);
-                                requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                                final DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                                final ContentValues contentValues = new ContentValues(1);
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_ID, order.getId());
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_START_TIME, dateFormat.format(order.getStartTime()));
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
+                                contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
+                                requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
                             }
                            // orders.add(order);
                         }
 
                         //listView.getAdapter().notifyDataSetChanged();
                         updateOrders(requireContext(), orders);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                   // }
+//                catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
 
 //                            String readFile = loadJSONFromFile(file);
 //                            Log.e("@#@#","json data"+readFile);

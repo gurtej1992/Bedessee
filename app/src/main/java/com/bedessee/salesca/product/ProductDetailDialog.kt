@@ -2,6 +2,7 @@ package com.bedessee.salesca.product
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.pm.ActivityInfo
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.loader.app.LoaderManager
 import com.bedessee.salesca.R
@@ -84,6 +86,13 @@ class ProductDetailDialog : DialogFragment() {
 
             MixPanelManager.trackProductView(context, "${product.brand} ${product.description}")
 
+        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requireActivity().requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
             val productNum = product.number
             val currentStore = StoreManager.getCurrentStore()
             var custSpecPrice: CustSpecPrice? = null

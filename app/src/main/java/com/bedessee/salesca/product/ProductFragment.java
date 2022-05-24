@@ -3,8 +3,11 @@ package com.bedessee.salesca.product;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -102,6 +105,13 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         View rootView = inflater.inflate(R.layout.fragment_product_list, container, false);
 
         final RecyclerView gridView = rootView.findViewById(R.id.gridView);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sharedPreferences.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();
@@ -164,7 +174,14 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 //                productDetailDialog.show(requireFragmentManager(), TAG);
 //            }
 //        });
-gridView.setLayoutManager(new GridLayoutManager(getContext(),5));
+
+
+
+        //GET
+
+        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        int spanCount = sh.getInt("spanCount",5);
+        gridView.setLayoutManager(new GridLayoutManager(getContext(),spanCount));
         gridView.setAdapter(mAdapter);
 
         final int loaderId;

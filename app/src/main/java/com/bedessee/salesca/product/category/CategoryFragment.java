@@ -1,8 +1,11 @@
 package com.bedessee.salesca.product.category;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,7 +45,13 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         MixPanelManager.trackScreenView(getActivity(), "Categories screen");
-
+        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         mAdapter = new CategoryAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, null, new String[]{Contract.CategoryColumns.COLUMN_DESCRIPTION}, new int[] {android.R.id.text1});
 
         ListView listView = new ListView(getActivity());

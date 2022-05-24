@@ -1,10 +1,12 @@
 package com.bedessee.salesca.customview
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
 import com.bedessee.salesca.update.UpdateActivity
@@ -15,7 +17,13 @@ class UpdateSelector : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.update_selector, container, false)
-
+        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requireActivity().requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         view.positiveButton.setOnClickListener {
             var updateDir = ""
 
@@ -33,7 +41,7 @@ class UpdateSelector : DialogFragment() {
 
             val updateIntent = Intent(context, UpdateActivity::class.java)
             updateIntent.putExtra(UpdateActivity.KEY_UPDATE_DIR, updateDir)
-            context!!.startActivity(updateIntent)
+            requireContext().startActivity(updateIntent)
 
             dismiss()
         }

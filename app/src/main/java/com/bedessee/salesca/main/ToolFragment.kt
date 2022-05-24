@@ -3,6 +3,7 @@ package com.bedessee.salesca.main
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,13 @@ class ToolFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
        val v:View= inflater.inflate(R.layout.fragment_tool, container, false)
+        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requireActivity().requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
       recyclerView = v.findViewById(R.id.recyclerView)
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.default_margin)
         if (recyclerView != null){

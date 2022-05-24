@@ -225,17 +225,17 @@ public class Utilities {
                 final SavedOrder order = ProviderUtils.cursorToSavedOrder(cursor);
 
                 if (order != null) {
-                    final ContentValues contentValues = new ContentValues(1);
-                    contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + 1);
-                    contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
-                    context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
+                        final ContentValues contentValues = new ContentValues(1);
+                        contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + 1);
+                        contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                        context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
                 }
                 String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
                 File f1 = new File(baseFilePath , "orderhistory");
                 if (!f1.exists()) {
                     f1.mkdirs();
                 }
-                SavedOrder order1=new SavedOrder(order.getId(),order.getStore(),order.getStartTime(),order.getEndTime(),order.isClosed(),order.getNumProducts()+1);
+                SavedOrder order1=new SavedOrder(order.getId(),StoreManager.getCurrentStore().getBaseNumber(),order.getStartTime(),order.getEndTime(),order.isClosed(),order.getNumProducts()+1);
                 Gson gson = new GsonBuilder().create();
                 String json = gson.toJson(order1);
                 Log.e("@@@@","get json"+json);

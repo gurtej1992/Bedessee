@@ -1,8 +1,11 @@
 package com.bedessee.salesca.product.brand;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -48,7 +51,13 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
         rootView = inflater.inflate(R.layout.fragment_brand_list, container, false);
 
         MixPanelManager.trackScreenView(getActivity(), "Brands screen");
-
+        SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
+        String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         getActivity().getLoaderManager().initLoader(LOADER_ID, null, this);
 
         mBrandAdapter = new BrandAdapter(getActivity());

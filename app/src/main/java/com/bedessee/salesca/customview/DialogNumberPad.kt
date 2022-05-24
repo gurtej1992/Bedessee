@@ -1,5 +1,6 @@
 package com.bedessee.salesca.customview
 
+import android.content.pm.ActivityInfo
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
@@ -11,6 +12,7 @@ import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
 import com.bedessee.salesca.utilities.ViewUtilities
@@ -196,7 +198,13 @@ class DialogNumberPad : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
         val view = inflater.inflate(R.layout.dialog_number_pad, container, false)
-
+        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requireActivity().requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         btnPoint = view.btn_point
         btn0 = view.btn_0
         btnCase = view.btn_case

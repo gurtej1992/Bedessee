@@ -3,10 +3,13 @@ package com.bedessee.salesca.main;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView drawericon,search,storeicon,menuicon,home_icon,cart_icon,report_icon,tool_icon;
     TextView home_txt,cart_txt,report_txt,tool_txt;
     LinearLayout home,cart,report,tools;
-    String from="";
+    String from="",orient;
 
     private static final String TAG = "MainActivity";
 
@@ -112,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
+         orient= sh.getString("orientation","landscape");
+         if(orient.equals("landscape")){
+             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+         }else {
+             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+         }
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         lst_menu_items = findViewById(R.id.lst_menu_items);

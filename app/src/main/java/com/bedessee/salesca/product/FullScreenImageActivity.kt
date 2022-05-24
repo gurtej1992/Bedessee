@@ -2,6 +2,7 @@ package com.bedessee.salesca.product
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.view.Window
@@ -23,6 +24,13 @@ class FullScreenImageActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
+        val sh = getSharedPreferences("setting", MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         //Setup View
         val imageViewTouch = ImageViewTouch(this, null)
         imageViewTouch.displayType = ImageViewTouchBase.DisplayType.FIT_TO_SCREEN

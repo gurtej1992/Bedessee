@@ -1,5 +1,8 @@
 package com.bedessee.salesca.customview;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,7 +32,13 @@ public class MarginCalculator extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.markup_calculator);
-
+        SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
+       String orient= sh.getString("orientation","landscape");
+        if(orient.equals("landscape")){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         final EditText costEdt = findViewById(R.id.editText_costprice);
         final EditText sellEdt = findViewById(R.id.editText_sellingprice);
         final EditText markupEdt = findViewById(R.id.editText_markup);

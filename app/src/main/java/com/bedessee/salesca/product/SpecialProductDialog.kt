@@ -1,6 +1,7 @@
 package com.bedessee.salesca.product
 
 import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
 import com.bedessee.salesca.customview.QtySelector
@@ -47,6 +49,14 @@ class SpecialProductDialog : DialogFragment() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
+        val orient = sh.getString("orientation", "landscape")
+        requireActivity().requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         val context = inflater.context
 
         val dimens = Utilities.getScreenDimensInPx(null)
