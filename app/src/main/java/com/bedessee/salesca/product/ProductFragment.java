@@ -235,6 +235,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 String filterWhere = filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")";
                 Log.e("LOLLLOL",filterWhere);
                 mAdapter.mCursorAdapter.getFilter().filter(filterWhere);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
