@@ -377,6 +377,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor != null) {
             mAdapter.mCursorAdapter.changeCursor(cursor);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
