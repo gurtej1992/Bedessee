@@ -189,6 +189,7 @@ public class OrderHistoryDialog extends Fragment {
         importOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String baseFilePath = new SharedPrefsManager(requireContext()).getSugarSyncDir();
 
                 final File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
@@ -205,42 +206,50 @@ public class OrderHistoryDialog extends Fragment {
 //                            JSONObject explrObject = jsonArray.getJSONObject(i);
 //                            Log.e("@#@#","json data"+explrObject);
 //                        }
+
                         final List<SavedOrder> savedOrders = new Gson().fromJson(newData, new TypeToken<List<SavedOrder>>() {
                         }.getType());
                         for (SavedOrder order : savedOrders) {
-                            if (order != null) {
-                                final DateFormat dateFormat = DateFormat.getDateTimeInstance();
-                                final ContentValues contentValues = new ContentValues(1);
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_ID, order.getId());
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_START_TIME, dateFormat.format(order.getStartTime()));
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
-                                contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
-                                requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
-                                requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
+                            if (order!= null) {
+                               Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, null, null, null);
+                                if (cursor.moveToNext()==true) {
+                                    while (cursor.moveToNext()) {
+                                        final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
+                                        if (saveorder != null) {
+                                            if (saveorder.getId().equals(order.getId())) {
+
+                                            } else {
+                                                final DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                                                final ContentValues contentValues = new ContentValues(1);
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_ID, order.getId());
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_START_TIME, dateFormat.format(order.getStartTime()));
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
+                                                contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                               // requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
+                                                requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
+                                            }
+                                        }
+
+                                    }
+                                    cursor.close();
+                                } else {
+                                    final DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                                    final ContentValues contentValues = new ContentValues(1);
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_ID, order.getId());
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_START_TIME, dateFormat.format(order.getStartTime()));
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                    requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
+                                    requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
+                                }
                             }
-                           // orders.add(order);
                         }
-
-                        //listView.getAdapter().notifyDataSetChanged();
-                        updateOrders(requireContext(), orders);
-                   // }
-//                catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-
-//                            String readFile = loadJSONFromFile(file);
-//                            Log.e("@#@#","json data"+readFile);
-//                            final List<SavedOrder> savedOrders = new Gson().fromJson(readFile, new TypeToken<List<SavedOrder>>() {
-//                        }.getType());
-//                        for (SavedOrder order : savedOrders) {
-//                            orders.add(order);
-//                        }
-//                        //listView.getAdapter().notifyDataSetChanged();
-//                        updateOrders(requireContext(), orders);
-
-                        }
+                    new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
+                }
 
 
                 else {
@@ -272,30 +281,6 @@ public class OrderHistoryDialog extends Fragment {
         });
 
         return view;
-    }
-
-    public String loadJSONFromFile(File fileName) {
-        String json;
-        try {
-            InputStream is = new FileInputStream(fileName);
-
-            int size = is.available();
-
-            byte[] buffer = new byte[size];
-
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, StandardCharsets.UTF_8);
-
-
-        } catch (IOException ex) {
-            Timber.e(ex);
-            return null;
-        }
-        return json;
-
     }
 
     @Override
