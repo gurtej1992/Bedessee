@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.Filter;
 import android.widget.FilterQueryProvider;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +37,7 @@ import com.bedessee.salesca.utilities.Utilities;
 
 import java.util.ArrayList;
 
-public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapter.ViewHolder> {
+public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapter.ViewHolder>{
     private static final String TAG = "ProductDummyAdapter";
 
     boolean isBusy = false;
@@ -490,12 +492,14 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
 
     @Override
     public int getItemCount() {
+
         return mCursorAdapter.getCount();
     }
 
     public void setListener(ProductDummyAdapter.Listener listener){
         this.listener = listener;
     }
+
 
     interface Listener {
         void onClick(Product product);

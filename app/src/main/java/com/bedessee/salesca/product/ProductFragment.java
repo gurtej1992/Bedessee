@@ -112,6 +112,23 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         }else {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        int[] dimens = Utilities.getScreenDimensInPx(getActivity());
+        mAdapter = new ProductDummyAdapter(getContext(),null, dimens);
+        mAdapter.setListener(new ProductDummyAdapter.Listener() {
+            @Override
+            public void onClick(Product product) {
+                MixPanelManager.selectProduct(getActivity(), product.getBrand() + " " + product.getDescription());
+                final ProductDetailDialog productDetailDialog = ProductDetailDialog.Companion.create(product, new Runnable() {
+                    @Override
+                    public void run() {
+                        shouldRestartLoaderOnResume = false;
+                    }
+                });
+
+                productDetailDialog.show(requireFragmentManager(), TAG);
+
+            }
+        });
         upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();
@@ -141,25 +158,10 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
         });
 
-        int[] dimens = Utilities.getScreenDimensInPx(getActivity());
 
 
-        mAdapter = new ProductDummyAdapter(getContext(),null, dimens);
-        mAdapter.setListener(new ProductDummyAdapter.Listener() {
-            @Override
-            public void onClick(Product product) {
-                                MixPanelManager.selectProduct(getActivity(), product.getBrand() + " " + product.getDescription());
-                final ProductDetailDialog productDetailDialog = ProductDetailDialog.Companion.create(product, new Runnable() {
-                    @Override
-                    public void run() {
-                        shouldRestartLoaderOnResume = false;
-                    }
-                });
 
-                productDetailDialog.show(requireFragmentManager(), TAG);
 
-            }
-        });
 //        mAdapter.setListener(new ProductAdapter.Listener() {
 //            @Override
 //            public void onClick(Product product) {

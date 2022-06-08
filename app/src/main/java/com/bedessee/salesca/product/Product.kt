@@ -107,7 +107,7 @@ open class Product(
         val sharedPrefs = SharedPrefsManager(context)
         val folderImagePath = sharedPrefs.linkToProdImages
         val folderLargeImagePath = sharedPrefs.linkToLargeProdImages
-        return imagePath!!.replace(folderImagePath, folderLargeImagePath)
+        return imagePath?.replace(folderImagePath, folderLargeImagePath)
     }
 
     val category: Category
