@@ -190,6 +190,13 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
                     if (store != null) {
 
                         if (!store.isShowPopup()) {
+                            final Date date = new Date();
+                            final String savedOrderId = Utilities.getSavedOrderId(StoreSelector.this, storeName, date);
+                            final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
+                            final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
+
+                            getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                            ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
                             StoreManager.setCurrentStore(getApplicationContext(), store);
                             final Intent intent = new Intent();
                             intent.putExtra("justLooking", true);

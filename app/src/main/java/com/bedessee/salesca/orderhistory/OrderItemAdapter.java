@@ -2,9 +2,11 @@ package com.bedessee.salesca.orderhistory;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
+import com.bedessee.salesca.store.StoreSelector;
+import com.bedessee.salesca.utilities.Utilities;
 
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +42,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 import timber.log.Timber;
 
@@ -87,8 +92,22 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
                                 mContext.getContentResolver().delete(Contract.SavedOrder.CONTENT_URI, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{order.getId()});
                                 mSavedOrders.remove(order);
                                 notifyDataSetChanged();
+                                Cursor cursor = mContext.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(mContext)}, null, null);
+                                if (cursor.moveToFirst()) {
+                              cursor.close();
+                                }else {
+                                    final Date date = new Date();
+                                    final String savedOrderId = Utilities.getSavedOrderId(mContext, StoreManager.getCurrentStore().getName(), date);
+                                    final SavedOrder savedOrder = new SavedOrder(savedOrderId, StoreManager.getCurrentStore().getBaseNumber(), date, null, false, 0);
+                                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
 
-                                // parentDialog.dismiss();
+                                    mContext.getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                                    ShoppingCart.setCurrentOrderId(mContext, savedOrderId);
+
+                                    Log.e("!!!!", "get saveorder id" + savedOrderId);
+                                }
+
+                                    // parentDialog.dismiss()
                             }
                         },"OK", null, "NO")
                         .show(((AppCompatActivity) mContext).getSupportFragmentManager(), "df");

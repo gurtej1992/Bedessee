@@ -211,11 +211,14 @@ public class OrderHistoryDialog extends Fragment {
                         }.getType());
                         for (SavedOrder order : savedOrders) {
                             if (order!= null) {
-                               Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, null, null, null);
-                                if (cursor.moveToNext()==true) {
-                                    while (cursor.moveToNext()) {
+                               Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())}, null, null);
+                                if (cursor.moveToFirst()) {
+
                                         final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
                                         if (saveorder != null) {
+                                            Log.e("!!!","get id"+saveorder.getId());
+                                            Log.e("!!!","get order id"+order.getId());
+
                                             if (saveorder.getId().equals(order.getId())) {
 
                                             } else {
@@ -232,9 +235,10 @@ public class OrderHistoryDialog extends Fragment {
                                             }
                                         }
 
-                                    }
                                     cursor.close();
-                                } else {
+                                }
+
+                                else {
                                     final DateFormat dateFormat = DateFormat.getDateTimeInstance();
                                     final ContentValues contentValues = new ContentValues(1);
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
