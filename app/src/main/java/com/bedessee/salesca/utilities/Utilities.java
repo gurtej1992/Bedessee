@@ -153,6 +153,7 @@ public class Utilities {
                     if (cursor.moveToFirst()) {
                                     final SavedOrder order = ProviderUtils.cursorToSavedOrder(cursor);
 
+                                    //comment
                         if (order != null) {
                             final ContentValues contentValues = new ContentValues(1);
                             contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + 1);
