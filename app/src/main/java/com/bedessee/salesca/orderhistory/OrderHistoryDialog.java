@@ -218,7 +218,7 @@ public class OrderHistoryDialog extends Fragment {
                                         if (saveorder != null) {
                                             Log.e("!!!","get id"+saveorder.getId());
                                             Log.e("!!!","get order id"+order.getId());
-
+                                            Log.e("!!!","get current id"+ShoppingCart.getCurrentOrderId(requireContext()));
                                             if (saveorder.getId().equals(order.getId())) {
 
                                             } else {
