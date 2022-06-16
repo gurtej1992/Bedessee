@@ -171,7 +171,7 @@ public class Utilities {
                         if(file.exists()){
                             boolean deleted = file.delete();
                             if (deleted) {
-                                SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                                SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem2);
                                 Gson gson = new GsonBuilder().create();
                                 String json = gson.toJson(order1);
                                 Log.e("@@@@", "get json" + json);
@@ -295,7 +295,7 @@ public class Utilities {
                 if(file.exists()){
                     boolean deleted = file.delete();
                     if (deleted) {
-                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);
@@ -309,7 +309,7 @@ public class Utilities {
                         }
                     }
                 }else {
-                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);

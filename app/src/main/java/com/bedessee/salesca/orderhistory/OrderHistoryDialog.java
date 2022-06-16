@@ -87,7 +87,7 @@ public class OrderHistoryDialog extends Fragment {
         }
         return instance;
     }
-
+    private List<String> fileList = new ArrayList<String>();
 
     class OrderListener implements OrderLoaderListener {
         @Override
@@ -176,14 +176,10 @@ public class OrderHistoryDialog extends Fragment {
 
         switchMaterial = view.findViewById(R.id.switch_stores);
         importOrder = view.findViewById(R.id.importorder);
-        if (StoreManager.getCurrentStore() == null) {
-            switchMaterial.setVisibility(View.GONE);
-            importOrder.setVisibility(View.GONE);
 
-        }else {
-            importOrder.setVisibility(View.VISIBLE);
+        importOrder.setVisibility(View.VISIBLE);
 
-        }
+
         listView = view.findViewById(R.id.list);
 
         importOrder.setOnClickListener(new View.OnClickListener() {
@@ -191,27 +187,26 @@ public class OrderHistoryDialog extends Fragment {
             public void onClick(View v) {
 
                 String baseFilePath = new SharedPrefsManager(requireContext()).getSugarSyncDir();
-
-                final File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
-                Timber.d("file path:%s", file.getAbsolutePath());
-                if(file.exists()) {
+                File root=new File(baseFilePath + "/orderhistory");
+                ListDir(root);
+                String newData="";
+                for(int i=0;i<fileList.size();i++) {
+                    final File file = new File(baseFilePath + "/orderhistory/" + fileList.get(i));
                     readFromFile(requireContext(), file);
-                    String data="["+readFromFile(requireContext(),file)+"]";
-                    String newData = data.replace("}{","},{");
-                    Log.e("@#@#",newData);
-//                    JSONArray jsonArray = null;
-//                    try {
-//                        jsonArray= new JSONArray(data);
-//                        for (int i = 0; i < jsonArray.length(); i++) {
-//                            JSONObject explrObject = jsonArray.getJSONObject(i);
-//                            Log.e("@#@#","json data"+explrObject);
-//                        }
+                    String data = readFromFile(requireContext(), file);
+                    newData+=data;
+                    Log.e("@#@#","new data before loop"+newData);
+                }
+                String data="["+newData+"]";
+                    String Data = data.replace("}{","},{");
+                    Log.e("@#@#",Data);
+                   final List<SavedOrder> savedOrders =(new Gson().fromJson(Data, new TypeToken<List<SavedOrder>>() {
+                    }.getType()));
+                    Log.e("@#@#","get saveorder list"+savedOrders.size());
 
-                        final List<SavedOrder> savedOrders = new Gson().fromJson(newData, new TypeToken<List<SavedOrder>>() {
-                        }.getType());
-                        for (SavedOrder order : savedOrders) {
+                   for (SavedOrder order : savedOrders) {
                             if (order!= null) {
-                               Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())}, null, null);
+                               Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{order.getId()}, null, null);
                                 if (cursor.moveToFirst()) {
 
                                         final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
@@ -256,11 +251,6 @@ public class OrderHistoryDialog extends Fragment {
                 }
 
 
-                else {
-                    Toast.makeText(requireContext(), "No Order History found", Toast.LENGTH_LONG).show();
-
-                }
-            }
         });
 
         progressBar = view.findViewById(R.id.progress_bar);
@@ -291,6 +281,15 @@ public class OrderHistoryDialog extends Fragment {
     public void onStart() {
         super.onStart();
        // ViewUtilities.Companion.setActivityWindowSize(getDialog().getWindow());
+    }
+
+    public void ListDir(File f){
+        File[] files = f.listFiles();
+        fileList.clear();
+        for (File file : files){
+            fileList.add(file.getName());
+        }
+
     }
 
     private String readFromFile(Context context,File file) {
