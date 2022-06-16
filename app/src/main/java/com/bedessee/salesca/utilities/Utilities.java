@@ -75,6 +75,7 @@ import timber.log.Timber;
 public class Utilities {
 
     private static int[] screenDimens;
+    public static List<SavedItem> savedItemList=new ArrayList<>();
 
     /**
      * Checks if an internet connection (cellular or wifi) exists
@@ -171,7 +172,12 @@ public class Utilities {
                         if(file.exists()){
                             boolean deleted = file.delete();
                             if (deleted) {
-                                SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem2);
+                                for(int i=0;i<savedItemList.size();i++){
+                                    if(savedItemList.get(i).getShoppingCartProduct().getProduct().getBrand().contains(savedItem2.getShoppingCartProduct().getProduct().getBrand())){
+                                        savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
+                                    }
+                                }
+                                SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                                 Gson gson = new GsonBuilder().create();
                                 String json = gson.toJson(order1);
                                 Log.e("@@@@", "get json" + json);
@@ -185,6 +191,7 @@ public class Utilities {
                                 }
                             }
                         }else {
+                            savedItemList.add(savedItem2);
                             SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(order1);
@@ -295,7 +302,8 @@ public class Utilities {
                 if(file.exists()){
                     boolean deleted = file.delete();
                     if (deleted) {
-                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem);
+                        savedItemList.add(savedItem);
+                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);
@@ -309,7 +317,8 @@ public class Utilities {
                         }
                     }
                 }else {
-                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItem);
+                    savedItemList.add(savedItem);
+                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);

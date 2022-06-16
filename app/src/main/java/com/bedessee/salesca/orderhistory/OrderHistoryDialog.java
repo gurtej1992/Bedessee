@@ -36,6 +36,7 @@ import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.reportsmenu.ReportFragment;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
+import com.bedessee.salesca.shoppingcart.ShoppingCartProduct;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.ViewUtilities;
@@ -211,12 +212,23 @@ public class OrderHistoryDialog extends Fragment {
 
                                         final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
                                         if (saveorder != null) {
-                                            Log.e("!!!","get id"+saveorder.getId());
-                                            Log.e("!!!","get order id"+order.getId());
-                                            Log.e("!!!","get current id"+ShoppingCart.getCurrentOrderId(requireContext()));
-                                            if (saveorder.getId().equals(order.getId())) {
 
+                                            if (saveorder.getId().equals(order.getId())) {
+                                                for(int i=0;i<order.savedItem.size();i++){
+                                                    final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                                                    productToSave.setEnteredPrice(null);
+                                                    final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
+                                                    requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
+                                                }
                                             } else {
+                                                for(int i=0;i<order.savedItem.size();i++){
+                                                    final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                                                    productToSave.setEnteredPrice(null);
+                                                    final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
+                                                    requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
+                                                }
                                                 final DateFormat dateFormat = DateFormat.getDateTimeInstance();
                                                 final ContentValues contentValues = new ContentValues(1);
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
@@ -227,6 +239,8 @@ public class OrderHistoryDialog extends Fragment {
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
                                                // requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
                                                 requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
+
+
                                             }
                                         }
 
@@ -234,6 +248,13 @@ public class OrderHistoryDialog extends Fragment {
                                 }
 
                                 else {
+                                    for(int i=0;i<order.savedItem.size();i++){
+                                        final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                                        productToSave.setEnteredPrice(null);
+                                        final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                                        final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
+                                        requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
+                                    }
                                     final DateFormat dateFormat = DateFormat.getDateTimeInstance();
                                     final ContentValues contentValues = new ContentValues(1);
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
