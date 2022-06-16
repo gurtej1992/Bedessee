@@ -1,9 +1,9 @@
 package com.bedessee.salesca.shoppingcart
 
-import android.R.string
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.text.TextUtils
-import android.text.TextUtils.split
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +19,9 @@ import com.bedessee.salesca.customview.GenericDialog
 import com.bedessee.salesca.customview.GenericDialog.Companion.newInstance
 import com.bedessee.salesca.customview.ItemType
 import com.bedessee.salesca.provider.Contract
+import com.bedessee.salesca.provider.ProviderUtils
+import com.bedessee.salesca.store.StoreManager
 import com.bedessee.salesca.utilities.Utilities
-import org.apache.commons.lang3.StringUtils.split
 
 
 class ShoppingCartAdapter(
@@ -118,6 +119,38 @@ class ShoppingCartAdapter(
             newInstance("", mContext.getString(R.string.delete_item_shopping_cart_message, selectedProduct.brand, selectedProduct.description), object : GenericDialog.OnClickListener {
                 override fun onClick(dialog: DialogFragment) {
                     mContext.contentResolver.delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", arrayOf(orderId, product.number))
+                    val cursor: Cursor? = mContext.getContentResolver().query(
+                        Contract.SavedOrder.CONTENT_URI,
+                        null,
+                        Contract.SavedOrderColumns.COLUMN_ID + " = ?",
+                        arrayOf(ShoppingCart.getCurrentOrderId(mContext)),
+                        null
+                    )
+                    if (cursor != null) {
+                        if (cursor.moveToFirst()) {
+                            val order = ProviderUtils.cursorToSavedOrder(cursor)
+
+                            //comment
+                            if (order != null) {
+                                val contentValues = ContentValues(1)
+                                contentValues.put(
+                                    Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS,
+                                    order.numProducts - shoppingCartProduct!!.quantity
+                                )
+                                contentValues.put(
+                                    Contract.SavedOrderColumns.COLUMN_STORE,
+                                    StoreManager.getCurrentStore().baseNumber
+                                )
+                                mContext.getContentResolver().update(
+                                    Contract.SavedOrder.CONTENT_URI,
+                                    contentValues,
+                                    Contract.SavedOrderColumns.COLUMN_ID + " = ?",
+                                    arrayOf(ShoppingCart.getCurrentOrderId(mContext))
+                                )
+                            }
+                        }
+                    }
+
                     ShoppingCart.getCurrentShoppingCart().products.remove(shoppingCartProduct)
                     notifyDataSetChanged()
                     ShoppingCart.getCurrentShoppingCart().productChanged();
@@ -166,3 +199,6 @@ class ShoppingCartAdapter(
         }
     }
 }
+
+
+
