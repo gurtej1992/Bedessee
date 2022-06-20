@@ -196,14 +196,11 @@ public class OrderHistoryDialog extends Fragment {
                     readFromFile(requireContext(), file);
                     String data = readFromFile(requireContext(), file);
                     newData+=data;
-                    Log.e("@#@#","new data before loop"+newData);
                 }
                 String data="["+newData+"]";
                     String Data = data.replace("}{","},{");
-                    Log.e("@#@#",Data);
                    final List<SavedOrder> savedOrders =(new Gson().fromJson(Data, new TypeToken<List<SavedOrder>>() {
                     }.getType()));
-                    Log.e("@#@#","get saveorder list"+savedOrders.size());
 
                    for (SavedOrder order : savedOrders) {
                             if (order!= null) {
@@ -215,6 +212,7 @@ public class OrderHistoryDialog extends Fragment {
 
                                             if (saveorder.getId().equals(order.getId())) {
                                                 for(int i=0;i<order.savedItem.size();i++){
+
                                                     final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
                                                     productToSave.setEnteredPrice(null);
                                                     final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
@@ -237,7 +235,6 @@ public class OrderHistoryDialog extends Fragment {
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
-                                               // requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
                                                 requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
 
 
@@ -248,13 +245,7 @@ public class OrderHistoryDialog extends Fragment {
                                 }
 
                                 else {
-                                    for(int i=0;i<order.savedItem.size();i++){
-                                        final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
-                                        productToSave.setEnteredPrice(null);
-                                        final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
-                                        final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
-                                        requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                                    }
+
                                     final DateFormat dateFormat = DateFormat.getDateTimeInstance();
                                     final ContentValues contentValues = new ContentValues(1);
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
@@ -263,10 +254,30 @@ public class OrderHistoryDialog extends Fragment {
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
-                                    requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
                                     requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
                                 }
                             }
+                       for(int i=0;i<order.savedItem.size();i++){
+                           final Cursor cursor = requireContext().getContentResolver().query(Contract.SavedItem.CONTENT_URI, null, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()}, null);
+
+                           if (cursor != null) {
+                               while (cursor.moveToNext()) {
+                                   final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor);
+                              if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
+
+                              }else {
+                                  final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                                  productToSave.setEnteredPrice(null);
+                                  final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                                  final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
+                                  requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
+                              }
+
+                               }
+                               cursor.close();
+                           }
+
+                       }
                         }
                     new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
                 }
