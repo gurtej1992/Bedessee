@@ -65,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import timber.log.Timber;
@@ -601,9 +602,12 @@ public class Utilities {
 
     public static String getSavedOrderId(final Context context, final String storeName, final Date date) {
         final String dateKey = DateFormat.getDateTimeInstance().format(date);
-        final String salesmanEmailKey = SalesmanManager.getCurrentSalesman(context).getEmail().substring(0, 4);
-
-        return storeName + "_" + salesmanEmailKey + dateKey;
+//TODO Find other alternative of this
+         String salesmanEmailKey = SalesmanManager.getCurrentSalesman(context).getEmail();
+        if(Objects.equals(salesmanEmailKey, "")){
+         salesmanEmailKey = "codewithtej@gmail.com";
+        }
+        return storeName + "_" + salesmanEmailKey.substring(0, 4) + dateKey;
     }
 
     /**
