@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.customview.GenericDialog;
+import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.reportsmenu.ReportAdapter;
@@ -96,15 +97,18 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
                                 if (cursor.moveToFirst()) {
                               cursor.close();
                                 }else {
-                                    final Date date = new Date();
-                                    final String savedOrderId = Utilities.getSavedOrderId(mContext, StoreManager.getCurrentStore().getName(), date);
-                                    final SavedOrder savedOrder = new SavedOrder(savedOrderId, StoreManager.getCurrentStore().getBaseNumber(), date, null, false, 0);
-                                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
-
-                                    mContext.getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
-                                    ShoppingCart.setCurrentOrderId(mContext, savedOrderId);
-
-                                    Log.e("!!!!", "get saveorder id" + savedOrderId);
+//                                    final Date date = new Date();
+//                                    final String savedOrderId = Utilities.getSavedOrderId(mContext, StoreManager.getCurrentStore().getName(), date);
+//                                    final SavedOrder savedOrder = new SavedOrder(ShoppingCart.getCurrentOrderId(mContext), StoreManager.getCurrentStore().getBaseNumber(), date, null, false, 0);
+//                                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
+//
+//                                    mContext.getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+//                                    ShoppingCart.setCurrentOrderId(mContext, ShoppingCart.getCurrentOrderId(mContext));
+                                    final ContentValues contentValues = new ContentValues(1);
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS,0);
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                    mContext.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(mContext)});
+                                    Log.e("!!!!", "get current id" + ShoppingCart.getCurrentOrderId(mContext));
                                 }
 
                                     // parentDialog.dismiss()
@@ -136,6 +140,13 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
                             final SalesmanStore salesmanStore = ProviderUtils.cursorToSalesmanStore(cursor);
                             final Store store = salesmanStore.getStore();
                             StoreManager.setCurrentStore(mContext, store);
+//                            final Date date = new Date();
+//                            final String savedOrderId = Utilities.getSavedOrderId(mContext, storeName, date);
+
+                            ShoppingCart.setCurrentOrderId(mContext, order.getId());
+                            if (mContext instanceof MainActivity) {
+                                ((MainActivity)mContext).toolbarSubtitle.setText(storeName);
+                            }
                             GenericDialog.Companion.outstandingDialogInstance(
                                     ((Activity) mContext), store.getOutstandingBalanceDue(),
                                     store.getLastCollectDate(),

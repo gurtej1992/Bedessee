@@ -76,6 +76,7 @@ import timber.log.Timber;
 public class Utilities {
 
     private static int[] screenDimens;
+    public static List<SavedItem> savedItemList=new ArrayList<>();
 
     /**
      * Checks if an internet connection (cellular or wifi) exists
@@ -145,7 +146,7 @@ public class Utilities {
 
 
                     context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
-                                    Toast.makeText(context, "Added update" + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Added " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
                                     if (onProductUpdatedListener != null) {
                                         onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
                                     }
@@ -157,7 +158,7 @@ public class Utilities {
                                     //comment
                         if (order != null) {
                             final ContentValues contentValues = new ContentValues(1);
-                            contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + 1);
+                            contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + selectedQty);
                             contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
                             context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
                         }
@@ -172,7 +173,12 @@ public class Utilities {
                         if(file.exists()){
                             boolean deleted = file.delete();
                             if (deleted) {
-                                SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                                for(int i=0;i<savedItemList.size();i++){
+                                    if(savedItemList.get(i).getShoppingCartProduct().getProduct().getBrand().contains(savedItem2.getShoppingCartProduct().getProduct().getBrand())){
+                                        savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
+                                    }
+                                }
+                                SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                                 Gson gson = new GsonBuilder().create();
                                 String json = gson.toJson(order1);
                                 Log.e("@@@@", "get json" + json);
@@ -186,7 +192,8 @@ public class Utilities {
                                 }
                             }
                         }else {
-                            SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                            savedItemList.add(savedItem2);
+                            SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(order1);
                             Log.e("@@@@", "get json" + json);
@@ -296,7 +303,8 @@ public class Utilities {
                 if(file.exists()){
                     boolean deleted = file.delete();
                     if (deleted) {
-                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                        savedItemList.add(savedItem);
+                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);
@@ -310,7 +318,8 @@ public class Utilities {
                         }
                     }
                 }else {
-                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                    savedItemList.add(savedItem);
+                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         Log.e("@@@@", "get json" + json);

@@ -1,8 +1,10 @@
 package com.bedessee.salesca.shoppingcart;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewTreeViewModelKt;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +31,9 @@ import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.modal.ShoppingCartNew;
 import com.bedessee.salesca.order.GMailUtils;
 import com.bedessee.salesca.orderhistory.OrderHistoryDialog;
+import com.bedessee.salesca.orderhistory.SavedOrder;
+import com.bedessee.salesca.provider.Contract;
+import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.store.NewStoreDialog;
 import com.bedessee.salesca.store.Store;
@@ -121,6 +127,8 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         });
         return view;
     }
+
+
 
 
     private void updateTotal(View view) {

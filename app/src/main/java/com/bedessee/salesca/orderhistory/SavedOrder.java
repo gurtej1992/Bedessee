@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO: Document me...
@@ -22,6 +23,7 @@ public class SavedOrder implements Comparable, Serializable {
     private boolean mIsClosed;
 
     private int mNumProducts;
+    List<SavedItem> savedItem;
 
     public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts) {
         mId = id;
@@ -30,6 +32,16 @@ public class SavedOrder implements Comparable, Serializable {
         mEndTime = endTime;
         mIsClosed = isClosed;
         mNumProducts = numProducts;
+    }
+
+    public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts,List<SavedItem> savedItem) {
+        mId = id;
+        mStore = store;
+        mStartTime = startTime;
+        mEndTime = endTime;
+        mIsClosed = isClosed;
+        mNumProducts = numProducts;
+        this.savedItem=savedItem;
     }
 
     public String getId() {

@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private Store mCurrentStore;
     private TextView toolbarTitle;
-    private TextView toolbarSubtitle;
+    public TextView toolbarSubtitle;
     private Boolean isFirstTime = true;
     private boolean mShowBalanceDialog;
     private Salesman mSalesman;
