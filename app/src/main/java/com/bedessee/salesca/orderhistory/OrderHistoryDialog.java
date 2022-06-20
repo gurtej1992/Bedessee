@@ -211,22 +211,9 @@ public class OrderHistoryDialog extends Fragment {
                                         if (saveorder != null) {
 
                                             if (saveorder.getId().equals(order.getId())) {
-                                                for(int i=0;i<order.savedItem.size();i++){
-
-                                                    final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
-                                                    productToSave.setEnteredPrice(null);
-                                                    final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
-                                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
-                                                    requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                                                }
+                                              
                                             } else {
-                                                for(int i=0;i<order.savedItem.size();i++){
-                                                    final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
-                                                    productToSave.setEnteredPrice(null);
-                                                    final SavedItem savedItem = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
-                                                    final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem);
-                                                    requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                                                }
+
                                                 final DateFormat dateFormat = DateFormat.getDateTimeInstance();
                                                 final ContentValues contentValues = new ContentValues(1);
                                                 contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
