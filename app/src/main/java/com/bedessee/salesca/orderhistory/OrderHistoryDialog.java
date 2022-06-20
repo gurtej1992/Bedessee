@@ -256,28 +256,37 @@ public class OrderHistoryDialog extends Fragment {
                                     contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
                                     requireContext().getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, contentValues);
                                 }
+
+
                             }
+
                        for(int i=0;i<order.savedItem.size();i++){
-                           final Cursor cursor = requireContext().getContentResolver().query(Contract.SavedItem.CONTENT_URI, null, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()}, null);
+                           final Cursor cursor1 = requireContext().getContentResolver().query(Contract.SavedItem.CONTENT_URI, null, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()}, null);
 
-                           if (cursor != null) {
-                               while (cursor.moveToNext()) {
-                                   final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor);
-                              if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
+                           if (cursor1.moveToFirst()) {
 
-                              }else {
-                                  final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
-                                  productToSave.setEnteredPrice(null);
-                                  final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
-                                  final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
-                                  requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                              }
+                                   final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor1);
+                                   if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
 
-                               }
-                               cursor.close();
+                                   }else {
+                                       final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                                       productToSave.setEnteredPrice(null);
+                                       final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                                       final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
+                                       requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
+                                   }
+
+                               cursor1.close();
+                           }else {
+                               final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                               productToSave.setEnteredPrice(null);
+                               final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
+                               final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
+                               requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
                            }
 
                        }
+
                         }
                     new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
                 }
