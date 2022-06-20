@@ -174,7 +174,7 @@ public class Utilities {
                             boolean deleted = file.delete();
                             if (deleted) {
                                 for(int i=0;i<savedItemList.size();i++){
-                                    if(savedItemList.get(i).getShoppingCartProduct().getProduct().getBrand().contains(savedItem2.getShoppingCartProduct().getProduct().getBrand())){
+                                    if(savedItemList.get(i).getShoppingCartProduct().getProduct().getNumber().contains(savedItem2.getShoppingCartProduct().getProduct().getNumber())){
                                         savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
                                     }
                                 }
@@ -192,8 +192,12 @@ public class Utilities {
                                 }
                             }
                         }else {
-                            savedItemList.add(savedItem2);
-                            SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1);
+                            for(int i=0;i<savedItemList.size();i++){
+                                if(savedItemList.get(i).getShoppingCartProduct().getProduct().getNumber().contains(savedItem2.getShoppingCartProduct().getProduct().getNumber())){
+                                    savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
+                                }
+                            }
+                            SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(order1);
                             Log.e("@@@@", "get json" + json);

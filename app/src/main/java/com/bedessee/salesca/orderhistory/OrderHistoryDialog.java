@@ -211,7 +211,20 @@ public class OrderHistoryDialog extends Fragment {
                                         if (saveorder != null) {
 
                                             if (saveorder.getId().equals(order.getId())) {
-                                              
+                                                if(saveorder.getNumProducts()==0){
+                                                    final DateFormat dateFormat = DateFormat.getDateTimeInstance();
+                                                    final ContentValues contentValues = new ContentValues(1);
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts());
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_ID, order.getId());
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_START_TIME, dateFormat.format(order.getStartTime()));
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_END_TIME, dateFormat.format(order.getStartTime()));
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_IS_CLOSED, order.isClosed());
+                                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                                    requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{order.getId()});
+
+
+                                                }
+
                                             } else {
 
                                                 final DateFormat dateFormat = DateFormat.getDateTimeInstance();
@@ -253,7 +266,10 @@ public class OrderHistoryDialog extends Fragment {
                            if (cursor1.moveToFirst()) {
 
                                    final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor1);
-                                   if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
+                                   Log.e("@#@#","get order"+savedItem.getShoppingCartProduct().getProduct().getNumber());
+                               Log.e("@#@#","get order after"+order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber());
+
+                               if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
 
                                    }else {
                                        final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
