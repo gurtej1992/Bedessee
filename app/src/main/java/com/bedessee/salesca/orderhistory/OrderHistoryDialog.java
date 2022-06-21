@@ -260,33 +260,28 @@ public class OrderHistoryDialog extends Fragment {
 
                             }
 
+                            final Cursor cursor1 = requireContext().getContentResolver().query(Contract.SavedItem.CONTENT_URI, null, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()}, null);
+
+                       if (cursor1.moveToFirst()) {
+
+                           final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor1);
+                           Log.e("@#@#","get order"+savedItem.getShoppingCartProduct().getProduct().getNumber());
+
+                         if(savedItem!=null){
+                             requireContext().getContentResolver().delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()});
+                         }
+
+                           cursor1.close();
+                       }
+
                        for(int i=0;i<order.savedItem.size();i++){
-                           final Cursor cursor1 = requireContext().getContentResolver().query(Contract.SavedItem.CONTENT_URI, null, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()}, null);
 
-                           if (cursor1.moveToFirst()) {
-
-                                   final SavedItem savedItem = ProviderUtils.cursorToSavedItem(requireContext(), cursor1);
-                                   Log.e("@#@#","get order"+savedItem.getShoppingCartProduct().getProduct().getNumber());
-                               Log.e("@#@#","get order after"+order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber());
-
-                               if(savedItem.getShoppingCartProduct().getProduct().getNumber().equals(order.savedItem.get(i).getShoppingCartProduct().getProduct().getNumber())){
-
-                                   }else {
-                                       final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
-                                       productToSave.setEnteredPrice(null);
-                                       final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
-                                       final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
-                                       requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                                   }
-
-                               cursor1.close();
-                           }else {
-                               final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
+                           final ShoppingCartProduct productToSave = new ShoppingCartProduct(order.savedItem.get(i).getShoppingCartProduct().getProduct(), order.savedItem.get(i).getShoppingCartProduct().getQuantity(), order.savedItem.get(i).getShoppingCartProduct().getItemType());
                                productToSave.setEnteredPrice(null);
                                final SavedItem savedItem1 = new SavedItem(order.savedItem.get(i).getOrderId(), productToSave);
                                final ContentValues values = ProviderUtils.savedItemToContentValues(savedItem1);
                                requireContext().getContentResolver().insert(Contract.SavedItem.CONTENT_URI, values);
-                           }
+
 
                        }
 

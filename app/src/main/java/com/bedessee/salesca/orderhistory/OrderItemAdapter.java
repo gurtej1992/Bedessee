@@ -1,16 +1,13 @@
 package com.bedessee.salesca.orderhistory;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,26 +21,17 @@ import com.bedessee.salesca.customview.GenericDialog;
 import com.bedessee.salesca.main.MainActivity;
 import com.bedessee.salesca.provider.Contract;
 import com.bedessee.salesca.provider.ProviderUtils;
-import com.bedessee.salesca.reportsmenu.ReportAdapter;
 import com.bedessee.salesca.salesmanstore.SalesmanStore;
-import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
 import com.bedessee.salesca.shoppingcart.ShoppingCart;
+import com.bedessee.salesca.shoppingcart.ShoppingCartProduct;
 import com.bedessee.salesca.store.Store;
 import com.bedessee.salesca.store.StoreManager;
-import com.bedessee.salesca.store.StoreSelector;
-import com.bedessee.salesca.utilities.Utilities;
 
-import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 import timber.log.Timber;
 
@@ -93,6 +81,8 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
                                 mContext.getContentResolver().delete(Contract.SavedOrder.CONTENT_URI, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{order.getId()});
                                 mSavedOrders.remove(order);
                                 notifyDataSetChanged();
+
+                                mContext.getContentResolver().delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()});
                                 Cursor cursor = mContext.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(mContext)}, null, null);
                                 if (cursor.moveToFirst()) {
                               cursor.close();
