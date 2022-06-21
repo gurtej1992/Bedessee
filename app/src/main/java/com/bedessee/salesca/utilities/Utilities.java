@@ -77,6 +77,7 @@ public class Utilities {
 
     private static int[] screenDimens;
     public static List<SavedItem> savedItemList=new ArrayList<>();
+    public static String strCurrentID = "";
 
     /**
      * Checks if an internet connection (cellular or wifi) exists
@@ -119,6 +120,10 @@ public class Utilities {
 
         final String orderId = ShoppingCart.getCurrentOrderId(context);
         Log.e("!!!!","get order id"+orderId);
+        if(!strCurrentID.equals(orderId)){
+            savedItemList.clear();
+        }
+        strCurrentID = orderId;
         final ShoppingCartProduct productToSave = new ShoppingCartProduct(product, selectedQty, itemType);
         productToSave.setEnteredPrice(price);
         final SavedItem savedItem = new SavedItem(orderId, productToSave);
@@ -299,6 +304,7 @@ public class Utilities {
                 if (!f1.exists()) {
                     f1.mkdirs();
                 }
+                //===========+FIRST ITEM
                 File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
                 if(file.exists()){
                     boolean deleted = file.delete();
