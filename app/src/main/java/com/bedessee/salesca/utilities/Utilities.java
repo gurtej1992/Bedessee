@@ -168,7 +168,7 @@ public class Utilities {
                         if (!f1.exists()) {
                             f1.mkdirs();
                         }
-
+//FIRST ORDER
                         File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
                         if(file.exists()){
                             boolean deleted = file.delete();
@@ -192,11 +192,7 @@ public class Utilities {
                                 }
                             }
                         }else {
-                            for(int i=0;i<savedItemList.size();i++){
-                                if(savedItemList.get(i).getShoppingCartProduct().getProduct().getNumber().contains(savedItem2.getShoppingCartProduct().getProduct().getNumber())){
-                                    savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
-                                }
-                            }
+                            savedItemList.add(savedItem2);
                             SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(order1);
