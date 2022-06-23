@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -127,6 +129,7 @@ public class OrderHistoryDialog extends Fragment {
                             }
                         }
 
+                        Log.e("!@!@","get value"+currentStoreOrder+"&&"+otherStore);
                         if (currentStoreOrder && otherStore) {
                             switchMaterial.setVisibility(View.VISIBLE);
                         } else {
@@ -157,7 +160,26 @@ public class OrderHistoryDialog extends Fragment {
     private void updateOrders(Context context, List<SavedOrder> orders){
         listView.setLayoutManager(new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        listView.setAdapter(new OrderItemAdapter(context, new ArrayList<>(orders)));
+        listView.setAdapter(new OrderItemAdapter(context, new ArrayList<>(orders)) {
+            @Override
+            public void updateData() {
+                final Cursor cursor = requireActivity().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, null, null, null);
+                final ArrayList<SavedOrder> orders = new ArrayList<>();
+
+                if (cursor != null) {
+                    while (cursor.moveToNext()) {
+                        final SavedOrder order = ProviderUtils.cursorToSavedOrder(cursor);
+                        if (order != null) {
+                            if (order.getNumProducts() > 0) {
+                                orders.add(order);
+                            }
+                        }
+                    }
+                    cursor.close();
+                }
+                new OrderListener().onLoaded(orders);
+            }
+        });
         listView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }
@@ -188,11 +210,13 @@ public class OrderHistoryDialog extends Fragment {
             public void onClick(View v) {
 
                 String baseFilePath = new SharedPrefsManager(requireContext()).getSugarSyncDir();
-                File root=new File(baseFilePath + "/orderhistory");
+                String parentDirectory = new File(baseFilePath).getParent();
+
+                File root=new File(parentDirectory + "/orderhistory");
                 ListDir(root);
                 String newData="";
                 for(int i=0;i<fileList.size();i++) {
-                    final File file = new File(baseFilePath + "/orderhistory/" + fileList.get(i));
+                    final File file = new File(parentDirectory + "/orderhistory/" + fileList.get(i));
                     readFromFile(requireContext(), file);
                     String data = readFromFile(requireContext(), file);
                     newData+=data;

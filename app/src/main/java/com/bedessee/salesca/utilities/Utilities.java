@@ -119,7 +119,6 @@ public class Utilities {
         boolean updatedQty = false;
 
         final String orderId = ShoppingCart.getCurrentOrderId(context);
-        Log.e("!!!!","get order id"+orderId);
         if(!strCurrentID.equals(orderId)){
             savedItemList.clear();
         }
@@ -169,12 +168,13 @@ public class Utilities {
                         }
 
                         String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                        File f1 = new File(baseFilePath , "orderhistory");
+                        String parentDirectory = new File(baseFilePath).getParent();
+                        File f1 = new File(parentDirectory , "orderhistory");
                         if (!f1.exists()) {
                             f1.mkdirs();
                         }
 //FIRST ORDER
-                        File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
+                        File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
                         if(file.exists()){
                             boolean deleted = file.delete();
                             if (deleted) {
@@ -186,11 +186,9 @@ public class Utilities {
                                 SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                                 Gson gson = new GsonBuilder().create();
                                 String json = gson.toJson(order1);
-                                Log.e("@@@@", "get json" + json);
                                 try {
                                     JSONObject jsonObj = new JSONObject(json);
-                                    Log.e("@@@@", "get jsonobject" + jsonObj);
-                                    writeToFile(json, baseFilePath);
+                                    writeToFile(json, parentDirectory);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -201,11 +199,9 @@ public class Utilities {
                             SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                             Gson gson = new GsonBuilder().create();
                             String json = gson.toJson(order1);
-                            Log.e("@@@@", "get json" + json);
                             try {
                                 JSONObject jsonObj = new JSONObject(json);
-                                Log.e("@@@@", "get jsonobject" + jsonObj);
-                                writeToFile(json, baseFilePath);
+                                writeToFile(json, parentDirectory);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -295,17 +291,20 @@ public class Utilities {
 
                 if (order != null) {
                         final ContentValues contentValues = new ContentValues(1);
-                        contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + 1);
+                        contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, order.getNumProducts() + selectedQty);
                         contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
                         context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
                 }
                 String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                File f1 = new File(baseFilePath , "orderhistory");
+                String parentDirectory = new File(baseFilePath).getParent();
+
+
+                File f1 = new File(parentDirectory , "orderhistory");
                 if (!f1.exists()) {
                     f1.mkdirs();
                 }
                 //===========+FIRST ITEM
-                File file = new File(baseFilePath + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
+                File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
                 if(file.exists()){
                     boolean deleted = file.delete();
                     if (deleted) {
@@ -313,11 +312,9 @@ public class Utilities {
                         SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
-                        Log.e("@@@@", "get json" + json);
                         try {
                             JSONObject jsonObj = new JSONObject(json);
-                            Log.e("@@@@", "get jsonobject" + jsonObj);
-                            writeToFile(json, baseFilePath);
+                            writeToFile(json, parentDirectory);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -328,11 +325,9 @@ public class Utilities {
                         SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
-                        Log.e("@@@@", "get json" + json);
                         try {
                             JSONObject jsonObj = new JSONObject(json);
-                            Log.e("@@@@", "get jsonobject" + jsonObj);
-                            writeToFile(json, baseFilePath);
+                            writeToFile(json, parentDirectory);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -355,7 +350,6 @@ public class Utilities {
             outputStreamWriter.close();
         }
         catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 

@@ -91,6 +91,8 @@ class ProductDetailDialog : DialogFragment() {
         requireActivity().requestedOrientation = if (orient == "landscape") {
             ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         } else {
+            view.findViewById<View>(R.id.like_label).visibility = View.GONE
+            view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
             val productNum = product.number
