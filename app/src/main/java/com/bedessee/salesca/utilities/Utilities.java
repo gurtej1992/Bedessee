@@ -174,7 +174,7 @@ public class Utilities {
                             f1.mkdirs();
                         }
 //FIRST ORDER
-                        File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
+                        File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getName() + ".json");
                         if(file.exists()){
                             boolean deleted = file.delete();
                             if (deleted) {
@@ -304,12 +304,12 @@ public class Utilities {
                     f1.mkdirs();
                 }
                 //===========+FIRST ITEM
-                File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json");
+                File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getName() + ".json");
                 if(file.exists()){
                     boolean deleted = file.delete();
                     if (deleted) {
                         savedItemList.add(savedItem);
-                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
+                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         try {
@@ -322,7 +322,7 @@ public class Utilities {
                     }
                 }else {
                     savedItemList.add(savedItem);
-                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
+                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + 1,savedItemList);
                         Gson gson = new GsonBuilder().create();
                         String json = gson.toJson(order1);
                         try {
@@ -345,7 +345,7 @@ public class Utilities {
 
     private static void writeToFile(String data,String path) {
         try {
-            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/orderhistory/os_" + StoreManager.getCurrentStore().getBaseNumber() + ".json"),true);
+            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/orderhistory/os_" + StoreManager.getCurrentStore().getName() + ".json"),true);
             outputStreamWriter.write(data.getBytes(StandardCharsets.UTF_8));
             outputStreamWriter.close();
         }

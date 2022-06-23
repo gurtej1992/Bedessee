@@ -87,7 +87,7 @@ public abstract class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAda
                                 mContext.getContentResolver().delete(Contract.SavedOrder.CONTENT_URI, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{order.getId()});
                                 mSavedOrders.remove(order);
                                 notifyDataSetChanged();
-                                File file = new File(parentDirectory + "/orderhistory/os_" + storeName.split("-")[1] + ".json");
+                                File file = new File(parentDirectory + "/orderhistory/os_" + storeName+ ".json");
                                 file.delete();
                                 mContext.getContentResolver().delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?", new String[]{order.getId()});
                                 Cursor cursor = mContext.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(mContext)}, null, null);
