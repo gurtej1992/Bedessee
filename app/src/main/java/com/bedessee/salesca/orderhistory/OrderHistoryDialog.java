@@ -99,47 +99,55 @@ public class OrderHistoryDialog extends Fragment {
             if (store == null) {
                 Toast.makeText(requireContext(), "Please select store", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
-            }else {
+                switchMaterial.setVisibility(View.GONE);
+            }
+
                 orders = orderList;
 
                 if (orders.isEmpty()) {
 
                     Toast.makeText(requireContext(), "There is no order history available", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
+                    switchMaterial.setVisibility(View.GONE);
+                }
+
 //                dismiss();
-                } else {
+
                     showAll();
 
                     if (orders.size() == 1) {
                         switchMaterial.setVisibility(View.GONE);
                     } else {
 
-                        String number = StoreManager.getCurrentStore().getBaseNumber();
-                        boolean currentStoreOrder = false;
-                        boolean otherStore = false;
+                        if (store != null) {
 
-                        // let's check if it contains an order of current store
-                        if (number != null) {
-                            for (SavedOrder order : orders) {
-                                if (order.getStore().equals(number)) {
-                                    currentStoreOrder = true;
-                                } else {
-                                    otherStore = true;
+                            String number = StoreManager.getCurrentStore().getBaseNumber();
+                            boolean currentStoreOrder = false;
+                            boolean otherStore = false;
+
+                            // let's check if it contains an order of current store
+                            if (number != null) {
+                                for (SavedOrder order : orders) {
+                                    if (order.getStore().equals(number)) {
+                                        currentStoreOrder = true;
+                                    } else {
+                                        otherStore = true;
+                                    }
                                 }
                             }
-                        }
 
-                        Log.e("!@!@","get value"+currentStoreOrder+"&&"+otherStore);
-                        if (currentStoreOrder && otherStore) {
-                            switchMaterial.setVisibility(View.VISIBLE);
-                        } else {
-                            switchMaterial.setVisibility(View.GONE);
+                            Log.e("!@!@", "get value" + currentStoreOrder + "&&" + otherStore);
+                            if (currentStoreOrder && otherStore) {
+                                switchMaterial.setVisibility(View.VISIBLE);
+                            } else {
+                                switchMaterial.setVisibility(View.GONE);
+                            }
                         }
                     }
 
                 }
-            }
-        }
+
+
     }
 
     private void showAll(){
