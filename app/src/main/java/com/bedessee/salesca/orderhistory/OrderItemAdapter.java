@@ -70,7 +70,7 @@ public abstract class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAda
         }
 
         final String storeName = order.getId().split("_")[0];
-        Log.e("@#@","get store"+storeName.split("-")[1]);
+     //   Log.e("@#@","get store"+storeName.split("-")[1]);
 
         holder.customer.setText(mContext.getString(R.string.order_item_title, storeName, order.getNumProducts()));
 

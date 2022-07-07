@@ -95,11 +95,11 @@ public class NewStoreDialog {
 
                     final String savedOrderId = Utilities.getSavedOrderId(context, mCompanyName, new Date());
 
-                    final SavedOrder savedOrder = new SavedOrder(savedOrderId,"000", date, null, false, 0);
-
-                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
-
-                    context.getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+//                    final SavedOrder savedOrder = new SavedOrder(savedOrderId,"000", date, null, false, 0);
+//
+//                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
+//
+//                    context.getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
 
                     ShoppingCart.setCurrentOrderId(context, savedOrderId);
 

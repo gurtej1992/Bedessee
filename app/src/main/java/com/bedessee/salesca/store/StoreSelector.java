@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -152,10 +153,15 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
 
                 final Date date = new Date();
                 final String savedOrderId = Utilities.getSavedOrderId(StoreSelector.this, storeName, date);
-                final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
-                final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
 
-                getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                Log.e("!!!!","get store number"+store.getBaseNumber()+"&&"+store.getNumber());
+                if(store.getBaseNumber().contains("0000")){
+
+                }else {
+                    final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
+                    final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
+                    getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                }
                 ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
                 StoreManager.setCurrentStore(getApplicationContext(), store);
 
@@ -192,10 +198,15 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
                         if (!store.isShowPopup()) {
                             final Date date = new Date();
                             final String savedOrderId = Utilities.getSavedOrderId(StoreSelector.this, storeName, date);
-                            final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
-                            final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
 
-                            getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                            Log.e("@@@","get store number"+store.getBaseNumber()+"&&"+store.getNumber());
+                            if(store.getBaseNumber().contains("0000")){
+
+                            }else {
+                                final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
+                                final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
+                                getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
+                            }
                             ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
                             StoreManager.setCurrentStore(getApplicationContext(), store);
                             final Intent intent = new Intent();

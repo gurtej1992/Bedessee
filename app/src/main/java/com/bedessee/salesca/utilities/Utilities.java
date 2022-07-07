@@ -344,6 +344,7 @@ public class Utilities {
 
 
     private static void writeToFile(String data,String path) {
+        Log.e("@#@#","get store name"+StoreManager.getCurrentStore());
         try {
             OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/orderhistory/os_" + StoreManager.getCurrentStore().getName() + ".json"),true);
             outputStreamWriter.write(data.getBytes(StandardCharsets.UTF_8));
