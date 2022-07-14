@@ -7,9 +7,12 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -100,10 +103,37 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         edtContact=(EditText) view.findViewById(R.id.edtContact);
         case_amount=(TextView) view.findViewById(R.id.case_amount);
 
+        edtComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    saveCommentAndContact();
+                    InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtComment.getApplicationWindowToken(), 0);
 
+                    return true;
+                }
+                return false;
+            }
+        });
 
-        edtComment.setText(mShoppingCart.getComment());
-        edtContact.setText(mShoppingCart.getContact());
+        if(mShoppingCart.getComment()!=null){
+            edtComment.setText(mShoppingCart.getComment());
+            edtContact.setText(mShoppingCart.getContact());
+        }else {
+            Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())}, null, null);
+            if (cursor.moveToFirst()) {
+
+                final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
+                if (saveorder != null) {
+
+                    edtComment.setText(saveorder.getComment());
+                    edtComment.setText(saveorder.getContact());
+                }
+            }
+        }
+
 
         String storeName = StoreManager.getCurrentStore().getName();
         if (storeName != null) {
@@ -178,7 +208,7 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                 break;
 
             case R.id.btn_close:
-                saveCommentAndContact();
+
                 //setResult(RESULT_CODE_CONTINUED);
                 //finish();
                 break;
@@ -197,6 +227,7 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                     saveCommentAndContact();
                     ShoppingCart shoppingCart = mShoppingCart;
                     ShoppingCartNew x = new ShoppingCartNew();
+
                     //Database.getInstance(getContext()).orderDeo().insertOrder();
                     shoppingCart.stopTimer();
                     ShoppingCart.setCurrentOrderId(getActivity(), null);
@@ -207,6 +238,8 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                     mShoppingCart.clearProducts();
                     mShoppingCart.clearComment();
                     mShoppingCart.clearContact();
+                    edtComment.setText("");
+                    edtContact.setText("");
 
                     StoreManager.clearCurrentStore();
                     StoreManager.setCurrentStore(getContext(),null);
@@ -225,5 +258,11 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
     private void saveCommentAndContact() {
         mShoppingCart.setComment(edtComment.getText().toString());
         mShoppingCart.setContact(edtContact.getText().toString());
+        final ContentValues contentValues = new ContentValues(1);
+        contentValues.put(Contract.SavedOrderColumns.COLUMN_COMMENT,edtComment.getText().toString());
+        contentValues.put(Contract.SavedOrderColumns.COLUMN_CONTACT,edtContact.getText().toString());
+        requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
+
+
     }
 }

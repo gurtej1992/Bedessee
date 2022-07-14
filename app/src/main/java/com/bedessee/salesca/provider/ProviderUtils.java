@@ -219,23 +219,11 @@ public class ProviderUtils {
         store.setNumber(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_CUST_NUM)));
         store.setAddress(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_CUST_ADDR)));
         store.setLastCollectDaysOld(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DAYS_OLD)));
-       if(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE))==null){
-           SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
-               Date date = new Date();
-               store.setLastCollectDate(formatter.format(date));
-
-       }else {
-           store.setLastCollectDate(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE)));
-       }
+        store.setLastCollectDate(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE)));
         store.setLastCollectInvoice(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_INVOICE)));
         store.setLastCollectAmount(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_AMOUNT)));
         store.setOutstandingBalanceDue(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_OUTSTANDING_BAL_DUE)));
-        if(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL))==null){
-            store.setStatementUrl("0000.TXT");
-
-        }else {
-            store.setStatementUrl(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL)));
-        }
+        store.setStatementUrl(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL)));
         store.setShowPopup(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_SHOW_POPUP)).equals("Y"));
         store.setIsNewStoreAdded(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_NEW_STORE)).equals("Y"));
         store.setOpenAccountStatusPopUp(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_SHOW_ACCOUNT_STATUS)));
@@ -340,8 +328,10 @@ public class ProviderUtils {
 
             final int numProducts = cursor.getInt(cursor.getColumnIndex(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS));
             final String store = cursor.getString(cursor.getColumnIndex(Contract.SavedOrderColumns.COLUMN_STORE));
+            final String comment = cursor.getString(cursor.getColumnIndex(Contract.SavedOrderColumns.COLUMN_COMMENT));
+            final String contact = cursor.getString(cursor.getColumnIndex(Contract.SavedOrderColumns.COLUMN_CONTACT));
 
-            return new SavedOrder(id, store, startTime, endTime, isClosed, numProducts);
+            return new SavedOrder(id, store, startTime, endTime, isClosed, numProducts,comment,contact);
         } catch (CursorIndexOutOfBoundsException ignore) {
             return null;
         }
@@ -368,6 +358,9 @@ public class ProviderUtils {
         values.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, 0);
 
         values.put(Contract.SavedOrderColumns.COLUMN_STORE, order.getId());
+
+        values.put(Contract.SavedOrderColumns.COLUMN_COMMENT,order.getComment());
+        values.put(Contract.SavedOrderColumns.COLUMN_CONTACT,order.getContact());
 
         return values;
     }

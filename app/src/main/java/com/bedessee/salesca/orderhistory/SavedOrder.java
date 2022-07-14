@@ -22,16 +22,23 @@ public class SavedOrder implements Comparable, Serializable {
 
     private boolean mIsClosed;
 
+    private String comment;
+
+    private String contact;
+
     private int mNumProducts;
     List<SavedItem> savedItem;
 
-    public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts) {
+    public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts,String mcomment,String mcontact) {
         mId = id;
         mStore = store;
         mStartTime = startTime;
         mEndTime = endTime;
         mIsClosed = isClosed;
         mNumProducts = numProducts;
+        comment=mcomment;
+        contact=mcontact;
+
     }
 
     public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts,List<SavedItem> savedItem) {
@@ -92,6 +99,22 @@ public class SavedOrder implements Comparable, Serializable {
 
     public void setNumProducts(int numProducts) {
         mNumProducts = numProducts;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     /**

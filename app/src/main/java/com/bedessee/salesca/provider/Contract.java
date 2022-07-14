@@ -138,6 +138,10 @@ public class Contract {
         public static final String COLUMN_END_TIME = "end_time";
         public static final String COLUMN_IS_CLOSED = "is_closed";
         public static final String COLUMN_NUM_PRODUCTS = "num_prods";
+        public static final String COLUMN_COMMENT = "comment";
+        public static final String COLUMN_CONTACT = "contact";
+
+
     }
 
     public static class ReportsMenuColumns {

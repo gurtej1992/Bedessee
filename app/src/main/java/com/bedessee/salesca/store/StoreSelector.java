@@ -154,16 +154,11 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
                 final Date date = new Date();
                 final String savedOrderId = Utilities.getSavedOrderId(StoreSelector.this, storeName, date);
 
-                Log.e("!!!!","get store number"+store.getBaseNumber()+"&&"+store.getNumber());
-                if(store.getBaseNumber().contains("0000")){
-
-                }else {
-                    final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
+                    final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0,"","");
                     final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
                     getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
-                }
-                ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
-                StoreManager.setCurrentStore(getApplicationContext(), store);
+                    ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
+                    StoreManager.setCurrentStore(getApplicationContext(), store);
 
                 finish();
             }
@@ -199,16 +194,12 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
                             final Date date = new Date();
                             final String savedOrderId = Utilities.getSavedOrderId(StoreSelector.this, storeName, date);
 
-                            Log.e("@@@","get store number"+store.getBaseNumber()+"&&"+store.getNumber());
-                            if(store.getBaseNumber().contains("0000")){
 
-                            }else {
-                                final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0);
+                                final SavedOrder savedOrder = new SavedOrder(savedOrderId, store.getBaseNumber() , date, null, false, 0,"","");
                                 final ContentValues values = ProviderUtils.savedOrderToContentValues(savedOrder);
                                 getContentResolver().insert(Contract.SavedOrder.CONTENT_URI, values);
-                            }
-                            ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
-                            StoreManager.setCurrentStore(getApplicationContext(), store);
+                                ShoppingCart.setCurrentOrderId(StoreSelector.this, savedOrderId);
+                                StoreManager.setCurrentStore(getApplicationContext(), store);
                             final Intent intent = new Intent();
                             intent.putExtra("justLooking", true);
                             setResult(RESULT_CODE_JUST_LOOKING, intent);

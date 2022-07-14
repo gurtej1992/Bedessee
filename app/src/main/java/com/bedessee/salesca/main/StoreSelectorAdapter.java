@@ -35,6 +35,7 @@ public class StoreSelectorAdapter extends CursorAdapter {
 
         ((TextView)view.findViewById(R.id.storename)).setText(store.getName());
         ((TextView)view.findViewById(R.id.storeaddress)).setText(store.getAddress());
+
     }
 
     @Override

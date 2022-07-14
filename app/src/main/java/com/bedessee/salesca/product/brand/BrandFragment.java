@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,7 +18,9 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.main.MainActivity;
@@ -63,7 +66,8 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
         mBrandAdapter = new BrandAdapter(getActivity());
 
         GridView gridView = rootView.findViewById(R.id.gridView);
-
+        int spanCount = sh.getInt("spanCount",5);
+        gridView.setNumColumns(spanCount);
         gridView.setAdapter(mBrandAdapter);
         gridView.setOnItemClickListener(this);
 
@@ -100,6 +104,16 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
         return rootView;
     }
 
+
+//    @Override
+//    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+//
+//        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//
+//        }
+//    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

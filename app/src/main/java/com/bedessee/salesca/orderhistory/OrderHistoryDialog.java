@@ -221,7 +221,9 @@ public class OrderHistoryDialog extends Fragment {
                 String parentDirectory = new File(baseFilePath).getParent();
 
                 File root=new File(parentDirectory + "/orderhistory");
-                ListDir(root);
+                if(root.exists()) {
+                    ListDir(root);
+                }
                 String newData="";
                 for(int i=0;i<fileList.size();i++) {
                     final File file = new File(parentDirectory + "/orderhistory/" + fileList.get(i));
@@ -357,9 +359,10 @@ public class OrderHistoryDialog extends Fragment {
     public void ListDir(File f){
         File[] files = f.listFiles();
         fileList.clear();
-        for (File file : files){
-            fileList.add(file.getName());
-        }
+        for (File file : files) {
+                fileList.add(file.getName());
+            }
+
 
     }
 

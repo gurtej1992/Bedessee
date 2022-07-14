@@ -12,6 +12,7 @@ public class ShoppingCartProduct implements Serializable, Comparable<ShoppingCar
     private ItemType mItemType;
     private String mEnteredPrice;
 
+
     public ShoppingCartProduct(Product product, int quantity, ItemType itemType) {
         mProduct = product;
         mQuantity = quantity;
@@ -57,6 +58,7 @@ public class ShoppingCartProduct implements Serializable, Comparable<ShoppingCar
         return mProduct.equals(that.mProduct);
 
     }
+
 
     @Override
     public int hashCode() {

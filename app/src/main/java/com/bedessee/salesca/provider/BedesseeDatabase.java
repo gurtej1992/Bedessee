@@ -155,7 +155,9 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
             Contract.SavedOrderColumns.COLUMN_START_TIME + " text, " +
             Contract.SavedOrderColumns.COLUMN_END_TIME + " text, " +
             Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS + " integer, " +
-            Contract.SavedOrderColumns.COLUMN_IS_CLOSED + " text)");
+            Contract.SavedOrderColumns.COLUMN_IS_CLOSED + " text, " +
+                Contract.SavedOrderColumns.COLUMN_COMMENT + " text, " +
+                Contract.SavedOrderColumns.COLUMN_CONTACT + " text)");
 
         db.execSQL("CREATE TABLE " + Tables.REPORTS_MENU + "(" +
                 Contract.ReportsMenuColumns.COLUMN_ID + " integer primary key, " +
