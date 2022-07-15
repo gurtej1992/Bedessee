@@ -90,6 +90,9 @@ class ToolFragment : Fragment() {
         toolAdapter = object : ToolAdapter(getContext(), utilsStrings) {
             override fun onClickView(pos: Int) {
                 when (pos) {
+                    0 ->{
+
+                    }
                     1 -> {
                         Utilities.launchRegularCalculator(context)
                     }

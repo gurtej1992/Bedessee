@@ -45,8 +45,17 @@ import com.bedessee.salesca.store.WebViewer;
 import com.bedessee.salesca.utilities.FileUtilities;
 import com.bedessee.salesca.utilities.Utilities;
 import com.bedessee.salesca.utilities.ViewUtilities;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -129,7 +138,7 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                 if (saveorder != null) {
 
                     edtComment.setText(saveorder.getComment());
-                    edtComment.setText(saveorder.getContact());
+                    edtContact.setText(saveorder.getContact());
                 }
             }
         }
@@ -259,10 +268,9 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         mShoppingCart.setComment(edtComment.getText().toString());
         mShoppingCart.setContact(edtContact.getText().toString());
         final ContentValues contentValues = new ContentValues(1);
-        contentValues.put(Contract.SavedOrderColumns.COLUMN_COMMENT,edtComment.getText().toString());
-        contentValues.put(Contract.SavedOrderColumns.COLUMN_CONTACT,edtContact.getText().toString());
+        contentValues.put(Contract.SavedOrderColumns.COLUMN_COMMENT, edtComment.getText().toString());
+        contentValues.put(Contract.SavedOrderColumns.COLUMN_CONTACT, edtContact.getText().toString());
         requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
-
 
     }
 }

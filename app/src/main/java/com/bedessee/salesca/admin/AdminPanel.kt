@@ -119,23 +119,6 @@ class AdminPanel : AppCompatActivity() {
                .create()
                .show()
        }
-    }
-    private fun showClearDialog(clearAction: String){
-        GenericDialog.newInstance(
-            this?.getString(R.string.clear_folders_message),
-            "it will run the following clean up: $clearAction",
-            object : GenericDialog.OnClickListener {
-                override fun onClick(dialog: DialogFragment) {
-                    val result = FolderClearUp.clearFoldersByName(this@AdminPanel!!, clearAction)
-                    if (result) {
-                        Utilities.shortToast(this@AdminPanel, "The folders have been clear out")
-                    }
-                    dialog.dismiss()
-                }
-            },
-            null
-        ).show((this as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
-
         force!!.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Are you sure want to crash the app?")
                 .setMessage("This is for Testing, Force crash will crash the app.")
@@ -154,6 +137,24 @@ class AdminPanel : AppCompatActivity() {
                 .create()
                 .show()
         }
+    }
+    private fun showClearDialog(clearAction: String){
+        GenericDialog.newInstance(
+            this?.getString(R.string.clear_folders_message),
+            "it will run the following clean up: $clearAction",
+            object : GenericDialog.OnClickListener {
+                override fun onClick(dialog: DialogFragment) {
+                    val result = FolderClearUp.clearFoldersByName(this@AdminPanel!!, clearAction)
+                    if (result) {
+                        Utilities.shortToast(this@AdminPanel, "The folders have been clear out")
+                    }
+                    dialog.dismiss()
+                }
+            },
+            null
+        ).show((this as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
+
+
 
 
     }

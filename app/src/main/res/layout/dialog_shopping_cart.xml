@@ -60,6 +60,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:fitsSystemWindows="true"
+        android:fillViewport="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,12 +73,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6"/>
+        app:layout_constraintGuide_percent="0.5"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/constraint"
         android:layout_marginTop="16dp"
+        android:layout_marginRight="@dimen/gutter"
         app:layout_constraintLeft_toRightOf="@+id/guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -122,6 +124,7 @@
             app:layout_constraintRight_toLeftOf="@+id/total_amount"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Total quantity sold: 0"
+            android:visibility="gone"
             app:layout_constraintVertical_bias="0.0" />
 
 
@@ -141,7 +144,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView_shoppingCart"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:nestedScrollingEnabled="false"
         android:text="@string/no_items_found"
         android:layout_marginTop="5dp"
@@ -237,6 +240,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewStatement"
         style="@style/DefaultButton"
+        android:textSize="12sp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingStart="@dimen/gutter"
@@ -255,6 +259,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/gutter"
         android:paddingEnd="@dimen/gutter"
+        android:textSize="12sp"
         android:text="@string/checkout_shopping_cart"
         app:layout_constraintBottom_toBottomOf="@id/btnViewStatement"
         app:layout_constraintEnd_toEndOf="parent"

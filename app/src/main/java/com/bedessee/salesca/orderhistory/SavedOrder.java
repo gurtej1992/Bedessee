@@ -51,6 +51,11 @@ public class SavedOrder implements Comparable, Serializable {
         this.savedItem=savedItem;
     }
 
+    public SavedOrder(String mcomment, String mcontact) {
+        comment=mcomment;
+        contact=mcontact;
+    }
+
     public String getId() {
         return mId;
     }

@@ -30,11 +30,12 @@
         android:id="@+id/radioType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:orientation="vertical"
+        android:layout_marginStart="4dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/edtQty"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.19999999">
 
         <RadioButton
             android:id="@+id/radioCase"
@@ -42,8 +43,8 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:enabled="false"
+            android:textSize="14sp"
             android:text="@string/case_mode"
-            android:layout_marginTop="-1dp"
             android:textAllCaps="true" />
 
         <RadioButton
@@ -51,8 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="false"
-            android:layout_marginTop = "-20dp"
             android:text="@string/piece_mode"
+            android:textSize="14sp"
             android:textAllCaps="true" />
 
     </RadioGroup>
@@ -62,14 +63,13 @@
         style="@style/Subtitle1Text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:ellipsize="end"
         android:maxLines="2"
+        android:layout_marginTop="@dimen/small_gutter"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/radioType"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/radioType"
+        app:layout_constraintTop_toBottomOf="@+id/radioType"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         tools:text="WEST INDIAN  " />
 
@@ -78,14 +78,14 @@
         style="@style/DescriptionText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
         android:maxLines="3"
+        android:layout_marginTop="@dimen/small_gutter"
         android:layout_marginEnd="@dimen/gutter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/radioType"
+        app:layout_constraintStart_toStartOf="@id/textView_brand"
         app:layout_constraintTop_toBottomOf="@+id/textView_brand"
         app:layout_constraintVertical_bias="0.0"
         tools:text="CREAM SODA" />
@@ -95,21 +95,22 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnRemoveItem"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/default_icon_size"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:background="?android:selectableItemBackground"
-        android:scaleType="fitXY"
+        android:scaleType="centerInside"
         android:tint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/textView_totalFull"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_brand"
+        app:layout_constraintTop_toBottomOf="@+id/radioType"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/ic_close_2"
         tools:ignore="ContentDescription" />
@@ -119,16 +120,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
+        android:editable="false"
         android:text="$12"
         android:textColor="@color/tabs_divider"
         android:textSize="@dimen/subtitle_1_text_size"
-        android:editable="false"
-        app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView_totalFull"
         app:layout_constraintLeft_toRightOf="@+id/textView_totalQtySold"
-        app:layout_constraintTop_toTopOf="@+id/textView_totalQtySold"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintRight_toLeftOf="@+id/textView_totalFull"
+        app:layout_constraintTop_toBottomOf="@+id/radioType"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/textView_totalFull"
@@ -154,7 +155,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/textView_totalCase"
         app:layout_constraintLeft_toRightOf="@+id/textView_totalFull"
-        app:layout_constraintTop_toTopOf="@+id/textView_description"
+        app:layout_constraintTop_toTopOf="@+id/textView_brand"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintVertical_bias="0.0"
         tools:text="Total quantity sold: 0" />
