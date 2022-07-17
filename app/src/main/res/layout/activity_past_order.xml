@@ -30,16 +30,18 @@
     <TextView
         android:id="@+id/title_toolbar"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
-        android:layout_marginEnd="@dimen/default_margin"
-        tools:text="Title Orders"
+        android:maxLines="2"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@id/control_bar"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_all"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/btn_close"
-        app:layout_constraintTop_toTopOf="@id/control_bar" />
+        app:layout_constraintTop_toTopOf="@id/control_bar"
+        android:layout_marginRight="@dimen/small_gutter"
+        tools:text="Title Orders" />
 
     <TextView
         android:id="@+id/add_all"

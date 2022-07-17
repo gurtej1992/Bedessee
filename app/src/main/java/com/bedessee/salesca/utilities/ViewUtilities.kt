@@ -43,7 +43,7 @@ class ViewUtilities {
             val size = Point()
             val display = window.windowManager.defaultDisplay
             display.getSize(size)
-            window.setLayout((size.x * 0.60).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
+            window.setLayout((size.x * 0.65).toInt(), WindowManager.LayoutParams.WRAP_CONTENT)
             window.setGravity(Gravity.CENTER)
         }
 

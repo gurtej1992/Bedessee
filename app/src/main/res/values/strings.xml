@@ -57,7 +57,7 @@
     <string name="upc_dialog_title">%d PRODUCTS found by search for \"%s\" </string>
     <string name="switch_store_dialog_title">Changing stores will remove all items from your shopping cart.</string>
     <string name="switch_store_dialog_message">Are you sure you want to continue?</string>
-    <string name="view_statement">View Statement</string>
+    <string name="view_statement">View\nStatement</string>
     <string name="no">no</string>
     <string name="yes">yes</string>
     <string name="ok">OK</string>

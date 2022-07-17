@@ -30,11 +30,11 @@
         android:id="@+id/radioType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/edtQty"
         app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="-4dp"
         app:layout_constraintVertical_bias="0.19999999">
 
         <RadioButton
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:enabled="false"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:text="@string/case_mode"
             android:textAllCaps="true" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:text="@string/piece_mode"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textAllCaps="true" />
 
     </RadioGroup>
