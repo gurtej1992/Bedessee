@@ -93,7 +93,7 @@ ReportAdapter reportAdapter;
                 reportsCursor.moveToNext();
             }
             // WTF, first item is null
-            reportsMenus.remove(0);
+         //   reportsMenus.remove(0);
             // This will sort by natural order, the menus should come with number as first char.
             Collections.sort(reportsMenus, new Comparator<ReportsMenu>() {
                 @Override
