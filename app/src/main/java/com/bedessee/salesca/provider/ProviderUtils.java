@@ -219,11 +219,23 @@ public class ProviderUtils {
         store.setNumber(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_CUST_NUM)));
         store.setAddress(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_CUST_ADDR)));
         store.setLastCollectDaysOld(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DAYS_OLD)));
-        store.setLastCollectDate(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE)));
+        if(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE))==null){
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
+            Date date = new Date();
+            store.setLastCollectDate(formatter.format(date));
+
+        }else {
+            store.setLastCollectDate(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_DATE)));
+        }
         store.setLastCollectInvoice(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_INVOICE)));
         store.setLastCollectAmount(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_LAST_COLLECT_AMOUNT)));
         store.setOutstandingBalanceDue(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_OUTSTANDING_BAL_DUE)));
-        store.setStatementUrl(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL)));
+        if(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL))==null){
+            store.setStatementUrl("0000.TXT");
+
+        }else {
+            store.setStatementUrl(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_STATEMENT_URL)));
+        }
         store.setShowPopup(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_SHOW_POPUP)).equals("Y"));
         store.setIsNewStoreAdded(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_NEW_STORE)).equals("Y"));
         store.setOpenAccountStatusPopUp(cursor.getString(cursor.getColumnIndex(Contract.SalesmanStoreColumns.COLUMN_SHOW_ACCOUNT_STATUS)));
