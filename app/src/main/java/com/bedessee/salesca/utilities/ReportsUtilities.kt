@@ -73,41 +73,18 @@ class ReportsUtilities {
                         if (!result) notSuccessfullyOpen(context)
                     }
                     "HTM" -> {
-                        show(context, FileUtilities.getFile(
+//                        show(context, FileUtilities.getFile(
+//                            context,
+//                            store.baseNumber,
+//                            reportsMenu.popupType,
+//                            reportsMenu.deviceFolder
+//                        ).absolutePath)
+                        openHtml(context,FileUtilities.getFile(
                             context,
                             store.baseNumber,
                             reportsMenu.popupType,
                             reportsMenu.deviceFolder
                         ).absolutePath)
-
-//                        val uri2 = Uri.fromFile(
-//                            File(
-//                                FileUtilities.getFile(
-//                                    context,
-//                                    store.baseNumber,
-//                                    reportsMenu.popupType,
-//                                    reportsMenu.deviceFolder
-//                                ).absolutePath
-//                                        + File.separator + "new folder" + "/index.html"
-//                            )
-//                        )
-//                        val intent = Intent(ACTION_VIEW, uri2)
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                        intent.setClassName(
-//                            "com.android.chrome",
-//                            "com.google.android.apps.chrome.Main"
-//                        )
-//
-//                        try {
-//                            context.startActivity(intent)
-//                        } catch (ex: ActivityNotFoundException) {
-//                            try {
-//                                intent.setPackage(null)
-//                                context.startActivity(intent)
-//                            } catch (e: Exception) {
-//                            }
-//                        }
-
                     }
                 }
             } else {
@@ -116,6 +93,24 @@ class ReportsUtilities {
             }
         }
 
+        private fun openHtml(context: Context, path: String) {
+            val uri2 = Uri.fromFile(
+                File(path)
+            )
+            val intent = Intent(ACTION_VIEW, uri2)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setClassName("com.android.chrome", "com.google.android.apps.chrome.Main")
+
+            try {
+                context.startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                try {
+                    intent.setPackage(null)
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                }
+            }
+        }
 
 
     }
