@@ -26,6 +26,7 @@ public class UpdateProducts extends AsyncTask<String, String, Void> {
 
     final Context mContext;
     final String mSugarSyncDir;
+    //
 
     protected BaseJsonUpdate.OnDownloadJsonCompleteListener mListener;
 

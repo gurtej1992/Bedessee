@@ -1,12 +1,10 @@
 package com.bedessee.salesca.utilities
 
-import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_VIEW
 import android.net.Uri
-import android.os.Environment
-import androidx.core.content.ContextCompat.startActivity
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.reportsmenu.ReportsMenu
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
@@ -107,6 +105,7 @@ class ReportsUtilities {
 //                            } catch (e: Exception) {
 //                            }
 //                        }
+
 
                     }
                 }

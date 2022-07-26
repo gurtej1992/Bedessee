@@ -34,6 +34,10 @@ class WebViewer : AppCompatActivity() {
         val webView = findViewById<WebView>(R.id.webview)
         webView.settings.builtInZoomControls = true
         webView.settings.setSupportZoom(true)
+        webView.settings.allowContentAccess=true
+        webView.settings.allowFileAccess=true
+        webView.settings.allowFileAccessFromFileURLs=true
+        webView.settings.allowUniversalAccessFromFileURLs=true
         webView.webViewClient = WebViewClient()
 
         //This will zoom out the WebView

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_marginEnd="6dp"
+        android:gravity="center"
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:text="this is a test text to test second row in phone" />
+
+    <View
+        android:layout_marginEnd="6dp"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/dark_grey" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_weight="1"
+        android:id="@+id/customer"
+        android:layout_width="0dp"
+        android:layout_marginEnd="6dp"
+        android:layout_height="match_parent"
+        tools:text="this is a test text to test second row in phone" />
+
+    <Button
+        android:id="@+id/btn_delete_order"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Delete"
+        android:textSize="@dimen/subtitle_2_text_size"
+        android:layout_marginRight="4dp" />
+
+    <Button
+        android:id="@+id/btn_load_order"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/subtitle_2_text_size"
+        android:text="Load"/>
+
+</LinearLayout>
