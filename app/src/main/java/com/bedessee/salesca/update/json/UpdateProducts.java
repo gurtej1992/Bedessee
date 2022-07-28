@@ -3,6 +3,7 @@ package com.bedessee.salesca.update.json;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -26,6 +27,7 @@ public class UpdateProducts extends AsyncTask<String, String, Void> {
 
     final Context mContext;
     final String mSugarSyncDir;
+    final String filename;
     //
 
     protected BaseJsonUpdate.OnDownloadJsonCompleteListener mListener;
@@ -34,11 +36,14 @@ public class UpdateProducts extends AsyncTask<String, String, Void> {
         mContext = context;
         final SharedPrefsManager sharedPrefs = new SharedPrefsManager(context);
         mSugarSyncDir = sharedPrefs.getSugarSyncDir();
+        SharedPreferences sh = context.getSharedPreferences("selectedfile", Context.MODE_PRIVATE);
+        filename= sh.getString("filename","products.json");
     }
 
 
     public String getFilename() {
-        return "products.json";
+
+        return filename;
     }
 
 

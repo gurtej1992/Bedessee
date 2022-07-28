@@ -11,17 +11,20 @@ import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
 import com.bedessee.salesca.customview.GenericDialog
 import com.bedessee.salesca.customview.UtilitiesSpinner
 import com.bedessee.salesca.login.Login
-import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
+import com.bedessee.salesca.update.UpdateActivity
 import com.bedessee.salesca.utilities.FolderClearUp
 import com.bedessee.salesca.utilities.Utilities
+import java.io.File
+import java.io.FilenameFilter
 
 
 class AdminPanel : AppCompatActivity() {
@@ -32,6 +35,7 @@ class AdminPanel : AppCompatActivity() {
     var force: TextView? = null
     var num:TextView?=null
     var set_ornt:TextView?=null
+    var select_file:TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +48,43 @@ class AdminPanel : AppCompatActivity() {
         force = findViewById<View>(R.id.force_crash) as TextView
         num = findViewById<View>(R.id.Num_Columns) as TextView
         set_ornt = findViewById<View>(R.id.set_ornt) as TextView
+        select_file = findViewById<View>(R.id.select_file) as TextView
+
+        //Creating a File object for directory
+        //Creating a File object for directory
+        val sharedPrefs = SharedPrefsManager(this)
+        var mSugarSyncDir = sharedPrefs.sugarSyncDir
+        val directoryPath = File(mSugarSyncDir + "/data/")
+        val textFilefilter: FilenameFilter = object : FilenameFilter {
+            override fun accept(dir: File?, name: String): Boolean {
+                val lowercaseName = name.toLowerCase()
+                return if (lowercaseName.startsWith("products")) {
+                    true
+                } else {
+                    false
+                }
+            }
+        }
+        //List of all the text files
+        //List of all the text files
+        val filesList: Array<String> = directoryPath.list(textFilefilter)
+        println("List of the text files in the specified directory:" + filesList.size)
+        for (fileName in filesList) {
+            println(fileName)
+        }
 
         price!!.setOnClickListener {
 
-                       this@AdminPanel.startActivity(
-                           Intent(
-                               this@AdminPanel,
-                               AdminSettings::class.java
-                           )
-                       )
-       }
+            this@AdminPanel.startActivity(
+                Intent(
+                    this@AdminPanel,
+                    AdminSettings::class.java
+                )
+            )
+        }
         clear1!!.setOnClickListener {
             val clearAction = FolderClearUp.clear_folder_json
-                        showClearDialog(clearAction)
+            showClearDialog(clearAction)
         }
         clear2!!.setOnClickListener {
             val clearAction = FolderClearUp.clear_folder_json
@@ -64,7 +92,7 @@ class AdminPanel : AppCompatActivity() {
         }
         signout!!.setOnClickListener {
             MixPanelManager.trackButtonClick(this, "Button click: Top menu: SIGN OUT")
-                       signOut(true)
+            signOut(true)
         }
         num!!.setOnClickListener {
             val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
@@ -80,45 +108,50 @@ class AdminPanel : AppCompatActivity() {
 // Set up the buttons
             builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                 // Here you get get input text from the Edittext
-                var m_Text:Int= input.text.toString().toInt()
-                val sharedPreferences: SharedPreferences =getSharedPreferences("setting", Context.MODE_PRIVATE)
+                var m_Text: Int = input.text.toString().toInt()
+                val sharedPreferences: SharedPreferences =
+                    getSharedPreferences("setting", Context.MODE_PRIVATE)
                 val edit = sharedPreferences.edit()
                 edit.putInt("spanCount", m_Text)
                 edit.apply()
             })
-            builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+            builder.setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
             builder.show()
         }
 
-       set_ornt!!.setOnClickListener {
-           AlertDialog.Builder(this).setTitle("Change Orientation")
-               .setPositiveButton(
-                   "Landscape"
-               ) { dialog, which ->
-                   // Perform Action & Dismiss dialog
-                   var orn_text:String= "landscape"
-                   val sharedPreferences: SharedPreferences =getSharedPreferences("setting", Context.MODE_PRIVATE)
-                   val edit = sharedPreferences.edit()
-                   edit.putString("orientation", orn_text)
-                   edit.apply()
-                   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        set_ornt!!.setOnClickListener {
+            AlertDialog.Builder(this).setTitle("Change Orientation")
+                .setPositiveButton(
+                    "Landscape"
+                ) { dialog, which ->
+                    // Perform Action & Dismiss dialog
+                    var orn_text: String = "landscape"
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("setting", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putString("orientation", orn_text)
+                    edit.apply()
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     dialog.dismiss();
-               }
-               .setNegativeButton(
-                   "Portrait"
-               ) { dialog, which ->
-                   var orn_text:String= "portrait"
-                   val sharedPreferences: SharedPreferences =getSharedPreferences("setting", Context.MODE_PRIVATE)
-                   val edit = sharedPreferences.edit()
-                   edit.putString("orientation", orn_text)
-                   edit.apply()
-                   setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                   dialog.dismiss()
-               }
-               .create()
-               .show()
-       }
+                }
+                .setNegativeButton(
+                    "Portrait"
+                ) { dialog, which ->
+                    var orn_text: String = "portrait"
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("setting", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putString("orientation", orn_text)
+                    edit.apply()
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
         force!!.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Are you sure want to crash the app?")
                 .setMessage("This is for Testing, Force crash will crash the app.")
@@ -136,6 +169,35 @@ class AdminPanel : AppCompatActivity() {
                 }
                 .create()
                 .show()
+        }
+
+        select_file!!.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            with(builder)
+            {
+                setTitle("List of Files")
+                setItems(filesList) { dialog, which ->
+                    Toast.makeText(
+                        applicationContext,
+                        filesList[which] + " is clicked",
+                        Toast.LENGTH_SHORT
+                    )
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putString("filename", filesList[which])
+                    edit.apply()
+                    startActivity(UpdateActivity.newIntent(this@AdminPanel))
+                    finish()
+                }
+
+                setNegativeButton("Cancel")
+                { dialog, which ->
+                    // Perform Action & Dismiss dialog
+                     dialog.dismiss();
+                }.create()
+                show()
+            }
         }
     }
     private fun showClearDialog(clearAction: String){
@@ -171,4 +233,6 @@ class AdminPanel : AppCompatActivity() {
         super.onBackPressed()
         finish()
     }
+
+
 }
