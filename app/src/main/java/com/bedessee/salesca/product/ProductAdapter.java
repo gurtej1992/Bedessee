@@ -119,7 +119,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         viewHolder.mTextPriceUnit.setVisibility(showUom ? View.VISIBLE : View.GONE);
 
         viewHolder.add = view.findViewById(R.id.add);
-        viewHolder.product_type = view.findViewById(R.id.product_type);
+       // viewHolder.product_type = view.findViewById(R.id.product_type);
         viewHolder.add_count = view.findViewById(R.id.add_count);
 
         view.setTag(viewHolder);
@@ -202,28 +202,28 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
             switch(product.getLPriceBackgroundColor().toLowerCase()) {
                 case "#800080":
                     // purple
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_purple));
+                  //  holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_purple));
                     break;
                 case "#229954":
                     // green
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_green));
+                   // holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_green));
                     break;
                 case "#ff0000":
                     // rea
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_red));
+                    //holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_red));
                     break;
                 case "#0000ff":
                     // blue
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_blue));
+                    //holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_blue));
                     break;
                 case "#8a2be2":
                     // blue
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_lavender));
+                   //holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_lavender));
                     break;
                 default:
                     // code block
                     //TODO: Change to case type
-                    holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_black));
+                   // holder.product_type.setBackground(context.getDrawable(R.drawable.product_type_black));
                    // holder.product_type.setBackgroundColor(Color.GRAY);
             }
             holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);

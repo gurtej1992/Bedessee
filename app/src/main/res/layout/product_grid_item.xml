@@ -111,15 +111,15 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/product_type"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_below="@+id/textView_brand"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/gutter"
-        android:background="@drawable/product_type_purple"
-        tools:ignore="TouchTargetSizeCheck" />
+<!--    <View-->
+<!--        android:id="@+id/product_type"-->
+<!--        android:layout_width="25dp"-->
+<!--        android:layout_height="25dp"-->
+<!--        android:layout_below="@+id/textView_brand"-->
+<!--        android:layout_alignParentRight="true"-->
+<!--        android:layout_marginRight="@dimen/gutter"-->
+<!--        android:background="@drawable/product_type_purple"-->
+<!--        tools:ignore="TouchTargetSizeCheck" />-->
 
 <!--    <com.bedessee.salesca.customview.QtySelector-->
 <!--        android:id="@+id/list_item_qty_selector"-->
