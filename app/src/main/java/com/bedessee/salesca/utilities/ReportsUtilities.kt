@@ -105,8 +105,8 @@ class ReportsUtilities {
             )
             val intent = Intent(ACTION_VIEW, uri2)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            //intent.setClassName("com.android.chrome", "com.google.android.apps.chrome.Main")
-            intent.setClassName("com.opera.mini.android", "com.opera.mini.android.Browser");
+            intent.setClassName("com.android.chrome", "com.google.android.apps.chrome.Main")
+            //intent.setClassName("com.opera.mini.android", "com.opera.mini.android.Browser");
 
             try {
                 context.startActivity(intent)

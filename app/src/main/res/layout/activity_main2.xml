@@ -27,6 +27,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/field_text_size"
+                android:textColor="@color/action_select"
+                android:id="@+id/filename_text"
+                android:layout_marginRight="@dimen/small_gutter"
+                android:gravity="right"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/lst_menu_items"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/lst_menu_items"
                 android:layout_width="match_parent"
@@ -35,7 +49,7 @@
                 android:dividerHeight="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/sell_sheet_btn"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+                app:layout_constraintTop_toBottomOf="@+id/filename_text" />
 
             <Button
                 android:id="@+id/sell_sheet_btn"
@@ -54,11 +68,11 @@
                 android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:background="@color/colorAccent"
                 android:orientation="horizontal"
                 android:padding="@dimen/gutter"
-                app:layout_constraintBottom_toTopOf="@+id/lst_menu_items"
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/filename_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

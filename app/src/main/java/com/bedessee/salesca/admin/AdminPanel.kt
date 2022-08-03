@@ -36,6 +36,7 @@ class AdminPanel : AppCompatActivity() {
     var num:TextView?=null
     var set_ornt:TextView?=null
     var select_file:TextView?=null
+    var updatedList= arrayOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,9 +69,26 @@ class AdminPanel : AppCompatActivity() {
         //List of all the text files
         //List of all the text files
         val filesList: Array<String> = directoryPath.list(textFilefilter)
+
         println("List of the text files in the specified directory:" + filesList.size)
-        for (fileName in filesList) {
-            println(fileName)
+        for (fileName in filesList.indices) {
+            if(fileName==0){
+                updatedList+="Product" +" "+"Main"
+            }else if (fileName==1){
+                updatedList+="Product"+" "+fileName+"st"
+
+            }else if(fileName==2){
+                updatedList+="Product"+" "+fileName+"nd"
+
+            }else if(fileName==3){
+                updatedList+="Product"+" "+fileName+"rd"
+
+            }else
+                updatedList+="Product"+" "+fileName+"th"
+
+
+
+            println(updatedList)
         }
 
         price!!.setOnClickListener {
@@ -175,20 +193,38 @@ class AdminPanel : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             with(builder)
             {
+                val sharedPreferences: SharedPreferences =
+                    getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                val edit = sharedPreferences.edit()
                 setTitle("List of Files")
-                setItems(filesList) { dialog, which ->
-                    Toast.makeText(
-                        applicationContext,
-                        filesList[which] + " is clicked",
-                        Toast.LENGTH_SHORT
-                    )
-                    val sharedPreferences: SharedPreferences =
-                        getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
-                    val edit = sharedPreferences.edit()
+
+                setItems(updatedList) { dialog, which ->
                     edit.putString("filename", filesList[which])
+                    edit.putString("Showfilename",updatedList[which])
                     edit.apply()
-                    startActivity(UpdateActivity.newIntent(this@AdminPanel))
-                    finish()
+                    AlertDialog.Builder(context).setTitle("Are you sure want to show file name?")
+                        .setMessage("This will show the selected file on main screen.")
+                        .setPositiveButton(
+                            "YES"
+                        ) { dialog, which ->
+                            edit.putBoolean("show",true)
+                            edit.apply()
+                            dialog.dismiss();
+                            startActivity(UpdateActivity.newIntent(this@AdminPanel))
+                            finish()
+                        }
+                        .setNegativeButton(
+                            "NO"
+                        ) { dialog, which -> // Do nothing
+                            dialog.dismiss()
+                        }
+                        .create()
+                        .show()
+
+
+
+
+
                 }
 
                 setNegativeButton("Cancel")

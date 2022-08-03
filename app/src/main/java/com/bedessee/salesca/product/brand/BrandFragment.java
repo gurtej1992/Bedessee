@@ -101,6 +101,7 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
             }
         });
 
+
         return rootView;
     }
 

@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private Store mCurrentStore;
     private TextView toolbarTitle;
-    public TextView toolbarSubtitle;
+    public TextView toolbarSubtitle,filename_text;
     private Boolean isFirstTime = true;
     private boolean mShowBalanceDialog;
     private Salesman mSalesman;
@@ -107,7 +107,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView drawericon,search,storeicon,menuicon,home_icon,cart_icon,report_icon,tool_icon;
     TextView home_txt,cart_txt,report_txt,tool_txt;
     LinearLayout home,cart,report,tools;
-    String from="",orient;
+    String from="",orient,filename;
+    Boolean value;
 
     private static final String TAG = "MainActivity";
 
@@ -117,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
          orient= sh.getString("orientation","landscape");
+        SharedPreferences shared = getSharedPreferences("selectedfile", Context.MODE_PRIVATE);
+        filename= shared.getString("Showfilename","ProductMain");
+        value=shared.getBoolean("show",false);
+
+
+
          if(orient.equals("landscape")){
              setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
          }else {
@@ -127,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         lst_menu_items = findViewById(R.id.lst_menu_items);
         toolbarTitle = findViewById(R.id.toolbar_title);
         toolbarSubtitle = findViewById(R.id.toolbar_subtitle);
+        filename_text = findViewById(R.id.filename_text);
         drawericon = findViewById(R.id.drawer);
         search = findViewById(R.id.search);
         storeicon = findViewById(R.id.select_store);
@@ -148,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
         );
         Intent i=getIntent();
         from=i.getStringExtra("from");
+        if(value){
+           filename_text.setVisibility(View.VISIBLE);
+            filename_text.setText(filename);
+
+        }else {
+            filename_text.setVisibility(View.GONE);
+
+        }
 
         drawericon.setOnClickListener(new View.OnClickListener() {
             @Override
