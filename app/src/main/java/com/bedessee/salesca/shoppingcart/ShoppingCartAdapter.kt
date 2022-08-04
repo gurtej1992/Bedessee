@@ -162,7 +162,7 @@ class ShoppingCartAdapter(
                 override fun onSelected(itemType: ItemType, qty: Int) {
                     val products = ShoppingCart.getCurrentShoppingCart().products
                     val index = products.indexOf(shoppingCartProduct)
-                    Utilities.updateShoppingCart(TAG, mContext, products[index].product, qty, null, itemType, null) { newQty, newItemType ->
+                    Utilities.updateShoppingCart("inc",TAG, mContext, products[index].product, qty, null, itemType, null) { newQty, newItemType ->
                         products[index].quantity = newQty
                         products[index].itemType = newItemType
                         notifyDataSetChanged()

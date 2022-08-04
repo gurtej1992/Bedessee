@@ -73,7 +73,7 @@ public class QtySelector extends FrameLayout {
                     DialogNumberPad.Companion.newInstance(new DialogNumberPad.OnItemSelectedListener() {
                         @Override
                         public void onSelected(@NotNull ItemType itemType, int qty) {
-                            Utilities.updateShoppingCart(TAG, context, mProduct, qty, null, itemType, null, null);
+                            Utilities.updateShoppingCart("inc",TAG, context, mProduct, qty, null, itemType, null, null);
                         }
                     }, new DialogNumberPad.DefaultNumberPad(ItemType.CASE, "0"), DEFAULT_INITIAL_VALUE).show(fragmentManager, TAG);
                 } else {

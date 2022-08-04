@@ -102,6 +102,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
+        android:id="@+id/show_file"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/gutter"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Show File Name"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/unselected_tab"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
         android:id="@+id/set_ornt"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/gutter"

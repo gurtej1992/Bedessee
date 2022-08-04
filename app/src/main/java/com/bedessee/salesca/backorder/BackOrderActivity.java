@@ -133,7 +133,8 @@ public class BackOrderActivity extends AppCompatActivity implements BackOrderQua
                         int quantity = order.getQuantity();
                         if (quantity == 0) continue;
 
-                        Utilities.updateShoppingCart("backorder",
+                        Utilities.updateShoppingCart("inc",
+                                "backorder",
                                 v.getContext(), order.getProduct(), order.getQuantity(),
                                 null, order.getType(), ProductEnteredFrom.BACK_ORDER, null);
                     }

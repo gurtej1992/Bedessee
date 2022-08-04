@@ -34,6 +34,7 @@ class AdminPanel : AppCompatActivity() {
     var signout: TextView? = null
     var force: TextView? = null
     var num:TextView?=null
+    var show_file:TextView?=null
     var set_ornt:TextView?=null
     var select_file:TextView?=null
     var updatedList= arrayOf<String>()
@@ -50,6 +51,8 @@ class AdminPanel : AppCompatActivity() {
         num = findViewById<View>(R.id.Num_Columns) as TextView
         set_ornt = findViewById<View>(R.id.set_ornt) as TextView
         select_file = findViewById<View>(R.id.select_file) as TextView
+        show_file = findViewById<View>(R.id.show_file) as TextView
+
 
         //Creating a File object for directory
         //Creating a File object for directory
@@ -140,6 +143,34 @@ class AdminPanel : AppCompatActivity() {
             builder.show()
         }
 
+        show_file!!.setOnClickListener {
+            AlertDialog.Builder(this).setTitle("Do you want to show file name?")
+                .setMessage("This will show the selected file on main screen.")
+                .setPositiveButton(
+                    "YES"
+                ) { dialog, which ->
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",true)
+                    edit.apply()
+                    dialog.dismiss()
+
+                }
+                .setNegativeButton(
+                    "NO"
+                ) { dialog, which -> // Do nothing
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",false)
+                    edit.apply()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+
         set_ornt!!.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Change Orientation")
                 .setPositiveButton(
@@ -202,31 +233,10 @@ class AdminPanel : AppCompatActivity() {
                     edit.putString("filename", filesList[which])
                     edit.putString("Showfilename",updatedList[which])
                     edit.apply()
-                    AlertDialog.Builder(context).setTitle("Are you sure want to show file name?")
-                        .setMessage("This will show the selected file on main screen.")
-                        .setPositiveButton(
-                            "YES"
-                        ) { dialog, which ->
-                            edit.putBoolean("show",true)
-                            edit.apply()
-                            dialog.dismiss();
-                            startActivity(UpdateActivity.newIntent(this@AdminPanel))
-                            finish()
-                        }
-                        .setNegativeButton(
-                            "NO"
-                        ) { dialog, which -> // Do nothing
-                            dialog.dismiss()
-                        }
-                        .create()
-                        .show()
-
-
-
-
-
+                    dialog.dismiss();
+                    startActivity(UpdateActivity.newIntent(this@AdminPanel))
+                    finish()
                 }
-
                 setNegativeButton("Cancel")
                 { dialog, which ->
                     // Perform Action & Dismiss dialog

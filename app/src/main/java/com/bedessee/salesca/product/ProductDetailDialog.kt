@@ -273,7 +273,7 @@ class ProductDetailDialog : DialogFragment() {
                             view.findViewById<View>(R.id.btn_done).setOnClickListener {
                                 dialog.hide()
                                 val newPrice = (view.findViewById<View>(R.id.edt_price) as TextView).text.toString()
-                                Utilities.updateShoppingCart(TAG, context, product, qtySelector.selectedQty, newPrice, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
+                                Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, newPrice, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
                             }
                             quantityView.btn_delete.setOnClickListener { price.text = null }
                             quantityView.btn0.setOnClickListener { price.text = price.text.toString() + "0" }
@@ -288,7 +288,7 @@ class ProductDetailDialog : DialogFragment() {
                             quantityView.btn9.setOnClickListener { price.text = price.text.toString() + "9" }
                             quantityView.btnComma.setOnClickListener { price.text = price.text.toString() + "." }
                         } else {
-                            Utilities.updateShoppingCart(TAG, context, product, qtySelector.selectedQty, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
+                            Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
                         }
                     } else {
                         MixPanelManager.trackButtonClick(context, "Button Click: Add to cart: ZERO QTY")

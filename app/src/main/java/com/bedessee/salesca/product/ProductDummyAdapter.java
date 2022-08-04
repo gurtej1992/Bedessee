@@ -326,7 +326,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                                     } else if (Double.parseDouble(newPrice) > Double.parseDouble(product.getPriceRangeTo())) {
                                                         Toast.makeText(mContext, "Maximum price is " + product.getPriceRangeTo(), Toast.LENGTH_LONG).show();
                                                     } else {
-                                                        Utilities.updateShoppingCart(TAG, mContext, product, 1, newPrice, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                                        Utilities.updateShoppingCart("inc",TAG, mContext, product, 1, newPrice, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
                                                             @Override
                                                             public void onUpdated(int qty, ItemType itemType) {
                                                                 holder.mQtySelector.setQty(0);
@@ -335,7 +335,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                                         });
                                                     }
                                                 } catch (NumberFormatException e) {
-                                                    Utilities.updateShoppingCart(TAG, mContext, product, 1, newPrice, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                                    Utilities.updateShoppingCart("inc",TAG, mContext, product, 1, newPrice, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
                                                         @Override
                                                         public void onUpdated(int qty, ItemType itemType) {
                                                             holder.mQtySelector.setQty(0);
@@ -354,7 +354,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                 } else {
 
                                     if (holder.mQtySelector.getSelectedQty() > 0) {
-                                        Utilities.updateShoppingCart(TAG, mContext, product, 1
+                                        Utilities.updateShoppingCart("inc",TAG, mContext, product, 1
 
 
                                                 , null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
@@ -420,6 +420,23 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                 public void onClick(View v) {
                                     if (StoreManager.isStoreSelected()) {
                                         holder.mQtySelector.decrementQty();
+                                        Utilities.updateShoppingCart("dec",TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                            @Override
+                                            public void onUpdated(int qty, ItemType itemType) {
+                                                holder.mQtySelector.setQty(qty);
+                                                holder.mQtySelector.invalidate();
+                                            }
+                                        });
+//                                        ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
+//                                        int count = 0;
+//                                        for (ShoppingCartProduct productx : mProducts) {
+//                                            if (product.getNumber().equals(productx.getProduct().getNumber())){
+//                                                count = productx.getQuantity()-1;
+//                                            }
+//
+//                                        }
+//                                        Log.d("sdsadsa","Size "+count);
+//                                        holder.mQtySelector.setQty(count);
                                     } else {
                                         Toast.makeText(mContext, "Please select store to continue.", Toast.LENGTH_SHORT).show();
                                     }

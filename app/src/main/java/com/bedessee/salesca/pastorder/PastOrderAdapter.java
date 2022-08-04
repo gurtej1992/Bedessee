@@ -98,7 +98,7 @@ public class PastOrderAdapter extends RecyclerView.Adapter<PastOrderAdapter.View
                         if (mQuantityListener != null) {
                             mQuantityListener.onChanged(order);
                         }
-                        Utilities.updateShoppingCart(TAG, context, order.getProduct(), qty, null, itemType, ProductEnteredFrom.PAST_ORDER, null);
+                        Utilities.updateShoppingCart("inc",TAG, context, order.getProduct(), qty, null, itemType, ProductEnteredFrom.PAST_ORDER, null);
                     }
                 }, new DialogNumberPad.DefaultNumberPad(ItemType.CASE, "0"), DEFAULT_INITIAL_VALUE).show(fragmentManager, TAG);
             }

@@ -177,7 +177,7 @@ class SpecialProductDialog : DialogFragment() {
                         dialog.hide()
                         val newPrice = view.edt_price.text.toString()
                         if (qtySelector.selectedQty > 0) {
-                            Utilities.updateShoppingCart(TAG, context, product, qtySelector.selectedQty, newPrice, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType ->
+                            Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, newPrice, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType ->
                                 qtySelector.setQty(0)
                                 qtySelector.invalidate()
                             }
@@ -187,7 +187,7 @@ class SpecialProductDialog : DialogFragment() {
                     }
                 } else {
                     if (qtySelector.selectedQty > 0) {
-                        Utilities.updateShoppingCart(TAG, context, product, qtySelector.selectedQty, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType ->
+                        Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType ->
                             qtySelector.setQty(0)
                             qtySelector.invalidate()
                         }
