@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -15,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bedessee.salesca.R
 import com.bedessee.salesca.admin.AdminPanel
-import com.bedessee.salesca.admin.AdminSettings
 import com.bedessee.salesca.customview.*
 import com.bedessee.salesca.login.Login
 import com.bedessee.salesca.mixpanel.MixPanelManager
@@ -37,6 +37,7 @@ class ToolFragment : Fragment() {
     var toolAdapter: ToolAdapter? = null
     val TAG = "ReportList"
     var recyclerView:RecyclerView?=null
+    var filename_text:TextView?=null
     private var instance: ReportFragment? = null
     fun getInstance(): ReportFragment? {
         if (instance == null) {
@@ -55,10 +56,21 @@ class ToolFragment : Fragment() {
        val v:View= inflater.inflate(R.layout.fragment_tool, container, false)
         val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
+        val shared = requireActivity().getSharedPreferences("selectedfile", AppCompatActivity.MODE_PRIVATE)
+        val filename = shared.getString("Showfilename", "ProductMain")
+        val value= shared.getBoolean("show",false)
+        filename_text = (context as MainActivity?)?.findViewById(R.id.filename_text)
         requireActivity().requestedOrientation = if (orient == "landscape") {
             ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         } else {
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
+        if (value) {
+            filename_text?.setVisibility(View.VISIBLE)
+            filename_text?.setText(filename)
+        } else {
+            filename_text?.setVisibility(View.GONE)
         }
       recyclerView = v.findViewById(R.id.recyclerView)
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.default_margin)
@@ -268,6 +280,15 @@ class ToolFragment : Fragment() {
             ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         } else {
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+        val shared = requireActivity().getSharedPreferences("selectedfile", AppCompatActivity.MODE_PRIVATE)
+        val filename = shared.getString("Showfilename", "ProductMain")
+        val value= shared.getBoolean("show",false)
+        if (value) {
+            filename_text?.setVisibility(View.VISIBLE)
+            filename_text?.setText(filename)
+        } else {
+            filename_text?.setVisibility(View.GONE)
         }
     }
 }
