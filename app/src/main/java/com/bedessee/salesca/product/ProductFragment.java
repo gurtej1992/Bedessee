@@ -2,9 +2,11 @@ package com.bedessee.salesca.product;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -57,7 +59,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private Status mStatus;
     private String mStatusString;
     CheckBox upcBox;
-    String currentHint = "";
+    String currentHint = "",searchtype="";
     public static boolean shouldRestartLoaderOnResume = true;
     private ProductDummyAdapter mAdapter;
 
@@ -158,6 +160,32 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
         });
 
+        mEditSearchReference.get().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
+                        .setTitle("Search Product")
+                        .setMessage("Where you want to search product?")
+                        .setPositiveButton(mFilter.name(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what would happen when positive button is clicked
+                                searchtype=mFilter.name();
+                              dialogInterface.dismiss();
+                            }
+                        })
+                        .setNegativeButton("All Products", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //set what should happen when negative button is clicked
+                                searchtype="All";
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .show();
+            }
+        });
+
 
 
 
@@ -189,16 +217,34 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         final int loaderId;
         switch (mFilter) {
             case BRAND:
-                loaderId = mBrand.hashCode();
+                if(searchtype.equals("All")){
+                    loaderId = mFilter.hashCode();
+            }else {
+                    loaderId = mBrand.hashCode();
+                }
                 break;
             case CATEGORY:
-                loaderId = mCategory.hashCode();
+                if(searchtype.equals("All")){
+                    loaderId = mFilter.hashCode();
+                }else {
+                    loaderId = mCategory.hashCode();
+                }
+
                 break;
             case STATUS:
                 if (mStatus != null) {
-                    loaderId = mStatus.hashCode();
+                    if(searchtype.equals("All")){
+                        loaderId = mFilter.hashCode();
+                    }else {
+                        loaderId = mStatus.hashCode();
+                    }
+
                 } else {
-                    loaderId = mStatusString.hashCode();
+                    if(searchtype.equals("All")){
+                        loaderId = mFilter.hashCode();
+                    }else {
+                        loaderId = mStatusString.hashCode();
+                    }
                 }
                 break;
             default:
@@ -301,14 +347,32 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private int getLoaderId() {
         switch (mFilter) {
             case BRAND:
-                return mBrand.hashCode();
+                if(searchtype.equals("All")){
+                    return mFilter.hashCode();
+                }else {
+                    return mBrand.hashCode();
+                }
+
             case CATEGORY:
-                return mCategory.hashCode();
+                if(searchtype.equals("All")){
+                    return mFilter.hashCode();
+                }else {
+                    return mCategory.hashCode();
+                }
+
             case STATUS:
                 if (mStatus != null) {
-                    return mStatus.hashCode();
+                    if(searchtype.equals("All")){
+                        return mFilter.hashCode();
+                    }else {
+                        return mStatus.hashCode();
+                    }
                 } else {
-                    return mStatusString.hashCode();
+                    if(searchtype.equals("All")){
+                        return mFilter.hashCode();
+                    }else {
+                        return mStatusString.hashCode();
+                    }
                 }
             default:
                 return mFilter.hashCode();
@@ -331,14 +395,26 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private String getFilterWhereClause() {
         switch (mFilter) {
             case BRAND:
-                return Contract.ProductColumns.COLUMN_BRAND + " = '" + mBrand.getName().toUpperCase() + "'";
+                if(searchtype.equals("All")){
+                    return "";
+                }else {
+                    return Contract.ProductColumns.COLUMN_BRAND + " = '" + mBrand.getName().toUpperCase() + "'";
+                }
+
 
             case CATEGORY:
-                return Contract.ProductColumns.COLUMN_NUMBER + " like '" + mCategory.getChar() + "%'";
-
+                if(searchtype.equals("All")){
+                    return "";
+                }else {
+                    return Contract.ProductColumns.COLUMN_NUMBER + " like '" + mCategory.getChar() + "%'";
+                }
             case STATUS:
-                return Contract.ProductColumns.COLUMN_M_STATUS + " like '%" + (mStatus != null ? mStatus.name() : mStatusString) + "%'";
-            default:
+                if(searchtype.equals("All")){
+                    return "";
+                }else {
+                    return Contract.ProductColumns.COLUMN_M_STATUS + " like '%" + (mStatus != null ? mStatus.name() : mStatusString) + "%'";
+                }
+                default:
                 return "";
         }
     }
