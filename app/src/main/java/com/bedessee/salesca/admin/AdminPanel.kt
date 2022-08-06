@@ -35,6 +35,7 @@ class AdminPanel : AppCompatActivity() {
     var force: TextView? = null
     var num:TextView?=null
     var show_file:TextView?=null
+    var show_html:TextView?=null
     var set_ornt:TextView?=null
     var select_file:TextView?=null
     var updatedList= arrayOf<String>()
@@ -52,6 +53,8 @@ class AdminPanel : AppCompatActivity() {
         set_ornt = findViewById<View>(R.id.set_ornt) as TextView
         select_file = findViewById<View>(R.id.select_file) as TextView
         show_file = findViewById<View>(R.id.show_file) as TextView
+        show_html = findViewById<View>(R.id.show_html) as TextView
+
 
 
         //Creating a File object for directory
@@ -164,6 +167,35 @@ class AdminPanel : AppCompatActivity() {
                         getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
                     val edit = sharedPreferences.edit()
                     edit.putBoolean("show",false)
+                    edit.apply()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+
+        show_html!!.setOnClickListener {
+            AlertDialog.Builder(this).setTitle("Show Html File")
+                .setPositiveButton(
+                    "Chrome"
+                ) { dialog, which ->
+                    // Perform Action & Dismiss dialog
+                    var orn_text: String = "chrome"
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("htmlsetting", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putString("option", orn_text)
+                    edit.apply()
+                    dialog.dismiss();
+                }
+                .setNegativeButton(
+                    "Html Viewer"
+                ) { dialog, which ->
+                    var orn_text: String = "html"
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("htmlsetting", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putString("option", orn_text)
                     edit.apply()
                     dialog.dismiss()
                 }
