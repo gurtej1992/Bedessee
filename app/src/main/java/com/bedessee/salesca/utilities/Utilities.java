@@ -221,7 +221,7 @@ public class Utilities {
                             shoppingCartProduct.setItemType(itemType);
                             shoppingCartProduct.setEnteredPrice(price);
                             context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
-                            Toast.makeText(context, "Subtracted " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
 
                             final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId}, null);
                             if (cursor.moveToFirst()) {

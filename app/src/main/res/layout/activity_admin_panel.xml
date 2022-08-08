@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_marginRight="@dimen/gutter"
+    android:layout_marginLeft="@dimen/gutter"
     tools:context=".admin.AdminPanel">
     <TextView
         android:layout_width="match_parent"
@@ -14,7 +16,6 @@
         android:gravity="center_vertical"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
-        android:paddingLeft="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
         android:text="Clear 1"/>
 
@@ -23,7 +24,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -31,7 +32,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/clear2"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -42,14 +42,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
         android:id="@+id/force_crash"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -59,7 +58,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -67,7 +66,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/Num_Columns"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -78,7 +76,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -86,7 +84,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/select_file"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -96,7 +93,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -104,7 +101,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/show_html"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -114,7 +110,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -122,7 +118,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/show_file"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -132,7 +127,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -140,7 +135,6 @@
         android:textColor="@color/primary_text"
         android:id="@+id/set_ornt"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -150,7 +144,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -160,21 +154,19 @@
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
         android:text="Show level Price"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/primary_text"
         android:id="@+id/sign_out"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/gutter"
         android:paddingTop="@dimen/gutter"
         android:paddingBottom="@dimen/gutter"
         android:textSize="@dimen/field_text_size"
@@ -182,5 +174,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/unselected_tab"/>
+        android:background="@color/colorAccent"/>
+    <ImageView
+        android:id="@+id/landLogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+     android:layout_gravity="center|center_horizontal"
+        app:srcCompat="@drawable/logo" />
 </LinearLayout>

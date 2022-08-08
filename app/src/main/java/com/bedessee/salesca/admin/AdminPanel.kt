@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -72,6 +73,12 @@ class AdminPanel : AppCompatActivity() {
                 }
             }
         }
+        val landLogo = findViewById<ImageView>(R.id.landLogo);
+        landLogo.animate().apply {
+            duration =2000
+            rotationYBy(360f)
+
+        }.start()
         //List of all the text files
         //List of all the text files
         val filesList: Array<String> = directoryPath.list(textFilefilter)

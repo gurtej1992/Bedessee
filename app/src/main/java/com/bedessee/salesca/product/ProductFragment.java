@@ -114,6 +114,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         }else {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
         int[] dimens = Utilities.getScreenDimensInPx(getActivity());
         mAdapter = new ProductDummyAdapter(getContext(),null, dimens);
         mAdapter.setListener(new ProductDummyAdapter.Listener() {
@@ -280,47 +281,54 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         View sview = getActivity().findViewById(R.id.search);
         View searchBar = rootView.findViewById(R.id.searchBar);
         sview.setOnClickListener(v -> {
-//            if(searchBar.getVisibility() == View.VISIBLE){
-//                searchBar.animate()
-//                        .translationY(0)
-//                        .alpha(0.0f)
-//                        .setListener(new AnimatorListenerAdapter() {
-//                            @Override
-//                            public void onAnimationEnd(Animator animation) {
-//                                super.onAnimationEnd(animation);
-//                                searchBar.setVisibility(View.GONE);
-//                            }
-//                        });
-//            }
-//            else{
-//                searchBar.setVisibility(View.VISIBLE);
-//                searchBar.setAlpha(0.0f);
-//                searchBar.animate()
-//                        .alpha(1.0f)
-//                        .setListener(null);
-//            }
 
-            //searchoption
-            AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
-                    .setTitle("Search Product")
-                    .setMessage("Where you want to search product?")
-                    .setPositiveButton(mFilter.name(), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //set what would happen when positive button is clicked
-                            searchtype=mFilter.name();
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .setNegativeButton("All Products", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            //set what should happen when negative button is clicked
-                            searchtype="All";
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .show();
+
+                        if(searchBar.getVisibility() == View.VISIBLE){
+                searchBar.animate()
+                        .translationY(0)
+                        .alpha(0.0f)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                searchBar.setVisibility(View.GONE);
+                            }
+                        });
+            }
+            else{
+                searchBar.setVisibility(View.VISIBLE);
+                searchBar.setAlpha(0.0f);
+                searchBar.animate()
+                        .alpha(1.0f)
+                        .setListener(null);
+                if(searchBar.getVisibility()==View.VISIBLE) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
+                            .setTitle("Search Product")
+                            .setMessage("Where you want to search product?")
+                            .setPositiveButton(mFilter.name(), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what would happen when positive button is clicked
+                                    if (mFilter.name().equalsIgnoreCase("STATUS")) {
+                                        searchtype = mFilter.name();
+                                    } else {
+                                        searchtype = mFilter.name();
+                                    }
+                                    searchtype = mFilter.name();
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .setNegativeButton("All Products", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //set what should happen when negative button is clicked
+                                    searchtype = "All";
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            }
         } );
 
         return rootView;
