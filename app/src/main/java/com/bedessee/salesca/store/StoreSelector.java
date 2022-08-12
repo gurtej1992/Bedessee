@@ -106,7 +106,7 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
         super.onResume();
        if(getResources().getConfiguration().orientation==1){
            int[] dimens = Utilities.getScreenDimensInPx(null);
-           getWindow().setLayout((int) (dimens[0] * .72), (int) (dimens[1] * .95));
+           getWindow().setLayout((int) (dimens[0] * .86), (int) (dimens[1] * .95));
        }else {
            int[] dimens = Utilities.getScreenDimensInPx(null);
            getWindow().setLayout((int) (dimens[0] * .6), (int) (dimens[1] * .95));

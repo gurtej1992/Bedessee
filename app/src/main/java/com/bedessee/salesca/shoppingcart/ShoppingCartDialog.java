@@ -127,26 +127,28 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
             }
         });
 
-        if(mShoppingCart.getComment()!=null){
-            edtComment.setText(mShoppingCart.getComment());
-            edtContact.setText(mShoppingCart.getContact());
-        }else {
-            Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())}, null, null);
-            if (cursor.moveToFirst()) {
-
-                final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
-                if (saveorder != null) {
-
-                    edtComment.setText(saveorder.getComment());
-                    edtContact.setText(saveorder.getContact());
-                }
-            }
-        }
-
-
         String storeName = StoreManager.getCurrentStore().getName();
         if (storeName != null) {
+            if (mShoppingCart.getComment() != null) {
+                edtComment.setText(mShoppingCart.getComment());
+                edtContact.setText(mShoppingCart.getContact());
+            } else {
+                Cursor cursor = requireContext().getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())}, null, null);
+                if (cursor.moveToFirst()) {
+
+                    final SavedOrder saveorder = ProviderUtils.cursorToSavedOrder(cursor);
+                    if (saveorder != null) {
+
+                        edtComment.setText(saveorder.getComment());
+                        edtContact.setText(saveorder.getContact());
+                    }
+                }
+            }
             ((TextView) view.findViewById(R.id.store_name)).setText(storeName);
+
+        }else {
+            edtComment.setText("");
+            edtContact.setText("");
         }
 
         view.findViewById(R.id.btnViewStatement).setOnClickListener(this);
