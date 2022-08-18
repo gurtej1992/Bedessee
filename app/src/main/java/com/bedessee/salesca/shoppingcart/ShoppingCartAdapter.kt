@@ -1,7 +1,9 @@
 package com.bedessee.salesca.shoppingcart
 
+import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.Cursor
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -80,14 +82,46 @@ class ShoppingCartAdapter(
         holder.description.text = "${product.description} ~ ${product.caseUom}"
         // holder.description.text = "${product.description} ~ ${product.caseUom} ~ ${product.number}" + if (!hidePrice) "" else " price: ${shoppingCartProduct.enteredPrice}"
         holder.edtQty.setText(getQuantity(shoppingCartProduct))
+        val shared = mContext.getSharedPreferences("includeprice", AppCompatActivity.MODE_PRIVATE)
+        val value= shared.getBoolean("show",true)
 
         val f:Float
         if(holder.radioCase.isChecked){
-            f = java.lang.Float.valueOf(product.casePrice.toString())
+
+            if(value){
+
+            if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
+                f = java.lang.Float.valueOf(product.lvl0Price.toString())
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl0Price!!.toDouble())))
+            }else if((getQuantity(shoppingCartProduct).toInt()>= product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999"))
+
+            {
+                f = java.lang.Float.valueOf(product.lvl1Price.toString())
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl1Price!!.toDouble())))
+            }
+            else if((getQuantity(shoppingCartProduct).toInt()>= product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
+                f = java.lang.Float.valueOf(product.lvl2Price.toString())
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl2Price!!.toDouble())))
+            }
+            else{
+                f = java.lang.Float.valueOf(product.lvl3Price.toString())
+                holder.totalCase.setText("$" + String.format("%.2f",f))
+                holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl3Price!!.toDouble())))
+
+            }
+
+        }else {
+
+                            f = java.lang.Float.valueOf(product.casePrice.toString())
             holder.totalCase.setText("$" + String.format("%.2f",f))
             holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())))
 
-        }else{
+            }
+        }
+        else{
             val parts: List<String> = product.piecePrice.toString().split(" ")
             if(parts.size==2){
                 val part1 = parts.first() // 004
@@ -158,44 +192,135 @@ class ShoppingCartAdapter(
             }, null).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
         }
         holder.edtQty.setOnClickListener {
-            newInstance(object : DialogNumberPad.OnItemSelectedListener {
-                override fun onSelected(itemType: ItemType, qty: Int) {
-                    val products = ShoppingCart.getCurrentShoppingCart().products
-                    val index = products.indexOf(shoppingCartProduct)
-                    Utilities.updateShoppingCart("inc",TAG, mContext, products[index].product, qty, null, itemType, null) { newQty, newItemType ->
-                        products[index].quantity = newQty
-                        products[index].itemType = newItemType
-                        notifyDataSetChanged()
-                        ShoppingCart.getCurrentShoppingCart().productChanged();
-                    }
-                    holder.edtQty.setText(getQuantity(shoppingCartProduct))
-                    val f:Float
-                     if(holder.radioCase.isChecked){
-                         holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
 
-                     }else {
-                         val parts: List<String> = product.piecePrice.toString().split(" ")
-                         if(parts.size==2){
-                             val part1 = parts.first() // 004
+            AlertDialog.Builder(mContext).setTitle("Do you want to add quantity or replace?")
+                .setPositiveButton(
+                    "Add"
+                ) { dialog, which ->
+                    newInstance(object : DialogNumberPad.OnItemSelectedListener {
+                        override fun onSelected(itemType: ItemType, qty: Int) {
+                            val products = ShoppingCart.getCurrentShoppingCart().products
+                            val index = products.indexOf(shoppingCartProduct)
+                            Utilities.updateShoppingCart("inc",TAG, mContext, products[index].product, qty, null, itemType, null) { newQty, newItemType ->
+                                products[index].quantity = newQty
+                                products[index].itemType = newItemType
+                                notifyDataSetChanged()
+                                ShoppingCart.getCurrentShoppingCart().productChanged();
+                            }
+                            holder.edtQty.setText(getQuantity(shoppingCartProduct))
+                            val f:Float
+                            if(holder.radioCase.isChecked){
 
-                             val part2 = parts[1]
-                             f = java.lang.Float.valueOf(part2)
-                             holder.totalCase.setText("$" + String.format("%.2f",f))
-                             holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+                                if(value){
 
-                         }else{
-                             val part1 = parts.first() // 004
+                                    if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl0Price!!.toDouble()))
 
-                             val part2 = parts[1]
-                             f = java.lang.Float.valueOf(product.piecePrice.toString())
-                             holder.totalCase.setText("$" + String.format("%.2f",f))
-                             holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+                                    }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
+                                    }
+                                    else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
+                                    }else{
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
+                                    }
+                                }
+                                else {
+                                    holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
+                                }
 
-                         }
-                     }
+
+                            }else {
+                                val parts: List<String> = product.piecePrice.toString().split(" ")
+                                if(parts.size==2){
+                                    val part1 = parts.first() // 004
+
+                                    val part2 = parts[1]
+                                    f = java.lang.Float.valueOf(part2)
+                                    holder.totalCase.setText("$" + String.format("%.2f",f))
+                                    holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                                }else{
+                                    val part1 = parts.first() // 004
+
+                                    val part2 = parts[1]
+                                    f = java.lang.Float.valueOf(product.piecePrice.toString())
+                                    holder.totalCase.setText("$" + String.format("%.2f",f))
+                                    holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                                }
+                            }
+
+                        }
+                    }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
+
+                    dialog.dismiss()
 
                 }
-            }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
+                .setNegativeButton(
+                    "Replace"
+                ) { dialog, which -> // Do nothing
+                    newInstance(object : DialogNumberPad.OnItemSelectedListener {
+                        override fun onSelected(itemType: ItemType, qty: Int) {
+                            val products = ShoppingCart.getCurrentShoppingCart().products
+                            val index = products.indexOf(shoppingCartProduct)
+                            Utilities.updateShoppingCart("update",TAG, mContext, products[index].product, qty, null, itemType, null) { newQty, newItemType ->
+                                products[index].quantity = qty
+                                products[index].itemType = newItemType
+                                notifyDataSetChanged()
+                                ShoppingCart.getCurrentShoppingCart().productChanged();
+                            }
+                            holder.edtQty.setText(""+qty)
+                            val f:Float
+                            if(holder.radioCase.isChecked){
+
+                                if(value){
+
+                                    if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl0Price!!.toDouble()))
+
+                                    }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
+                                    }
+                                    else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
+                                    }else{
+                                        holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
+                                    }
+                                }
+                                else {
+                                    holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
+                                }
+
+
+                            }else {
+                                val parts: List<String> = product.piecePrice.toString().split(" ")
+                                if(parts.size==2){
+                                    val part1 = parts.first() // 004
+
+                                    val part2 = parts[1]
+                                    f = java.lang.Float.valueOf(part2)
+                                    holder.totalCase.setText("$" + String.format("%.2f",f))
+                                    holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                                }else{
+                                    val part1 = parts.first() // 004
+
+                                    val part2 = parts[1]
+                                    f = java.lang.Float.valueOf(product.piecePrice.toString())
+                                    holder.totalCase.setText("$" + String.format("%.2f",f))
+                                    holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
+
+                                }
+                            }
+
+                        }
+                    }, DefaultNumberPad(shoppingCartProduct.itemType, getQuantity(shoppingCartProduct)), getQuantity(shoppingCartProduct)).show((mContext as AppCompatActivity).supportFragmentManager, TAG)
+
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
         }
     }
 }

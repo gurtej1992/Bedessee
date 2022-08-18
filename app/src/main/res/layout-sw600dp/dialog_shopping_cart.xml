@@ -191,18 +191,17 @@
         android:id="@+id/order_total_price"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/gutter"
         android:layout_marginEnd="@dimen/gutter"
-        android:text="$123"
+        android:layout_marginBottom="@dimen/gutter"
         android:gravity="start|left"
         android:padding="@dimen/small_gutter"
-        android:textSize="@dimen/subtitle_1_text_size"
         android:textColor="@color/tabs_divider"
+        android:textSize="@dimen/subtitle_1_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintTop_toBottomOf="@+id/order_total_txt"
-        app:layout_constraintStart_toEndOf="@+id/edtComment" />
+        app:layout_constraintStart_toEndOf="@+id/edtComment"
+        app:layout_constraintTop_toBottomOf="@+id/order_total_txt" />
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"

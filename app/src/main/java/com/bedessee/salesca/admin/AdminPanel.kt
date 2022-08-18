@@ -39,6 +39,7 @@ class AdminPanel : AppCompatActivity() {
     var show_html:TextView?=null
     var set_ornt:TextView?=null
     var select_file:TextView?=null
+    var include_file:TextView?=null
     var updatedList= arrayOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +56,8 @@ class AdminPanel : AppCompatActivity() {
         select_file = findViewById<View>(R.id.select_file) as TextView
         show_file = findViewById<View>(R.id.show_file) as TextView
         show_html = findViewById<View>(R.id.show_html) as TextView
+        include_file = findViewById<View>(R.id.include_price) as TextView
+
 
 
 
@@ -172,6 +175,33 @@ class AdminPanel : AppCompatActivity() {
                 ) { dialog, which -> // Do nothing
                     val sharedPreferences: SharedPreferences =
                         getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",false)
+                    edit.apply()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+
+        include_file!!.setOnClickListener {
+            AlertDialog.Builder(this).setTitle("Do you want to include level prices?")
+                .setPositiveButton(
+                    "YES"
+                ) { dialog, which ->
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("includeprice", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",true)
+                    edit.apply()
+                    dialog.dismiss()
+
+                }
+                .setNegativeButton(
+                    "NO"
+                ) { dialog, which -> // Do nothing
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("includeprice", Context.MODE_PRIVATE)
                     val edit = sharedPreferences.edit()
                     edit.putBoolean("show",false)
                     edit.apply()

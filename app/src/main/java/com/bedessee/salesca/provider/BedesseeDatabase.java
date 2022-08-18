@@ -87,7 +87,20 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
             Contract.ProductColumns.COLUMN_PRICE_FROM + " text, " +
             Contract.ProductColumns.COLUMN_PRICE_TO + " text, " +
             Contract.ProductColumns.COLUMN_UPC + " text, " +
-            Contract.ProductColumns.COLUMN_TOTAL_QTY_SOLD + " text)");
+            Contract.ProductColumns.COLUMN_TOTAL_QTY_SOLD + " text, " +
+                        Contract.ProductColumns.COLUMN_LVL0FROM + " text, " +
+                        Contract.ProductColumns.COLUMN_LVL0To + " text, " +
+                Contract.ProductColumns.COLUMN_LVL0PRICE + " text, " +
+                Contract.ProductColumns.COLUMN_LVL1FROM + " text, " +
+                Contract.ProductColumns.COLUMN_LVL1To + " text, " +
+                Contract.ProductColumns.COLUMN_LVL1PRICE + " text, " +
+                Contract.ProductColumns.COLUMN_LVL2FROM + " text, " +
+                Contract.ProductColumns.COLUMN_LVL2To + " text, " +
+                Contract.ProductColumns.COLUMN_LVL2PRICE + " text, " +
+                Contract.ProductColumns.COLUMN_LVL3FROM + " text, " +
+                Contract.ProductColumns.COLUMN_LVL3To + " text, " +
+                Contract.ProductColumns.COLUMN_LVL3PRICE + " text) ");
+
 
         db.execSQL("CREATE TABLE " + Tables.BRAND + "(" +
             Contract.BrandColumns.COLUMN_ID + " integer primary key, " +

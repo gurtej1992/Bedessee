@@ -209,7 +209,76 @@ public class Utilities {
                         }
 
 
-                    }else {
+                    }else if(perform.equals("update")){
+                            final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product,  selectedQty, itemType);
+                            productToSave2.setEnteredPrice(price);
+                            savedItem2= new SavedItem(orderId, productToSave2);
+                            final ContentValues value = ProviderUtils.savedItemToContentValues(savedItem2);
+
+                            shoppingCartProduct.setQuantity( selectedQty);
+                            shoppingCartProduct.setItemType(itemType);
+                            shoppingCartProduct.setEnteredPrice(price);
+                            context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+                            Toast.makeText(context, "Updated " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
+
+                            final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId}, null);
+                            if (cursor.moveToFirst()) {
+                                final SavedOrder order = ProviderUtils.cursorToSavedOrder(cursor);
+
+                                //comment
+                                if (order != null) {
+                                    final ContentValues contentValues = new ContentValues(1);
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_NUM_PRODUCTS, selectedQty);
+                                    contentValues.put(Contract.SavedOrderColumns.COLUMN_STORE, StoreManager.getCurrentStore().getBaseNumber());
+                                    context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
+
+                                }
+
+                                String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
+                                String parentDirectory = new File(baseFilePath).getParent();
+                                File f1 = new File(parentDirectory , "orderhistory");
+                                if (!f1.exists()) {
+                                    f1.mkdirs();
+                                }
+//FIRST ORDER
+                                File file = new File(parentDirectory + "/orderhistory/os_" + StoreManager.getCurrentStore().getName() + ".json");
+                                if(file.exists()){
+                                    boolean deleted = file.delete();
+                                    if (deleted) {
+                                        for(int i=0;i<savedItemList.size();i++){
+                                            if(savedItemList.get(i).getShoppingCartProduct().getProduct().getNumber().contains(savedItem2.getShoppingCartProduct().getProduct().getNumber())){
+                                                savedItemList.get(i).getShoppingCartProduct().setQuantity(shoppingCartProduct.getQuantity());
+                                            }
+                                        }
+                                        SavedOrder order1= new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(),  selectedQty,savedItemList);
+                                        Gson gson = new GsonBuilder().create();
+                                        String json = gson.toJson(order1);
+                                        try {
+                                            JSONObject jsonObj = new JSONObject(json);
+                                            writeToFile(json, parentDirectory);
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }else {
+                                    savedItemList.add(savedItem2);
+                                    SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(),  selectedQty,savedItemList);
+                                    Gson gson = new GsonBuilder().create();
+                                    String json = gson.toJson(order1);
+                                    try {
+                                        JSONObject jsonObj = new JSONObject(json);
+                                        writeToFile(json, parentDirectory);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+
+
+                        }
+                    else {
                         Log.e("@#@", "get cart value" + shoppingCartProduct.getQuantity());
                         if (shoppingCartProduct.getQuantity() > 1) {
                             final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() - selectedQty, itemType);

@@ -212,7 +212,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/gutter"
         android:layout_marginEnd="@dimen/gutter"
-        android:text="$123"
         android:gravity="start|left"
         android:padding="@dimen/small_gutter"
         android:textSize="@dimen/subtitle_1_text_size"

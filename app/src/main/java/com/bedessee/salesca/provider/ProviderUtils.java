@@ -89,6 +89,20 @@ public class ProviderUtils {
         values.put(Contract.ProductColumns.COLUMN_PRICE_FROM, product.getPriceRangeFrom());
         values.put(Contract.ProductColumns.COLUMN_PRICE_TO, product.getPriceRangeTo());
         values.put(Contract.ProductColumns.COLUMN_TOTAL_QTY_SOLD, product.getTotalQtySold());
+        values.put(Contract.ProductColumns.COLUMN_LVL0FROM, product.getLvl0From());
+        values.put(Contract.ProductColumns.COLUMN_LVL0To, product.getLvl0To());
+        values.put(Contract.ProductColumns.COLUMN_LVL0PRICE, product.getLvl0Price());
+        values.put(Contract.ProductColumns.COLUMN_LVL1FROM, product.getLvl1From());
+        values.put(Contract.ProductColumns.COLUMN_LVL1To, product.getLvl1To());
+        values.put(Contract.ProductColumns.COLUMN_LVL1PRICE, product.getLvl1Price());
+        values.put(Contract.ProductColumns.COLUMN_LVL2FROM, product.getLvl2From());
+        values.put(Contract.ProductColumns.COLUMN_LVL2To, product.getLvl2To());
+        values.put(Contract.ProductColumns.COLUMN_LVL2PRICE, product.getLvl2Price());
+        values.put(Contract.ProductColumns.COLUMN_LVL3FROM, product.getLvl3From());
+        values.put(Contract.ProductColumns.COLUMN_LVL3To, product.getLvl3To());
+        values.put(Contract.ProductColumns.COLUMN_LVL3PRICE, product.getLvl3Price());
+
+
 
         return values;
     }
@@ -143,8 +157,19 @@ public class ProviderUtils {
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRICE_FROM)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRICE_TO)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_FILE_CREATED_ON)),
-                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_TOTAL_QTY_SOLD))
-        );
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_TOTAL_QTY_SOLD)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL0FROM)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL0To)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL0PRICE)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL1FROM)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL1To)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL1PRICE)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL2FROM)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL2To)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL2PRICE)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3FROM)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3To)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3PRICE)));
     }
 
 

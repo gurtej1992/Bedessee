@@ -59,6 +59,22 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorAccent"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_text"
+        android:id="@+id/include_price"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/gutter"
+        android:paddingBottom="@dimen/gutter"
+        android:textSize="@dimen/field_text_size"
+        android:text="Include Level Price"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="match_parent"

@@ -101,8 +101,32 @@ open class Product(
     @SerializedName("FILE CREATED ON")
     var fileCreatedOn: String?,
     @SerializedName("TOTAL QTY SOLD")
-    var totalQtySold: String?
-) : Serializable, Comparable<Product> {
+    var totalQtySold: String?,
+    @SerializedName("LVL0_FROM")
+    var lvl0From: String?,
+    @SerializedName("LVL0_TO")
+    var lvl0To: String?,
+    @SerializedName("LVL0_PRICE")
+    var lvl0Price: String?,
+   @SerializedName("LVL1_FROM")
+   var lvl1From: String?,
+   @SerializedName("LVL1_TO")
+   var lvl1To: String?,
+    @SerializedName("LVL1_PRICE")
+    var lvl1Price: String?,
+    @SerializedName("LVL2_FROM")
+    var lvl2From: String?,
+    @SerializedName("LVL2_TO")
+    var lvl2To: String?,
+    @SerializedName("LVL2_PRICE")
+    var lvl2Price: String?,
+    @SerializedName("LVL3_FROM")
+    var lvl3From: String?,
+    @SerializedName("LVL3_TO")
+    var lvl3To: String?,
+    @SerializedName("LVL3_PRICE")
+    var lvl3Price: String?
+    ) : Serializable, Comparable<Product> {
     fun getLargeImagePath(context: Context?): String? {
         val sharedPrefs = SharedPrefsManager(context)
         val folderImagePath = sharedPrefs.linkToProdImages

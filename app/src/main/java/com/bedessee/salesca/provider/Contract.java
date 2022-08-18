@@ -61,6 +61,18 @@ public class Contract {
         public static final String COLUMN_PRICE_FROM = "pricefrom";
         public static final String COLUMN_PRICE_TO = "priceto";
         public static final String COLUMN_TOTAL_QTY_SOLD = "total_qty_sold";
+        public static final String COLUMN_LVL0FROM = "lvl0From";
+        public static final String COLUMN_LVL0To = "lvl0To";
+        public static final String COLUMN_LVL0PRICE = "lvl0Price";
+        public static final String COLUMN_LVL1FROM = "lvl1From";
+        public static final String COLUMN_LVL1To = "lvl1To";
+        public static final String COLUMN_LVL1PRICE = "lvl1Price";
+        public static final String COLUMN_LVL2FROM = "lvl2From";
+        public static final String COLUMN_LVL2To = "lvl2To";
+        public static final String COLUMN_LVL2PRICE = "lvl2Price";
+        public static final String COLUMN_LVL3FROM = "lvl3From";
+        public static final String COLUMN_LVL3To = "lvl3To";
+        public static final String COLUMN_LVL3PRICE = "lvl3Price";
     }
 
     public static class SideMenuColumns {

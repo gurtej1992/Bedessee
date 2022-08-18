@@ -176,29 +176,34 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         ((TextView) view.findViewById(R.id.totalItems)).setText("Total items: " + mShoppingCart.getTotalItems());
     }
 
-    private void updatePrice(View view){
+    private void updatePrice(View view) {
 
 
-        double sum=0;
-        for(int i=0;i<mShoppingCart.getProducts().size();i++){
-                if(mShoppingCart.getProducts().get(i).getItemType()== ItemType.CASE){
-                   sum= sum+(double)mShoppingCart.getProducts().get(i).getQuantity()*Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
-                }else {
-                    List<String> parts= Arrays.asList(mShoppingCart.getProducts().get(i).getProduct().getPiecePrice().toString().split(" "));
-                    Log.e("@#@#","get price"+parts);
-                    if(parts.size()==2) {
+        double sum = 0;
+        if (mShoppingCart.getProducts().size() == 0) {
+            ((TextView) view.findViewById(R.id.order_total_price)).setText("$ " + String.format("%.2f", sum));
+
+        } else{
+            for (int i = 0; i < mShoppingCart.getProducts().size(); i++) {
+                if (mShoppingCart.getProducts().get(i).getItemType() == ItemType.CASE) {
+                    sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+                } else {
+                    List<String> parts = Arrays.asList(mShoppingCart.getProducts().get(i).getProduct().getPiecePrice().toString().split(" "));
+                    Log.e("@#@#", "get price" + parts);
+                    if (parts.size() == 2) {
                         String part1 = parts.get(0);
                         String parts2 = parts.get(1);
                         sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(parts2);
-                    }else {
+                    } else {
                         String part1 = parts.get(0);
                         String parts2 = parts.get(1);
                         sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(parts2);
                     }
                 }
-            ((TextView) view.findViewById(R.id.order_total_price)).setText("$ " + String.format("%.2f",sum));
+                ((TextView) view.findViewById(R.id.order_total_price)).setText("$ " + String.format("%.2f", sum));
 
-        }
+            }
+    }
         double total_price = Math.round(sum * 100.0) / 100.0;
     }
 
@@ -274,5 +279,16 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         contentValues.put(Contract.SavedOrderColumns.COLUMN_CONTACT, edtContact.getText().toString());
         requireContext().getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{ShoppingCart.getCurrentOrderId(requireContext())});
 
+    }
+
+    @Override
+    public void onResume() {
+        if(mShoppingCart.getProducts().size()==0){
+            mShoppingCart.clearComment();
+            mShoppingCart.clearContact();
+            edtComment.setText("");
+            edtContact.setText("");
+        }
+        super.onResume();
     }
 }
