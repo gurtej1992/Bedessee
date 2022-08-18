@@ -197,21 +197,21 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
                             Log.e("@#@#", "get sum" + sum);
 
                         }
-                        else if((mShoppingCart.getProducts().get(i).getQuantity()> Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl1To().equals("999"))
+                        else if((mShoppingCart.getProducts().get(i).getQuantity()>= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl1To().equals("999"))
                         {
                             sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl1Price());
                             Log.e("@#@#", "get sum" + sum);
 
 
-                        }else if((mShoppingCart.getProducts().get(i).getQuantity()> Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl2To().equals("999"))
+                        }else if((mShoppingCart.getProducts().get(i).getQuantity()>=Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl2To().equals("999"))
                         {
-                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl1Price());
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl2Price());
                             Log.e("@#@#", "get sum" + sum);
 
 
                         }else
                         {
-                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl2Price());
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl3Price());
 
                         }
 
