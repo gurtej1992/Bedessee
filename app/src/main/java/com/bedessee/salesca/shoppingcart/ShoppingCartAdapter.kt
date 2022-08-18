@@ -197,6 +197,7 @@ class ShoppingCartAdapter(
                 .setPositiveButton(
                     "Add"
                 ) { dialog, which ->
+
                     newInstance(object : DialogNumberPad.OnItemSelectedListener {
                         override fun onSelected(itemType: ItemType, qty: Int) {
                             val products = ShoppingCart.getCurrentShoppingCart().products
@@ -260,6 +261,7 @@ class ShoppingCartAdapter(
                 .setNegativeButton(
                     "Replace"
                 ) { dialog, which -> // Do nothing
+
                     newInstance(object : DialogNumberPad.OnItemSelectedListener {
                         override fun onSelected(itemType: ItemType, qty: Int) {
                             val products = ShoppingCart.getCurrentShoppingCart().products

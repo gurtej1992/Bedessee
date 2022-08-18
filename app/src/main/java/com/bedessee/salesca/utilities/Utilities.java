@@ -120,6 +120,7 @@ public class Utilities {
 
         final String orderId = ShoppingCart.getCurrentOrderId(context);
         if(!strCurrentID.equals(orderId)){
+
             savedItemList.clear();
         }
         strCurrentID = orderId;

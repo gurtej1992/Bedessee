@@ -83,12 +83,15 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
     private ShoppingCart mShoppingCart;
     EditText edtComment,edtContact;
     TextView case_amount;
+    Boolean value;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_shopping_cart, container, false);
         SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("includeprice", Context.MODE_PRIVATE);
+       value= sharedPreferences.getBoolean("show",true);
         if(orient.equals("landscape")){
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }else {
@@ -186,7 +189,39 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         } else{
             for (int i = 0; i < mShoppingCart.getProducts().size(); i++) {
                 if (mShoppingCart.getProducts().get(i).getItemType() == ItemType.CASE) {
-                    sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+
+                    if(value){
+                        if((mShoppingCart.getProducts().get(i).getQuantity()> Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl0From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl0To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl0To().equals("999"))
+                        {
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl0Price());
+                            Log.e("@#@#", "get sum" + sum);
+
+                        }
+                        else if((mShoppingCart.getProducts().get(i).getQuantity()> Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl1To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl1To().equals("999"))
+                        {
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl1Price());
+                            Log.e("@#@#", "get sum" + sum);
+
+
+                        }else if((mShoppingCart.getProducts().get(i).getQuantity()> Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2From())&&mShoppingCart.getProducts().get(i).getQuantity()<= Integer.parseInt(mShoppingCart.getProducts().get(i).getProduct().getLvl2To()))||mShoppingCart.getProducts().get(i).getProduct().getLvl2To().equals("999"))
+                        {
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl1Price());
+                            Log.e("@#@#", "get sum" + sum);
+
+
+                        }else
+                        {
+                            sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getLvl2Price());
+
+                        }
+
+
+                    }else {
+                        sum = sum + (double) mShoppingCart.getProducts().get(i).getQuantity() * Double.parseDouble(mShoppingCart.getProducts().get(i).getProduct().getCasePrice());
+                        Log.e("@#@#", "get sum" + sum);
+                    }
+
+
                 } else {
                     List<String> parts = Arrays.asList(mShoppingCart.getProducts().get(i).getProduct().getPiecePrice().toString().split(" "));
                     Log.e("@#@#", "get price" + parts);
