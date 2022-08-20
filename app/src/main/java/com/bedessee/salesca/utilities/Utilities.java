@@ -42,8 +42,11 @@ import com.bedessee.salesca.shoppingcart.ShoppingCartProduct;
 import com.bedessee.salesca.store.StoreManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -184,7 +187,8 @@ public class Utilities {
                                             }
                                         }
                                         SavedOrder order1= new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
-                                        Gson gson = new GsonBuilder().create();
+                                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                        //Gson gson = new GsonBuilder().create();
                                         String json = gson.toJson(order1);
                                         try {
                                             JSONObject jsonObj = new JSONObject(json);
@@ -197,7 +201,9 @@ public class Utilities {
                             }else {
                                 savedItemList.add(savedItem2);
                                 SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
-                                Gson gson = new GsonBuilder().create();
+                               // Gson gson = new GsonBuilder().create();
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
                                 String json = gson.toJson(order1);
                                 try {
                                     JSONObject jsonObj = new JSONObject(json);
@@ -252,7 +258,9 @@ public class Utilities {
                                             }
                                         }
                                         SavedOrder order1= new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(),  selectedQty,savedItemList);
-                                        Gson gson = new GsonBuilder().create();
+                                        //Gson gson = new GsonBuilder().create();
+                                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
                                         String json = gson.toJson(order1);
                                         try {
                                             JSONObject jsonObj = new JSONObject(json);
@@ -265,7 +273,9 @@ public class Utilities {
                                 }else {
                                     savedItemList.add(savedItem2);
                                     SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(),  selectedQty,savedItemList);
-                                    Gson gson = new GsonBuilder().create();
+                                    //Gson gson = new GsonBuilder().create();
+                                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
                                     String json = gson.toJson(order1);
                                     try {
                                         JSONObject jsonObj = new JSONObject(json);
@@ -324,7 +334,9 @@ public class Utilities {
                                                     }
                                                 }
                                                 SavedOrder order1= new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList);
-                                                Gson gson = new GsonBuilder().create();
+                                                //Gson gson = new GsonBuilder().create();
+                                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
                                                 String json = gson.toJson(order1);
                                                 try {
                                                     JSONObject jsonObj = new JSONObject(json);
@@ -340,7 +352,9 @@ public class Utilities {
                                 }else {
                                     savedItemList.add(savedItem2);
                                     SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList);
-                                    Gson gson = new GsonBuilder().create();
+                                   // Gson gson = new GsonBuilder().create();
+                                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
                                     String json = gson.toJson(order1);
                                     try {
                                         JSONObject jsonObj = new JSONObject(json);
@@ -460,7 +474,97 @@ public class Utilities {
                     if (deleted) {
                         savedItemList.add(savedItem);
                         SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
-                        Gson gson = new GsonBuilder().create();
+                        //Gson gson = new GsonBuilder().create();
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        JSONObject jsonObject=new JSONObject();
+                        JSONObject obj = null;
+                        JSONArray jsonArray = new JSONArray();
+                        try {
+                            jsonObject.put("mId",orderId);
+                            jsonObject.put("mIsClosed",order.isClosed());
+                            jsonObject.put("mNumProducts",order.getNumProducts() + selectedQty);
+                            jsonObject.put("mStartTime",order.getStartTime());
+                            jsonObject.put("mEndTime",order.getEndTime());
+                            jsonObject.put("mStore",StoreManager.getCurrentStore().getName());
+
+                            for (int i=0;i<savedItemList.size();i++){
+                                obj = new JSONObject();
+                                obj.put("mOrderId",savedItemList.get(i).getOrderId());
+                                JSONObject jsonObject1=new JSONObject();
+                                jsonObject1.put("mItemType",savedItemList.get(i).getShoppingCartProduct().getItemType());
+                                jsonObject1.put("mQuantity",savedItemList.get(i).getShoppingCartProduct().getQuantity());
+                                JSONObject jsonObject2=new JSONObject();
+                                jsonObject2.put("BRAND",savedItemList.get(i).getShoppingCartProduct().getProduct().getBrand());
+                                jsonObject2.put("PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getCasePrice());
+                                jsonObject2.put("CASE SIZE",savedItemList.get(i).getShoppingCartProduct().getProduct().getCaseUom());
+                                jsonObject2.put("CASES PER ROW",savedItemList.get(i).getShoppingCartProduct().getProduct().getCasesPerRow());
+                                jsonObject2.put("CASES PER SKID",savedItemList.get(i).getShoppingCartProduct().getProduct().getCasesPerSkid());
+                                jsonObject2.put("DESCRIP",savedItemList.get(i).getShoppingCartProduct().getProduct().getDescription());
+                                jsonObject2.put("FILE CREATED ON",savedItemList.get(i).getShoppingCartProduct().getProduct().getFileCreatedOn());
+                                jsonObject2.put("imagePath",savedItemList.get(i).getShoppingCartProduct().getProduct().getImagePath());
+                                jsonObject2.put("LAYERS PER SKID",savedItemList.get(i).getShoppingCartProduct().getProduct().getLayersPerSkid());
+                                jsonObject2.put("LEVEL1PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel1Price());
+                                jsonObject2.put("LEVEL2PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel2Price());
+                                jsonObject2.put("LEVEL3PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel3Price());
+                                jsonObject2.put("LIKE TAG",savedItemList.get(i).getShoppingCartProduct().getProduct().getLikeTag());
+                                jsonObject2.put("LPRICE BCKG COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLPriceBackgroundColor());
+                                jsonObject2.put("LPRICE COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLPriceColor());
+                                jsonObject2.put("LVL0_FROM",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl0From());
+                                jsonObject2.put("LVL0_PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl0Price());
+                                jsonObject2.put("LVL0_TO",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl0To());
+                                jsonObject2.put("LVL1 BCKG COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel1BackgroundColor());
+                                jsonObject2.put("LVL1 COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel1PriceColor());
+                                jsonObject2.put("LVL1_FROM",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl1From());
+                                jsonObject2.put("LVL1_PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl1Price());
+                                jsonObject2.put("LVL1_TO",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl1To());
+                                jsonObject2.put("LVL2 BCKG COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel2BackgroundColor());
+                                jsonObject2.put("LVL2 COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel2PriceColor());
+                                jsonObject2.put("LVL2_FROM",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl2From());
+                                jsonObject2.put("LVL2_PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl2Price());
+                                jsonObject2.put("LVL2_TO",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl2To());
+                                jsonObject2.put("LVL3 BCKG COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel3BackgroundColor());
+                                jsonObject2.put("LVL3 COLOR",savedItemList.get(i).getShoppingCartProduct().getProduct().getLevel3PriceColor());
+                                jsonObject2.put("LVL3_FROM",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl3From());
+                                jsonObject2.put("LVL3_PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl3Price());
+                                jsonObject2.put("LVL3_TO",savedItemList.get(i).getShoppingCartProduct().getProduct().getLvl3To());
+                                jsonObject2.put("M STATUS",savedItemList.get(i).getShoppingCartProduct().getProduct().getMStatus());
+                                jsonObject2.put("NEW STATUS SORT",savedItemList.get(i).getShoppingCartProduct().getProduct().getNewTag());
+                                jsonObject2.put("NOTE01",savedItemList.get(i).getShoppingCartProduct().getProduct().getNote01());
+                                jsonObject2.put("NOTE02",savedItemList.get(i).getShoppingCartProduct().getProduct().getNote02());
+                                jsonObject2.put("NOTE03",savedItemList.get(i).getShoppingCartProduct().getProduct().getNote03());
+                                jsonObject2.put("NOTE04",savedItemList.get(i).getShoppingCartProduct().getProduct().getNote04());
+                                jsonObject2.put("NOTE05",savedItemList.get(i).getShoppingCartProduct().getProduct().getNote05());
+                                jsonObject2.put("POP PRICE FLAG",savedItemList.get(i).getShoppingCartProduct().getProduct().getPopUpPriceFlag());
+                                jsonObject2.put("POP UP PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getPopUpPrice());
+                                jsonObject2.put("PRICE RANGE FROM",savedItemList.get(i).getShoppingCartProduct().getProduct().getPriceRangeFrom());
+                                jsonObject2.put("PRICE RANGE TO",savedItemList.get(i).getShoppingCartProduct().getProduct().getPriceRangeTo());
+                                jsonObject2.put("PROD#",savedItemList.get(i).getShoppingCartProduct().getProduct().getNumber());
+                                jsonObject2.put("QTY1",savedItemList.get(i).getShoppingCartProduct().getProduct().getQty1());
+                                jsonObject2.put("QTY2",savedItemList.get(i).getShoppingCartProduct().getProduct().getQty2());
+                                jsonObject2.put("QTY3",savedItemList.get(i).getShoppingCartProduct().getProduct().getQty3());
+                                jsonObject2.put("QTY4",savedItemList.get(i).getShoppingCartProduct().getProduct().getQty4());
+                                jsonObject2.put("SHOW_QTY1",savedItemList.get(i).getShoppingCartProduct().getProduct().getShowQty1());
+                                jsonObject2.put("SHOW_QTY2",savedItemList.get(i).getShoppingCartProduct().getProduct().getShowQty2());
+                                jsonObject2.put("SHOW_QTY3",savedItemList.get(i).getShoppingCartProduct().getProduct().getShowQty3());
+                                jsonObject2.put("SHOW_QTY4",savedItemList.get(i).getShoppingCartProduct().getProduct().getShowQty4());
+                                jsonObject2.put("STATUS CODE",savedItemList.get(i).getShoppingCartProduct().getProduct().getStatusCode());
+                                jsonObject2.put("STATUS DESCRIPTION",savedItemList.get(i).getShoppingCartProduct().getProduct().getStatusDescription());
+                                jsonObject2.put("TOTAL QTY",savedItemList.get(i).getShoppingCartProduct().getProduct().getTotalQty());
+                                jsonObject2.put("UNIT PRICE",savedItemList.get(i).getShoppingCartProduct().getProduct().getPiecePrice());
+                                jsonObject2.put("UOM",savedItemList.get(i).getShoppingCartProduct().getProduct().getPieceUom());
+                                jsonObject2.put("UPC",savedItemList.get(i).getShoppingCartProduct().getProduct().getUPC());
+                                jsonObject1.put("mProduct",jsonObject2);
+                                obj.put("mShoppingCartProduct",jsonObject1);
+
+                                 jsonArray.put(obj);
+
+                            }
+
+                            jsonObject.put("savedItem",jsonArray);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         String json = gson.toJson(order1);
                         try {
                             JSONObject jsonObj = new JSONObject(json);
@@ -473,7 +577,7 @@ public class Utilities {
                 }else {
                     savedItemList.add(savedItem);
                         SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
-                        Gson gson = new GsonBuilder().create();
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         String json = gson.toJson(order1);
                         try {
                             JSONObject jsonObj = new JSONObject(json);
@@ -502,6 +606,12 @@ public class Utilities {
         }
         catch (IOException e) {
         }
+    }
+
+    public JSONObject makeJsonObject(String id,String name,Date start,Date end,Boolean value,int number,List<SavedItem> savedItemList){
+              JSONObject obj=new JSONObject();
+
+              return obj;
     }
 
     public static FragmentManager getFragmentManager(Context context) {
