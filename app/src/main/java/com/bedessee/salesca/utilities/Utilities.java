@@ -190,7 +190,12 @@ public class Utilities {
                                       //  Gson gson = new GsonBuilder().setPrettyPrinting().create();
                                         //Gson gson = new GsonBuilder().create();
                                        // String json = gson.toJson(order1);
-                                        String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString();
+                                        String json = null;
+                                        try {
+                                            json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString(8);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                         writeToFile(json, parentDirectory);
                                     }
                             }else {
@@ -200,7 +205,12 @@ public class Utilities {
                                // Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                               //  String json = gson.toJson(order1);
-                                String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString();
+                                String json = null;
+                                try {
+                                    json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString(8);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 writeToFile(json, parentDirectory);
                             }
                         }
@@ -252,7 +262,12 @@ public class Utilities {
                                        // Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                                        // String json = gson.toJson(order1);
-                                        String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), selectedQty,savedItemList).toString();
+                                        String json = null;
+                                        try {
+                                            json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), selectedQty,savedItemList).toString(8);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                         writeToFile(json, parentDirectory);
                                     }
                                 }else {
@@ -262,7 +277,12 @@ public class Utilities {
                                    // Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                                    // String json = gson.toJson(order1);
-                                    String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), selectedQty,savedItemList).toString();
+                                    String json = null;
+                                    try {
+                                        json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), selectedQty,savedItemList).toString(8);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                     writeToFile(json, parentDirectory);
                                 }
                             }
@@ -318,7 +338,12 @@ public class Utilities {
                                                // Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                                                 //String json = gson.toJson(order1);
-                                                String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList).toString();
+                                                String json = null;
+                                                try {
+                                                    json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList).toString(8);
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
                                                 writeToFile(json, parentDirectory);
                                             }
 
@@ -329,7 +354,12 @@ public class Utilities {
                                    // SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList);
                                    // Gson gson = new GsonBuilder().create();
                                   //  Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                                    String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList).toString();
+                                    String json = null;
+                                    try {
+                                        json = makeJsonObject(orderId, StoreManager.getCurrentStore().getBaseNumber(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() - 1,savedItemList).toString(8);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                     writeToFile(json, parentDirectory);
 
                                 }
@@ -444,15 +474,25 @@ public class Utilities {
                         savedItemList.add(savedItem);
 //                        SavedOrder order1 = new SavedOrder(orderId, StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
                         //Gson gson = new GsonBuilder().create();
-                        String json = makeJsonObject(orderId, StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString();
-                            writeToFile(json, parentDirectory);
+                        String json = null;
+                        try {
+                            json = makeJsonObject(orderId, StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString(8);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        writeToFile(json, parentDirectory);
                     }
                 }else {
                     savedItemList.add(savedItem);
 //                        SavedOrder order1 = new SavedOrder(order.getId(), StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList);
 //                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 //                        String json = gson.toJson(order1);
-                    String json = makeJsonObject(order.getId(), StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString();
+                    String json = null;
+                    try {
+                        json = makeJsonObject(order.getId(), StoreManager.getCurrentStore().getName(), order.getStartTime(), order.getEndTime(), order.isClosed(), order.getNumProducts() + selectedQty,savedItemList).toString(8);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     writeToFile(json, parentDirectory);
 
                     }
@@ -483,6 +523,7 @@ public class Utilities {
         JSONArray jsonArray = new JSONArray();
         try {
             jsonObject.put("mId",id);
+
             jsonObject.put("mIsClosed",value);
             jsonObject.put("mNumProducts",number);
             jsonObject.put("mStartTime",start);
@@ -557,7 +598,8 @@ public class Utilities {
                 jsonObject2.put("UPC",savedItemList.get(i).getShoppingCartProduct().getProduct().getUPC());
                 jsonObject1.put("mProduct",jsonObject2);
                 obj.put("mShoppingCartProduct",jsonObject1);
-                obj.put("---------","----------");
+                obj.put("-------------","-----------------------------------------------------");
+
 
                 jsonArray.put(obj);
 
