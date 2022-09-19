@@ -32,6 +32,7 @@ import com.tonyodev.fetch2.Request
 import org.apache.commons.io.FilenameUtils
 import java.io.File
 import java.net.URL
+import kotlin.concurrent.thread
 
 class ToolFragment : Fragment() {
     var toolAdapter: ToolAdapter? = null
@@ -169,14 +170,23 @@ class ToolFragment : Fragment() {
                     6 -> showWhatsNew()
                     7 -> {
                         noLogin?.let {
+
                             FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
-                            fetchRequest(context, it.link1)
+                                fetchRequest(context, it.link1)
+
                         }
                     }
                     8 -> {
                         noLogin?.let {
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
-                            fetchRequest(context, it.link2)
+
+
+                                FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
+                                fetchRequest(context, it.link2)
+
+
+
+
+
                         }
                     }
                 }
@@ -257,6 +267,8 @@ class ToolFragment : Fragment() {
             }
         }
     }
+
+
 
     private fun signOut(launchLoginScreen: Boolean) {
         val context = context

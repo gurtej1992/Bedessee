@@ -1,13 +1,19 @@
 package com.bedessee.salesca.utilities
 
+import android.R
 import android.content.Context
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.dialog_progress.*
+import kotlinx.android.synthetic.main.dialog_progress.view.*
 import timber.log.Timber
 import java.io.*
 import java.nio.charset.StandardCharsets
+import kotlin.concurrent.thread
+
 
 object FolderClearUp {
     const val clear_folder_json = "app_folders_to_clear.json"
@@ -22,13 +28,26 @@ object FolderClearUp {
             val arrayFolders = object: TypeToken<ArrayList<Folder>>() {}.type
             val folders:List<Folder> = Gson().fromJson(loadJSONFromFile(file), arrayFolders)
             val list = sugarFolder.listFiles()
+            var progressBar:ProgressBar
+
             folders.forEach {
                 list?.forEach { file ->
                     if (file.name == it.FOLDER) {
                        Timber.d("folder found ${file.name}")
                        Timber.d("deleting contents of ${file.name}")
-                       file.deleteRecursively()
-                       result = true
+                        thread(start = true) {
+                            file.deleteRecursively()
+
+
+                        }
+
+
+
+
+                        Toast.makeText(context, "folder found and deleting contents of ${file.name}", Toast.LENGTH_SHORT).show()
+
+                        result = true
+
                     }
                 }
             }

@@ -79,6 +79,8 @@ public class UpdateUsers extends BaseJsonUpdate {
 
                     final Salesman currSalesman = new SharedPrefsManager(mContext).getCurrentSalesman();
 
+
+
                     if (currSalesman != null && currSalesman.getEmail().equals(salesman.getEmail())) {
                         new SharedPrefsManager(mContext).setCurrentEmailPrefix(salesman);
                         String currentEmailPrefix =  new SharedPrefsManager(mContext).getCurrentEmailPrefix();
@@ -86,6 +88,7 @@ public class UpdateUsers extends BaseJsonUpdate {
 
                         SalesmanManager.setCurrentSalesman(mContext, salesman);
                     }
+
 
                     final ContentValues contentValue = ProviderUtils.UserToContentValues(salesman);
 
