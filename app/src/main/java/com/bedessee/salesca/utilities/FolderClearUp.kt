@@ -42,8 +42,6 @@ object FolderClearUp {
                         }
 
 
-
-
                         Toast.makeText(context, "folder found and deleting contents of ${file.name}", Toast.LENGTH_SHORT).show()
 
                         result = true

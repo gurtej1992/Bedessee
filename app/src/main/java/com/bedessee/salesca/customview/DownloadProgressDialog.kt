@@ -132,7 +132,7 @@ class DownloadProgressDialog : DialogFragment() {
 
             override fun onError(download: Download, error: Error, throwable: Throwable?) {
                 progressTitle?.let {
-                    it.text = "Error occurred while downloading.Please check the URL."
+                    it.text = "Error occurred while downloading.URL is not valid.Please check the URL."
                 }
             }
 
