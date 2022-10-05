@@ -301,33 +301,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 searchBar.animate()
                         .alpha(1.0f)
                         .setListener(null);
-                if(searchBar.getVisibility()==View.VISIBLE) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
-                            .setTitle("Search Product")
-                            .setMessage("Where you want to search product?")
-                            .setPositiveButton(mFilter.name(), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //set what would happen when positive button is clicked
-                                    if (mFilter.name().equalsIgnoreCase("STATUS")) {
-                                        searchtype = mFilter.name();
-                                    } else {
-                                        searchtype = mFilter.name();
-                                    }
-                                    searchtype = mFilter.name();
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .setNegativeButton("All Products", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    //set what should happen when negative button is clicked
-                                    searchtype = "All";
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .show();
-                }
+                    searchtype="All";
             }
         } );
 

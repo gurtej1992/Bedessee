@@ -24,6 +24,7 @@ import com.bedessee.salesca.update.UpdateActivity
 import com.tonyodev.fetch2.*
 import com.tonyodev.fetch2core.DownloadBlock
 import ir.mahdi.mzip.zip.ZipArchive
+import kotlinx.android.synthetic.main.alertdialog_progress.*
 import kotlinx.android.synthetic.main.dialog_progress.*
 import org.apache.commons.io.FilenameUtils
 import timber.log.Timber
@@ -182,12 +183,16 @@ class DownloadProgressDialog : DialogFragment() {
         val sugarPath = SharedPrefsManager(context).sugarSyncDir
         val unzippedFile = FilenameUtils.getName(archiveFile)
         val alertDialogBuilder = AlertDialog.Builder(context)
+        val view = layoutInflater.inflate(R.layout.alertdialog_progress,null)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             alertDialogBuilder.setTitle("Unzipping File")
                 .setMessage("The file $unzippedFile is Unzipping Please wait\"")
-                .setView(R.layout.alertdialog_progress)
+                .setView(view)
                 .setCancelable(false)
+
+
         }
+
         val mAlertDialog = alertDialogBuilder.create()
         mAlertDialog.show()
 
@@ -222,9 +227,11 @@ class DownloadProgressDialog : DialogFragment() {
             }
         }
                 }
-            }).start()
 
 
+
+            })
+                .start()
 
 
         } catch(ex:Exception) {

@@ -160,6 +160,8 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                 if (priceColor != null) {
                     holder.mTextPriceUnit.setTextColor(priceColor);
                     holder.mTextUomUnit.setTextColor(priceColor);
+                    holder.add.setColorFilter(priceColor);
+
                     //  holder.product_type.setBackgroundColor(priceColor);
                 }
 
@@ -194,6 +196,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                     }
                     holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);
                     holder.mTextUomUnit.setBackgroundColor(priceBackgroundColor);
+                    holder.add.setColorFilter(priceBackgroundColor);
 
 
                 }
@@ -457,6 +460,8 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                 for (ShoppingCartProduct productx : mProducts) {
                     if (p.getNumber().equals(productx.getProduct().getNumber())){
                         count = count + productx.getQuantity();
+                    }else {
+                        count=1;
                     }
 
                 }
