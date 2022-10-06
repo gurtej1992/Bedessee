@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -130,8 +131,10 @@ class ProductDetailDialog : DialogFragment() {
             Glide.with(this).load(file).into(view.product_image);
 
             view.btn_share.setOnClickListener {
+                Log.e("@@@@@","get value  file://${file.absolutePath}")
                 MixPanelManager.trackButtonClick(context, "Button Click: Image Share")
                 Utilities.shareImage(context, "file://${file.absolutePath}")
+
             }
         view.btn_code.setOnClickListener {
 
@@ -141,7 +144,7 @@ class ProductDetailDialog : DialogFragment() {
             )
 
             if (file.exists()) {
-                openPDF(context!!, file)
+                openPDF(requireContext(), file)
             }
             else{
                 Toast.makeText(context,"No barcode found!",Toast.LENGTH_SHORT).show()
@@ -151,7 +154,7 @@ class ProductDetailDialog : DialogFragment() {
             view.btn_zoom.setOnClickListener {
                 MixPanelManager.trackButtonClick(context, "Button Click: Image Zoo ")
                 btnZoomClickedRunnable?.run()
-                FullScreenImageActivity.launch(context!!, Uri.parse("file://${file.absolutePath}"))
+                FullScreenImageActivity.launch(requireContext(), Uri.parse("file://${file.absolutePath}"))
             }
 
             view.textView_brand.text = "${product.brand} ${product.description}"
@@ -160,8 +163,8 @@ class ProductDetailDialog : DialogFragment() {
             val casePrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.casePrice else custSpecPrice.price
             setupField(
                     view.textView_price_field,
-                    context!!.getString(R.string.field_string_formatter, product.caseUom),
-                    context!!.getString(R.string.quantity_string_formatter, casePrice),
+                    requireContext().getString(R.string.field_string_formatter, product.caseUom),
+                    requireContext().getString(R.string.quantity_string_formatter, casePrice),
                     product.lPriceColor!!,
                     product.lPriceBackgroundColor!!
             )
@@ -246,7 +249,10 @@ class ProductDetailDialog : DialogFragment() {
 
             val qtySelectorClickListener: QtySelectorClickListener = object : QtySelectorClickListener {
                 override fun onPlusButtonClick(): View.OnClickListener {
-                    return View.OnClickListener { qtySelector.incrementQty() }
+                    return View.OnClickListener {
+                        qtySelector.incrementQty()
+                        btnAddToCart.performClick()
+                    }
                 }
 
                 override fun onMinusButtonClick(): View.OnClickListener {

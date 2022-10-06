@@ -165,6 +165,12 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                     }
                 });
 
+                holder.mQtySelector.postDelayed(new Runnable() {
+                    public void run() {
+                        holder.mQtySelector.setVisibility(View.INVISIBLE);
+                    }
+                }, 10000);
+
                 Integer priceColor = Utilities.parseSaveColor(product.getLPriceColor());
                 if (priceColor != null) {
                     holder.mTextPriceUnit.setTextColor(priceColor);
