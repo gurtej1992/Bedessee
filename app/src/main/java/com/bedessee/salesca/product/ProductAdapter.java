@@ -498,6 +498,8 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
     }
 
 
+
+
     static class ViewHolder {
         RelativeLayout mItemBody;
         ImageView mImageView,add;

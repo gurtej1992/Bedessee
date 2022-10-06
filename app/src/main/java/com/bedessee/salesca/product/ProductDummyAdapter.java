@@ -103,16 +103,16 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                 final String filePath = product.getImagePath();
 
                 holder.mImageView.setImageBitmap(null);
-                if(holder.mQtySelector.getSelectedQty() == 0 || holder.mQtySelector.getSelectedQty() < 0){
-                    holder.add_count.setVisibility(View.GONE);
-                    holder.add.setVisibility(View.VISIBLE);
-                }
-                else{
-                    holder.add_count.setVisibility(View.VISIBLE);
-                    //+countProduct(product)
-                    holder.add_count.setText(""+countProduct(product));
-                    holder.add.setVisibility(View.GONE);
-                }
+//                if(holder.mQtySelector.getSelectedQty() == 0 || holder.mQtySelector.getSelectedQty() < 0){
+//                    holder.add_count.setVisibility(View.GONE);
+//                    holder.add.setVisibility(View.VISIBLE);
+//                }
+//                else{
+//                    holder.add_count.setVisibility(View.VISIBLE);
+//                    //+countProduct(product)
+//                    holder.add_count.setText(""+countProduct(product));
+//                    holder.add.setVisibility(View.GONE);
+//                }
                 holder.add_count.setOnClickListener(v -> {
                     holder.add.performClick();
                 });
@@ -152,7 +152,16 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                     @Override
                     public void onClick(View v) {
                         holder.mQtySelector.setVisibility(View.VISIBLE);
-                        holder.mQtySelector.setQty(countProduct(product));
+                        ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
+
+                        if(mProducts.size()==0){
+                            holder.mQtySelector.setQty(1);
+
+                        }else {
+
+                            holder.mQtySelector.setQty(countProduct(product));
+
+                        }
                     }
                 });
 
@@ -450,7 +459,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
 
                     holder.mQtySelector.setQtySelectorClickListener(qtySelectorClickListener);
 
-                    holder.mQtySelector.setQty(0);
+                    holder.mQtySelector.setQty(countProduct(product));
                     holder.mQtySelector.setProduct(product);
                 }
             }
@@ -459,13 +468,18 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                 int count = 0;
                 for (ShoppingCartProduct productx : mProducts) {
                     if (p.getNumber().equals(productx.getProduct().getNumber())){
+                        Log.e("@@@@@","agayyaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
                         count = count + productx.getQuantity();
+                        break;
                     }else {
+                        Log.e("@@@@@","nahi ayaaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
+
                         count=1;
                     }
 
                 }
                 return count;
+
             }
 
 
@@ -495,6 +509,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
             }
         };
 
+
     }
 
 
@@ -510,6 +525,16 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
     public void onBindViewHolder(@NonNull ProductDummyAdapter.ViewHolder holder, int position) {
         mCursorAdapter.getCursor().moveToPosition(position);
         mCursorAdapter.bindView(holder.itemView, mContext, mCursorAdapter.getCursor());
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
@@ -541,7 +566,6 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
             super(itemView);
         }
     }
-
 
 
 }

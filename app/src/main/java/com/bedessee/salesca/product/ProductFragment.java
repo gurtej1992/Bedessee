@@ -439,6 +439,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+
         mAdapter.mCursorAdapter.changeCursor(null);
     }
 
