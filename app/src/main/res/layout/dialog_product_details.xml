@@ -138,6 +138,10 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent">
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="0.5"/>
                 <com.bedessee.salesca.customview.QtySelector
                     android:layout_gravity="center"
                     android:layout_margin="25dp"
@@ -150,9 +154,10 @@
 
                 <Button
                     android:layout_margin="30dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:id="@+id/btnAddToCart"
                     android:layout_width="0dp"
+                    android:visibility="invisible"
                     android:layout_height="match_parent"
                     android:text="@string/add_to_cart"/>
             </LinearLayout>

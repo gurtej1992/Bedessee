@@ -447,7 +447,9 @@ public class Utilities {
             shoppingCartProduct.setEnteredPrice(price);
             ShoppingCart.getCurrentShoppingCart().addProduct(shoppingCartProduct, from);
             Toast.makeText(context, "Added" + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " to your shopping cart.", Toast.LENGTH_SHORT).show();
-
+            if (onProductUpdatedListener != null) {
+                onProductUpdatedListener.onUpdated(selectedQty, itemType);
+            }
             final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{savedItem.getOrderId()}, null);
             if (cursor.moveToFirst()) {
                 final SavedOrder order = ProviderUtils.cursorToSavedOrder(cursor);

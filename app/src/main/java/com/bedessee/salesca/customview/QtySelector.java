@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.product.Product;
 import com.bedessee.salesca.store.StoreManager;
+import com.bedessee.salesca.utilities.ProductEnteredFrom;
 import com.bedessee.salesca.utilities.Utilities;
 
 import org.jetbrains.annotations.NotNull;
@@ -72,8 +73,16 @@ public class QtySelector extends FrameLayout {
                 if (StoreManager.isStoreSelected()) {
                     DialogNumberPad.Companion.newInstance(new DialogNumberPad.OnItemSelectedListener() {
                         @Override
-                        public void onSelected(@NotNull ItemType itemType, int qty) {
-                            Utilities.updateShoppingCart("inc",TAG, context, mProduct, qty, null, itemType, null, null);
+                        public void onSelected(@NotNull ItemType itemType, int mqty) {
+//                            Utilities.updateShoppingCart("inc",TAG, context, mProduct, qty, null, itemType, null, null);
+                            Utilities.updateShoppingCart("inc",TAG, context, mProduct, mqty, null, itemType, null, new Utilities.OnProductUpdatedListener() {
+                                @Override
+                                public void onUpdated(int qty, ItemType itemType) {
+                                    setQty(qty);
+                                    invalidate();
+                                }
+                            });
+
                         }
                     }, new DialogNumberPad.DefaultNumberPad(ItemType.CASE, "0"), DEFAULT_INITIAL_VALUE).show(fragmentManager, TAG);
                 } else {

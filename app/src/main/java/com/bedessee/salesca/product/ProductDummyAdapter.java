@@ -459,16 +459,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                             Toast.makeText(mContext, "Please add some quantities.", Toast.LENGTH_SHORT).show();
 
                                         }
-//                                        ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
-//                                        int count = 0;
-//                                        for (ShoppingCartProduct productx : mProducts) {
-//                                            if (product.getNumber().equals(productx.getProduct().getNumber())){
-//                                                count = productx.getQuantity()-1;
-//                                            }
-//
-//                                        }
-//                                        Log.d("sdsadsa","Size "+count);
-//                                        holder.mQtySelector.setQty(count);
+
                                     } else {
                                         Toast.makeText(mContext, "Please select store to continue.", Toast.LENGTH_SHORT).show();
                                     }

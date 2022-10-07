@@ -137,16 +137,16 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         final String filePath = product.getImagePath();
 
         holder.mImageView.setImageBitmap(null);
-        if(holder.mQtySelector.getSelectedQty() == 0 || holder.mQtySelector.getSelectedQty() < 0){
-            holder.add_count.setVisibility(View.GONE);
-            holder.add.setVisibility(View.VISIBLE);
-        }
-        else{
-            holder.add_count.setVisibility(View.VISIBLE);
-            //+countProduct(product)
-            holder.add_count.setText(""+countProduct(product));
-            holder.add.setVisibility(View.GONE);
-        }
+//        if(holder.mQtySelector.getSelectedQty() == 0 || holder.mQtySelector.getSelectedQty() < 0){
+//            holder.add_count.setVisibility(View.GONE);
+//            holder.add.setVisibility(View.VISIBLE);
+//        }
+//        else{
+//            holder.add_count.setVisibility(View.VISIBLE);
+//            //+countProduct(product)
+//            holder.add_count.setText(""+countProduct(product));
+//            holder.add.setVisibility(View.GONE);
+//        }
         holder.add_count.setOnClickListener(v -> {
             holder.add.performClick();
         });
@@ -186,15 +186,33 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 holder.mQtySelector.setVisibility(View.VISIBLE);
-                holder.mQtySelector.setQty(countProduct(product));
+                ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
+
+                if(mProducts.size()==0){
+                    holder.mQtySelector.setQty(1);
+
+                }else {
+
+                    holder.mQtySelector.setQty(countProduct(product));
+
+                }
             }
         });
+
+        holder.mQtySelector.postDelayed(new Runnable() {
+            public void run() {
+                holder.mQtySelector.setVisibility(View.INVISIBLE);
+            }
+        }, 20000);
+
 
         Integer priceColor = Utilities.parseSaveColor(product.getLPriceColor());
         if (priceColor != null) {
             holder.mTextPriceUnit.setTextColor(priceColor);
             holder.mTextUomUnit.setTextColor(priceColor);
-          //  holder.product_type.setBackgroundColor(priceColor);
+            holder.add.setColorFilter(priceColor);
+
+            //  holder.product_type.setBackgroundColor(priceColor);
         }
 
         Integer priceBackgroundColor = Utilities.parseSaveColor(product.getLPriceBackgroundColor());
@@ -228,6 +246,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
             }
             holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);
             holder.mTextUomUnit.setBackgroundColor(priceBackgroundColor);
+            holder.add.setColorFilter(priceBackgroundColor);
 
 
         }
@@ -453,24 +472,22 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
                         @Override
                         public void onClick(View v) {
                             if (StoreManager.isStoreSelected()) {
-                                holder.mQtySelector.decrementQty();
-                                Utilities.updateShoppingCart("dec",TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
-                                    @Override
-                                    public void onUpdated(int qty, ItemType itemType) {
-                                        holder.mQtySelector.setQty(0);
-                                        holder.mQtySelector.invalidate();
-                                    }
-                                });
-                                ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
-                                int count = 0;
-                                for (ShoppingCartProduct productx : mProducts) {
-                                    if (product.getNumber().equals(productx.getProduct().getNumber())){
-                                        count = productx.getQuantity()-1;
-                                    }
+                                if(holder.mQtySelector.getSelectedQty()>1) {
+
+                                    holder.mQtySelector.decrementQty();
+                                    Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                        @Override
+                                        public void onUpdated(int qty, ItemType itemType) {
+                                            holder.mQtySelector.setQty(qty);
+                                            holder.mQtySelector.invalidate();
+                                        }
+                                    });
+
+                                }else {
+
+                                    Toast.makeText(mContext, "Please add some quantities.", Toast.LENGTH_SHORT).show();
 
                                 }
-                                Log.d("sdsadsa","Size "+count);
-                                holder.mQtySelector.setQty(count);
                             } else {
                                 Toast.makeText(mContext, "Please select store to continue.", Toast.LENGTH_SHORT).show();
                             }
@@ -481,7 +498,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
 
             holder.mQtySelector.setQtySelectorClickListener(qtySelectorClickListener);
 
-            holder.mQtySelector.setQty(0);
+            holder.mQtySelector.setQty(countProduct(product));
             holder.mQtySelector.setProduct(product);
         }
     }
@@ -489,8 +506,15 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
         int count = 0;
         for (ShoppingCartProduct productx : mProducts) {
+            count = 0;
             if (p.getNumber().equals(productx.getProduct().getNumber())){
                 count = count + productx.getQuantity();
+                break;
+            }
+            else {
+                Log.e("@@@@@","nahi ayaaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
+
+                count=1;
             }
 
         }
@@ -498,7 +522,15 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
     }
 
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
     static class ViewHolder {
         RelativeLayout mItemBody;
