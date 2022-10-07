@@ -12,7 +12,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.loader.app.LoaderManager
@@ -24,6 +26,7 @@ import com.bedessee.salesca.product.ProductFragment.shouldRestartLoaderOnResume
 import com.bedessee.salesca.provider.Contract
 import com.bedessee.salesca.provider.ProviderUtils
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
+import com.bedessee.salesca.shoppingcart.ShoppingCart
 import com.bedessee.salesca.store.StoreManager
 import com.bedessee.salesca.utilities.FieldUtilities.Companion.setupField
 import com.bedessee.salesca.utilities.FileUtilities.Companion.getFile
@@ -139,7 +142,7 @@ class ProductDetailDialog : DialogFragment() {
         view.btn_code.setOnClickListener {
 
             val file = getFile(
-                context!!, product.number!!, "PDF",
+                requireContext(), product.number!!, "PDF",
                 "barcode"
             )
 
@@ -231,7 +234,7 @@ class ProductDetailDialog : DialogFragment() {
             productAdapter = ProductAdapter(context, Utilities.getScreenDimensInPx(activity))
             productAdapter.setListener { product ->
                 MixPanelManager.selectProduct(activity, product.brand + " " + product.description)
-                create(product, Runnable { shouldRestartLoaderOnResume = false }).show(fragmentManager!!, TAG)
+                create(product, Runnable { shouldRestartLoaderOnResume = false }).show(requireFragmentManager(), TAG)
                 dismiss()
             }
 
@@ -252,14 +255,52 @@ class ProductDetailDialog : DialogFragment() {
                     return View.OnClickListener {
                         qtySelector.incrementQty()
                         btnAddToCart.performClick()
+                        val mProducts = ShoppingCart.getCurrentShoppingCart().products
+                        var count = 0
+                        for (productx in mProducts) {
+
+                            if (product.number == productx.product.number) {
+
+                                count = count + productx.quantity
+                                Log.d("sdsadsa", "Size $count+${productx.quantity}")
+                            }
+                        }
+                        Log.d("sdsadsa", "Size $count")
+                        qtySelector.setQty(count)
                     }
                 }
 
                 override fun onMinusButtonClick(): View.OnClickListener {
-                    return View.OnClickListener { qtySelector.decrementQty() }
+                    return View.OnClickListener {
+                        if (StoreManager.isStoreSelected()) {
+                            if (qtySelector.getSelectedQty() > 1) {
+                               qtySelector.decrementQty()
+                                Utilities.updateShoppingCart(
+                                    "dec",
+                                    TAG,
+                                    context,
+                                    product,
+                                    1,
+                                    null,
+                                    qtySelector.getItemType(),
+                                    ProductEnteredFrom.PRODUCT_LIST
+                                ) { qty, itemType ->
+                                    qtySelector.setQty(qty)
+                                    qtySelector.invalidate()
+                                }
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Please add some quantities.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                    }
                 }
             }
+            }
 
+            qtySelector.setQty(countProduct(product))
             qtySelector.setProduct(product)
             qtySelector.setQtySelectorClickListener(qtySelectorClickListener)
 
@@ -279,6 +320,7 @@ class ProductDetailDialog : DialogFragment() {
                             view.findViewById<View>(R.id.btn_done).setOnClickListener {
                                 dialog.hide()
                                 val newPrice = (view.findViewById<View>(R.id.edt_price) as TextView).text.toString()
+                                Log.d("sdsadsa", "quantity +${qtySelector.selectedQty}")
                                 Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, newPrice, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
                             }
                             quantityView.btn_delete.setOnClickListener { price.text = null }
@@ -294,7 +336,9 @@ class ProductDetailDialog : DialogFragment() {
                             quantityView.btn9.setOnClickListener { price.text = price.text.toString() + "9" }
                             quantityView.btnComma.setOnClickListener { price.text = price.text.toString() + "." }
                         } else {
-                            Utilities.updateShoppingCart("inc",TAG, context, product, qtySelector.selectedQty, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
+                            Log.d("sdsadsa", "quantity +${qtySelector.selectedQty}")
+
+                            Utilities.updateShoppingCart("inc",TAG, context, product, 1, null, qtySelector.itemType, ProductEnteredFrom.PRODUCT_LIST) { qty, itemType -> qtySelector.setQty(0) }
                         }
                     } else {
                         MixPanelManager.trackButtonClick(context, "Button Click: Add to cart: ZERO QTY")
@@ -389,5 +433,22 @@ class ProductDetailDialog : DialogFragment() {
             return false
         }
         return true
+    }
+
+    fun countProduct(p: Product): Int {
+        val mProducts = ShoppingCart.getCurrentShoppingCart().products
+        var count = 0
+        for (productx in mProducts) {
+            count=0
+            if (p.number == productx.product.number) {
+                Log.e("@@@@@", "agayyaaa" + p.number + "oorrrr" + productx.product.number)
+                count = count + productx.quantity
+                break
+            } else {
+                Log.e("@@@@@", "nahi ayaaaa" + p.number + "oorrrr" + productx.product.number)
+                count = 1
+            }
+        }
+        return count
     }
 }

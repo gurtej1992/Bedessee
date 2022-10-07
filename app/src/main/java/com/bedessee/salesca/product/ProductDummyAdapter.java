@@ -1,10 +1,12 @@
 package com.bedessee.salesca.product;
 
 import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,6 +52,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
 
     public CursorAdapter mCursorAdapter;
     private ViewHolder holder;
+
 
     private void updateDimens(int[] dimens){
         width = dimens[0] / 12;
@@ -169,7 +172,9 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                     public void run() {
                         holder.mQtySelector.setVisibility(View.INVISIBLE);
                     }
-                }, 10000);
+                }, 20000);
+
+
 
                 Integer priceColor = Utilities.parseSaveColor(product.getLPriceColor());
                 if (priceColor != null) {
@@ -437,14 +442,23 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                 @Override
                                 public void onClick(View v) {
                                     if (StoreManager.isStoreSelected()) {
-                                        holder.mQtySelector.decrementQty();
-                                        Utilities.updateShoppingCart("dec",TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
-                                            @Override
-                                            public void onUpdated(int qty, ItemType itemType) {
-                                                holder.mQtySelector.setQty(qty);
-                                                holder.mQtySelector.invalidate();
-                                            }
-                                        });
+                                        Log.e("@@@","get quantity"+holder.mQtySelector.getSelectedQty());
+                                        if(holder.mQtySelector.getSelectedQty()>1) {
+
+                                            holder.mQtySelector.decrementQty();
+                                            Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                                @Override
+                                                public void onUpdated(int qty, ItemType itemType) {
+                                                    holder.mQtySelector.setQty(qty);
+                                                    holder.mQtySelector.invalidate();
+                                                }
+                                            });
+
+                                        }else {
+
+                                            Toast.makeText(mContext, "Please add some quantities.", Toast.LENGTH_SHORT).show();
+
+                                        }
 //                                        ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
 //                                        int count = 0;
 //                                        for (ShoppingCartProduct productx : mProducts) {
@@ -473,8 +487,9 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                 ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
                 int count = 0;
                 for (ShoppingCartProduct productx : mProducts) {
+                   count = 0;
                     if (p.getNumber().equals(productx.getProduct().getNumber())){
-                        Log.e("@@@@@","agayyaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
+                        Log.e("@@@@@","agayyaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber()+"count"+count+"quantity"+productx.getQuantity());
                         count = count + productx.getQuantity();
                         break;
                     }else {
