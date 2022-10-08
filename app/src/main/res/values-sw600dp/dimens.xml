@@ -5,4 +5,5 @@
     <dimen name="dialog_number_pad_item_type_buttons_size">56dp</dimen>
     <dimen name="dialog_number_pad_text_size">28sp</dimen>
     <dimen name="dialog_number_pad_control_buttons_margin">14dp</dimen>
+    <dimen name="tab_size">66dp</dimen>
 </resources>

@@ -160,7 +160,8 @@ class ProductDetailDialog : DialogFragment() {
                 FullScreenImageActivity.launch(requireContext(), Uri.parse("file://${file.absolutePath}"))
             }
 
-            view.textView_brand.text = "${product.brand} ${product.description}"
+            view.textView_brand.text = "${product.brand} "
+        view.textView_brand_desc.text="${product.description}"
             view.textView_uom.text = "Unit: ${product.pieceUom}"
 
             val casePrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.casePrice else custSpecPrice.price
@@ -288,13 +289,10 @@ class ProductDetailDialog : DialogFragment() {
                                             qtySelector.getItemType(),
                                             ProductEnteredFrom.PRODUCT_LIST
                                         ){ qty, itemType ->
-                                            if (qty == 0) {
-                                                qtySelector.setQty(1)
-                                                qtySelector.invalidate()
-                                            } else {
+
                                                 qtySelector.setQty(qty)
                                                 qtySelector.invalidate()
-                                            }
+
                                         }
                                     }
                                 }
@@ -461,17 +459,22 @@ class ProductDetailDialog : DialogFragment() {
     }
 
     fun countProduct(p: Product): Int {
+        var count = 1
         val mProducts = ShoppingCart.getCurrentShoppingCart().products
-        var count = 0
-        for (productx in mProducts) {
-            count=0
-            if (p.number == productx.product.number) {
-                Log.e("@@@@@", "agayyaaa" + p.number + "oorrrr" + productx.product.number)
-                count = count + productx.quantity
-                break
-            } else {
-                Log.e("@@@@@", "nahi ayaaaa" + p.number + "oorrrr" + productx.product.number)
-                count = 1
+        if (mProducts.size > 0) {
+            for (productx in mProducts) {
+                count = 0
+                if (p.number == productx.product.number) {
+                    Log.e(
+                        "@@@@@",
+                        "agayyaaa" + p.number + "oorrrr" + productx.product.number + "count" + count + "quantity" + productx.quantity
+                    )
+                    count += productx.quantity
+                    break
+                } else {
+                    Log.e("@@@@@", "nahi ayaaaa" + p.number + "oorrrr" + productx.product.number)
+                    count = 1
+                }
             }
         }
         return count

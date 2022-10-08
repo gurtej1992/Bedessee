@@ -304,11 +304,12 @@ public class Utilities {
                                   ShoppingCart.getCurrentShoppingCart().getProducts().remove(shoppingCartProduct);
                                 ShoppingCart.getCurrentShoppingCart().productChanged();
                             }else {
-                                shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
-                                shoppingCartProduct.setItemType(itemType);
-                                shoppingCartProduct.setEnteredPrice(price);
+
                                 context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
                             }
+                            shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
+                            shoppingCartProduct.setItemType(itemType);
+                            shoppingCartProduct.setEnteredPrice(price);
                             Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
 
                             final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId}, null);

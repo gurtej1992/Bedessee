@@ -6,6 +6,7 @@
     <dimen name="dialog_number_pad_text_size">18sp</dimen>
     <dimen name="dialog_number_pad_backspace_size">24dp</dimen>
     <dimen name="dialog_number_pad_control_buttons_margin">12dp</dimen>
+    <dimen name="tab_size">58dp</dimen>
 
     <!-- Text -->
     <dimen name="field_text_size">18sp</dimen>

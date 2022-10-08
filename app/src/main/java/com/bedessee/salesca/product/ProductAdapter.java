@@ -203,7 +203,7 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
             public void run() {
                 holder.mQtySelector.setVisibility(View.INVISIBLE);
             }
-        }, 20000);
+        }, 30000);
 
 
         Integer priceColor = Utilities.parseSaveColor(product.getLPriceColor());
@@ -483,14 +483,10 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
                                                 Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
                                                     @Override
                                                     public void onUpdated(int qty, ItemType itemType) {
-                                                        if (qty==0){
-                                                            holder.mQtySelector.setQty(1);
-                                                            holder.mQtySelector.invalidate();
 
-                                                        }else {
                                                             holder.mQtySelector.setQty(qty);
                                                             holder.mQtySelector.invalidate();
-                                                        }
+
 
                                                     }
                                                 });
@@ -529,20 +525,22 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         }
     }
     int countProduct(Product p ){
+        int count=1;
         ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
-        int count = 0;
-        for (ShoppingCartProduct productx : mProducts) {
-            count = 0;
-            if (p.getNumber().equals(productx.getProduct().getNumber())){
-                count = count + productx.getQuantity();
-                break;
-            }
-            else {
-                Log.e("@@@@@","nahi ayaaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
+        if(mProducts.size()>0){
+            for (ShoppingCartProduct productx : mProducts) {
+                count = 0;
+                if (p.getNumber().equals(productx.getProduct().getNumber())){
+                    Log.e("@@@@@","agayyaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber()+"count"+count+"quantity"+productx.getQuantity());
+                    count = count + productx.getQuantity();
+                    break;
+                }else {
+                    Log.e("@@@@@","nahi ayaaaa"+p.getNumber()+"oorrrr"+productx.getProduct().getNumber());
 
-                count=1;
-            }
+                    count=1;
+                }
 
+            }
         }
         return count;
     }
