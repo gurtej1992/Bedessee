@@ -291,16 +291,24 @@ public class Utilities {
                         }
                     else {
                         Log.e("@#@", "get cart value" + shoppingCartProduct.getQuantity());
-                        if (shoppingCartProduct.getQuantity() > 1) {
+                        if (shoppingCartProduct.getQuantity() >=1) {
                             final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product, shoppingCartProduct.getQuantity() - selectedQty, itemType);
                             productToSave2.setEnteredPrice(price);
                             savedItem2 = new SavedItem(orderId, productToSave2);
                             final ContentValues value = ProviderUtils.savedItemToContentValues(savedItem2);
 
-                            shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
-                            shoppingCartProduct.setItemType(itemType);
-                            shoppingCartProduct.setEnteredPrice(price);
-                            context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+
+                            //if only one item left
+                            if(shoppingCartProduct.getQuantity() ==1){
+                                context.getContentResolver().delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+                                  ShoppingCart.getCurrentShoppingCart().getProducts().remove(shoppingCartProduct);
+                                ShoppingCart.getCurrentShoppingCart().productChanged();
+                            }else {
+                                shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
+                                shoppingCartProduct.setItemType(itemType);
+                                shoppingCartProduct.setEnteredPrice(price);
+                                context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+                            }
                             Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
 
                             final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId}, null);

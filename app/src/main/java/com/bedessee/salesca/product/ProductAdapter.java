@@ -472,8 +472,34 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
                         @Override
                         public void onClick(View v) {
                             if (StoreManager.isStoreSelected()) {
-                                if(holder.mQtySelector.getSelectedQty()>1) {
 
+                                    ArrayList<ShoppingCartProduct> mProducts = ShoppingCart.getCurrentShoppingCart().getProducts();
+                                    if(mProducts.size()>0) {
+                                        for (ShoppingCartProduct productx : mProducts) {
+
+                                            if (product.getNumber().equals(productx.getProduct().getNumber())) {
+
+                                                holder.mQtySelector.decrementQty();
+                                                Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
+                                                    @Override
+                                                    public void onUpdated(int qty, ItemType itemType) {
+                                                        if (qty==0){
+                                                            holder.mQtySelector.setQty(1);
+                                                            holder.mQtySelector.invalidate();
+
+                                                        }else {
+                                                            holder.mQtySelector.setQty(qty);
+                                                            holder.mQtySelector.invalidate();
+                                                        }
+
+                                                    }
+                                                });
+
+                                            }
+
+                                        }
+                                    }
+                                    else if(holder.mQtySelector.getSelectedQty()>1) {
                                     holder.mQtySelector.decrementQty();
                                     Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
                                         @Override

@@ -273,8 +273,33 @@ class ProductDetailDialog : DialogFragment() {
                 override fun onMinusButtonClick(): View.OnClickListener {
                     return View.OnClickListener {
                         if (StoreManager.isStoreSelected()) {
-                            if (qtySelector.getSelectedQty() > 1) {
-                               qtySelector.decrementQty()
+                            val mProducts = ShoppingCart.getCurrentShoppingCart().products
+                            if (mProducts.size > 0) {
+                                for (productx in mProducts) {
+                                    if (product.number == productx.product.number) {
+                                        qtySelector.decrementQty()
+                                        Utilities.updateShoppingCart(
+                                            "dec",
+                                            TAG,
+                                            context,
+                                            product,
+                                            1,
+                                            null,
+                                            qtySelector.getItemType(),
+                                            ProductEnteredFrom.PRODUCT_LIST
+                                        ){ qty, itemType ->
+                                            if (qty == 0) {
+                                                qtySelector.setQty(1)
+                                                qtySelector.invalidate()
+                                            } else {
+                                                qtySelector.setQty(qty)
+                                                qtySelector.invalidate()
+                                            }
+                                        }
+                                    }
+                                }
+                            } else if (qtySelector.getSelectedQty() > 1) {
+                                qtySelector.decrementQty()
                                 Utilities.updateShoppingCart(
                                     "dec",
                                     TAG,
