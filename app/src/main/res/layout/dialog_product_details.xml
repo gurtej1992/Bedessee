@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/textView_brand"
-        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"
@@ -47,7 +47,7 @@
 
     <TextView
         android:id="@+id/textView_brand_desc"
-        android:textSize="16sp"
+        android:textSize="@dimen/subtitle_2_text_size"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_margin"

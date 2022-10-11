@@ -15,7 +15,7 @@ android {
         multiDexEnabled true
         //noinspection HighAppVersionCode
         versionCode 20220402
-        versionName '2022-09-19'
+        versionName '2022-10-10'
     }
 
     signingConfigs {

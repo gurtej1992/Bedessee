@@ -214,7 +214,9 @@ public class Utilities {
                                 writeToFile(json, parentDirectory);
                             }
                         }
-
+                        if (onProductUpdatedListener != null) {
+                            onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+                        }
 
                     }else if(perform.equals("update")){
                             final ShoppingCartProduct productToSave2 = new ShoppingCartProduct(product,  selectedQty, itemType);
@@ -287,7 +289,9 @@ public class Utilities {
                                 }
                             }
 
-
+                        if (onProductUpdatedListener != null) {
+                            onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+                        }
                         }
                     else {
                         Log.e("@#@", "get cart value" + shoppingCartProduct.getQuantity());
@@ -303,14 +307,25 @@ public class Utilities {
                                 context.getContentResolver().delete(Contract.SavedItem.CONTENT_URI, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
                                   ShoppingCart.getCurrentShoppingCart().getProducts().remove(shoppingCartProduct);
                                 ShoppingCart.getCurrentShoppingCart().productChanged();
+                                Log.e("@@@@","what quantity"+shoppingCartProduct.getQuantity());
+                                Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
+
+
+                                if (onProductUpdatedListener != null) {
+                                    onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity()-selectedQty, itemType);
+                                }
                             }else {
 
                                 context.getContentResolver().update(Contract.SavedItem.CONTENT_URI, value, Contract.SavedItemColumns.COLUMN_ORDER_ID + " = ?" + " AND " + Contract.SavedItemColumns.COLUMN_PRODUCT_NUMBER + " = ?", new String[]{orderId, product.getNumber()});
+                                shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
+                                shoppingCartProduct.setItemType(itemType);
+                                shoppingCartProduct.setEnteredPrice(price);
+                                Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
+                                if (onProductUpdatedListener != null) {
+                                    onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+                                }
+
                             }
-                            shoppingCartProduct.setQuantity(shoppingCartProduct.getQuantity() - selectedQty);
-                            shoppingCartProduct.setItemType(itemType);
-                            shoppingCartProduct.setEnteredPrice(price);
-                            Toast.makeText(context, "Removed " + selectedQty + " " + product.getBrand() + " " + product.getDescription() + " from your shopping cart.", Toast.LENGTH_SHORT).show();
 
                             final Cursor cursor = context.getContentResolver().query(Contract.SavedOrder.CONTENT_URI, null, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId}, null);
                             if (cursor.moveToFirst()) {
@@ -377,9 +392,9 @@ public class Utilities {
                         }
                     }
 
-                    if (onProductUpdatedListener != null) {
-                                        onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
-                                    }
+//                    if (onProductUpdatedListener != null) {
+//                                        onProductUpdatedListener.onUpdated(shoppingCartProduct.getQuantity(), itemType);
+//                                    }
 
 
 //                    if (selectedQty != shoppingCartProduct.getQuantity()) {

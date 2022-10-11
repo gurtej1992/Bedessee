@@ -456,7 +456,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                                                         Utilities.updateShoppingCart("dec", TAG, mContext, product, 1, null, holder.mQtySelector.getItemType(), ProductEnteredFrom.PRODUCT_LIST, new Utilities.OnProductUpdatedListener() {
                                                             @Override
                                                             public void onUpdated(int qty, ItemType itemType) {
-
+                                             Log.e("@@@@","how qty"+qty);
                                                                    holder.mQtySelector.setQty(qty);
                                                                    holder.mQtySelector.invalidate();
 
@@ -579,7 +579,7 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
 
     @Override
     public int getItemCount() {
-
+Log.e("@@@","get size"+mCursorAdapter.getCount());
         return mCursorAdapter.getCount();
     }
 

@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -83,25 +84,18 @@ class AdminPanel : AppCompatActivity() {
 
         }.start()
         //List of all the text files
-        //List of all the text files
+        Log.e("@#@","get filter"+textFilefilter);
         val filesList: Array<String> = directoryPath.list(textFilefilter)
+        Log.e("@#@","get filename"+filesList.get(0));
 
         println("List of the text files in the specified directory:" + filesList.size)
-        for (fileName in filesList.indices) {
-            if(fileName==0){
-                updatedList+="Product" +" "+"Main"
-            }else if (fileName==1){
-                updatedList+="Product"+" "+fileName+"st"
+        for (fileName in filesList) {
 
-            }else if(fileName==2){
-                updatedList+="Product"+" "+fileName+"nd"
-
-            }else if(fileName==3){
-                updatedList+="Product"+" "+fileName+"rd"
-
-            }else
-                updatedList+="Product"+" "+fileName+"th"
-
+            var name=fileName.substringAfterLast("-")
+            if(name.contains("_")){
+                name=name.replace("_","/")
+            }
+            updatedList+=name
 
 
             println(updatedList)
