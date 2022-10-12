@@ -99,7 +99,9 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
                 Contract.ProductColumns.COLUMN_LVL2PRICE + " text, " +
                 Contract.ProductColumns.COLUMN_LVL3FROM + " text, " +
                 Contract.ProductColumns.COLUMN_LVL3To + " text, " +
-                Contract.ProductColumns.COLUMN_LVL3PRICE + " text) ");
+                Contract.ProductColumns.COLUMN_LVL3PRICE + " text, "+
+                        Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR + " text, " +
+                        Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR + " text)") ;
 
 
         db.execSQL("CREATE TABLE " + Tables.BRAND + "(" +

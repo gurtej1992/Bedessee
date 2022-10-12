@@ -65,7 +65,7 @@ public class UpdateActivity extends Activity {
     final public static int REQUEST_CODE = 1;
     final public static String KEY_UPDATE_DIR = "key_update_dir";
     private String mDir = "";
-
+Boolean update=false;
     private int mCurrentUpdateCount = 0;
     private int mTotalUpdateCount = 0;
 
@@ -74,6 +74,7 @@ public class UpdateActivity extends Activity {
      * this Activity.
      */
     public enum UpdateType {
+
         PRODUCT_INFO("Product info"),
         SALESMEN_STORES("Stores list"),
         BRANDS("Brands info"),
@@ -114,6 +115,7 @@ public class UpdateActivity extends Activity {
      */
     public static DownloadManager sDownloadManager;
 
+    SharedPreferences sharedPrefsManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +127,8 @@ public class UpdateActivity extends Activity {
         }else {
            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+       sharedPrefsManager=getSharedPreferences("selectedfile",Context.MODE_PRIVATE);
+        update=sharedPrefsManager.getBoolean("update",false);
         updatingAdapter = new UpdatingAdapter();
         initViews();
 
@@ -142,15 +146,19 @@ public class UpdateActivity extends Activity {
                         mUpdateTypesList = (ArrayList<UpdateType>) extras.get(sUpdateTypeKey);
                     } else {
                         mUpdateTypesList = new ArrayList<>();
-                        mUpdateTypesList.add(UpdateActivity.UpdateType.APP_INFO);
-                        mUpdateTypesList.add(UpdateType.USERS);
-                        mUpdateTypesList.add(UpdateType.CUST_SPEC_PRICE_LIST);
-                        mUpdateTypesList.add(UpdateType.SIDE_MENU);
-                        mUpdateTypesList.add(UpdateType.BRANDS);
-                        mUpdateTypesList.add(UpdateType.CATEGORY);
-                        mUpdateTypesList.add(UpdateType.SALESMEN_STORES);
+
+                            mUpdateTypesList.add(UpdateActivity.UpdateType.APP_INFO);
+                            mUpdateTypesList.add(UpdateType.USERS);
+                            mUpdateTypesList.add(UpdateType.CUST_SPEC_PRICE_LIST);
+                            mUpdateTypesList.add(UpdateType.SIDE_MENU);
+                            mUpdateTypesList.add(UpdateType.BRANDS);
+                            mUpdateTypesList.add(UpdateType.CATEGORY);
+                            mUpdateTypesList.add(UpdateType.SALESMEN_STORES);
+
                         mUpdateTypesList.add(UpdateType.PRODUCT_INFO);
-                        mUpdateTypesList.add(UpdateType.REPORTS_MENU);
+
+                            mUpdateTypesList.add(UpdateType.REPORTS_MENU);
+
                     }
 
                     if (extras.containsKey(KEY_UPDATE_DIR)) {
@@ -185,6 +193,7 @@ public class UpdateActivity extends Activity {
 
             case PRODUCT_INFO:
                 /* Download product info */
+
                 final UpdateProducts updateProducts = new UpdateProducts(UpdateActivity.this);
                 updateProducts.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
                     @Override
@@ -197,73 +206,90 @@ public class UpdateActivity extends Activity {
                 break;
 
             case SALESMEN_STORES:
-                final UpdateSalesmenStores updateSalesmenStores = new UpdateSalesmenStores(this);
-                updateSalesmenStores.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
-                    @Override
-                    public void onComplete() {
-                        setResult(100);
-                        allClear();
-                    }
-                });
-                updateSalesmenStores.execute(mDir);
+
+
+                    final UpdateSalesmenStores updateSalesmenStores = new UpdateSalesmenStores(this);
+                    updateSalesmenStores.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
+                        @Override
+                        public void onComplete() {
+                            setResult(100);
+                            allClear();
+                        }
+                    });
+                    updateSalesmenStores.execute(mDir);
+
                 break;
 
             case BRANDS:
-                final UpdateBrands updateBrands = new UpdateBrands(this);
-                updateBrands.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
-                    @Override
-                    public void onComplete() {
-                        setResult(1);
-                        allClear();
-                    }
-                });
-                updateBrands.execute(mDir);
+
+                    final UpdateBrands updateBrands = new UpdateBrands(this);
+                    updateBrands.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
+                        @Override
+                        public void onComplete() {
+                            setResult(1);
+                            allClear();
+                        }
+                    });
+                    updateBrands.execute(mDir);
+
                 break;
 
             case USERS:
-                final UpdateUsers updateUsers = new UpdateUsers(this);
-                updateUsers.setOnUpdateUsersCompleteListener(new UpdateUsers.OnUpdateUsersCompleteListener() {
-                    @Override
-                    public void onComplete() {
 
-                        setResult(1);
-                        allClear();
-                    }
+                    final UpdateUsers updateUsers = new UpdateUsers(this);
+                    updateUsers.setOnUpdateUsersCompleteListener(new UpdateUsers.OnUpdateUsersCompleteListener() {
+                        @Override
+                        public void onComplete() {
 
-                    @Override
-                    public void onError() {
+                            setResult(1);
+                            allClear();
+                        }
 
-                    }
-                });
-                updateUsers.execute(mDir);
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+                    updateUsers.execute(mDir);
+
                 break;
 
             case CATEGORY:
-                final UpdateCategories updateCategories = new UpdateCategories(this);
-                updateCategories.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
-                    @Override
-                    public void onComplete() {
-                        setResult(1);
-                        allClear();
-                    }
-                });
-                updateCategories.execute(mDir);
+
+                    final UpdateCategories updateCategories = new UpdateCategories(this);
+                    updateCategories.setOnJsonDownloadCompleteListener(new BaseJsonUpdate.OnDownloadJsonCompleteListener() {
+                        @Override
+                        public void onComplete() {
+                            setResult(1);
+                            allClear();
+                        }
+                    });
+                    updateCategories.execute(mDir);
+
                 break;
 
             case APP_INFO:
-                runUpdate(new UpdateAppInfo(this));
+
+                    runUpdate(new UpdateAppInfo(this));
+
                 break;
 
             case SIDE_MENU:
-                runUpdate(new UpdateSideMenu(this));
+
+                    runUpdate(new UpdateSideMenu(this));
+
                 break;
 
             case CUST_SPEC_PRICE_LIST:
-                runUpdate(new UpdateCustSpecPrice(this));
+
+                    runUpdate(new UpdateCustSpecPrice(this));
+
                 break;
 
             case REPORTS_MENU:
-                runUpdate(new UpdateReportsMenu(this));
+
+                    runUpdate(new UpdateReportsMenu(this));
+
                 break;
 
             default:
@@ -309,6 +335,7 @@ public class UpdateActivity extends Activity {
                         finish();
 
                     }
+                  sharedPrefsManager.edit().putBoolean("update",false).apply();
                 }
             });
             button.setEnabled(true);

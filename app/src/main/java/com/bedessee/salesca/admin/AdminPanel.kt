@@ -7,13 +7,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.os.Environment
 import android.text.InputType
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.bedessee.salesca.R
@@ -25,8 +25,14 @@ import com.bedessee.salesca.sharedprefs.SharedPrefsManager
 import com.bedessee.salesca.update.UpdateActivity
 import com.bedessee.salesca.utilities.FolderClearUp
 import com.bedessee.salesca.utilities.Utilities
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.File
+import java.io.FileInputStream
 import java.io.FilenameFilter
+import java.nio.MappedByteBuffer
+import java.nio.channels.FileChannel
+import java.nio.charset.Charset
 
 
 class AdminPanel : AppCompatActivity() {
@@ -42,6 +48,7 @@ class AdminPanel : AppCompatActivity() {
     var select_file:TextView?=null
     var include_file:TextView?=null
     var updatedList= arrayOf<String>()
+    var fileList= arrayOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,22 +67,39 @@ class AdminPanel : AppCompatActivity() {
         include_file = findViewById<View>(R.id.include_price) as TextView
 
 
-
-
-        //Creating a File object for directory
         //Creating a File object for directory
         val sharedPrefs = SharedPrefsManager(this)
         var mSugarSyncDir = sharedPrefs.sugarSyncDir
-        val directoryPath = File(mSugarSyncDir + "/data/")
-        val textFilefilter: FilenameFilter = object : FilenameFilter {
-            override fun accept(dir: File?, name: String): Boolean {
-                val lowercaseName = name.toLowerCase()
-                return if (lowercaseName.startsWith("products")) {
-                    true
-                } else {
-                    false
-                }
+
+
+        try {
+            val directoryPath = File(mSugarSyncDir + "/data/prod_files_can_select.json")
+            val stream = FileInputStream(directoryPath)
+            var jsonStr: String? = null
+            try {
+                val fc: FileChannel = stream.getChannel()
+                val bb: MappedByteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size())
+                jsonStr = Charset.defaultCharset().decode(bb).toString()
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                stream.close()
             }
+
+            val jsonObj = JSONArray(jsonStr)
+
+            // looping through All nodes
+            for (i in 0 until jsonObj.length()) {
+                val c = jsonObj.getJSONObject(i)
+                val menu_name = c.getString("MENU TO DISPLAY")
+                val fileselect = c.getString("FILE NAME TO SELECT")
+                updatedList+=menu_name
+                fileList+=fileselect
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         val landLogo = findViewById<ImageView>(R.id.landLogo);
         landLogo.animate().apply {
@@ -83,23 +107,6 @@ class AdminPanel : AppCompatActivity() {
             rotationYBy(360f)
 
         }.start()
-        //List of all the text files
-        Log.e("@#@","get filter"+textFilefilter);
-        val filesList: Array<String> = directoryPath.list(textFilefilter)
-        Log.e("@#@","get filename"+filesList.get(0));
-
-        println("List of the text files in the specified directory:" + filesList.size)
-        for (fileName in filesList) {
-
-            var name=fileName.substringAfterLast("-")
-            if(name.contains("_")){
-                name=name.replace("_","/")
-            }
-            updatedList+=name
-
-
-            println(updatedList)
-        }
 
         price!!.setOnClickListener {
 
@@ -293,8 +300,9 @@ class AdminPanel : AppCompatActivity() {
                 setTitle("List of Files")
 
                 setItems(updatedList) { dialog, which ->
-                    edit.putString("filename", filesList[which])
+                    edit.putString("filename", fileList[which])
                     edit.putString("Showfilename",updatedList[which])
+                    edit.putBoolean("update",true)
                     edit.apply()
                     dialog.dismiss();
                     startActivity(UpdateActivity.newIntent(this@AdminPanel))
@@ -327,6 +335,11 @@ class AdminPanel : AppCompatActivity() {
 
 
 
+
+    }
+
+    //readfile
+    open fun ReadFile() {
 
     }
 

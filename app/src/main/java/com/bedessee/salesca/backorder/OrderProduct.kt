@@ -15,7 +15,9 @@ class OrderProduct(number: String?, brand: String?, description: String?, pieceU
                    lvl2Price: String?,
                    lvl3From: String?,
                    lvl3To: String?,
-                   lvl3Price: String?
+                   lvl3Price: String?,
+                   plus_color:String,
+                   plus_bckg_color:String
 ) : Product(number, brand, description, pieceUom, casePrice, lPriceColor, lPriceBackgroundColor, level1Price, level1PriceColor, level1BackgroundColor, level2Price, level2PriceColor, level2BackgroundColor, level3Price, level3PriceColor, level3BackgroundColor, statusCode, mStatus, statusDescription, casesPerSkid, casesPerRow, layersPerSkid, imagePath, piecePrice, caseUom, totalQty, uPC, qty1, qty2, qty3, qty4, showQty1, showQty2, showQty3, showQty4, note01, note02, note03, note04, note05, popUpPrice, popUpPriceFlag, likeTag, newTag, priceRangeFrom, priceRangeTo, fileCreatedOn, totalQtySold, lvl0From,
     lvl0To,
     lvl0Price,
@@ -27,7 +29,7 @@ class OrderProduct(number: String?, brand: String?, description: String?, pieceU
     lvl2Price,
     lvl3From,
     lvl3To,
-    lvl3Price,) {
+    lvl3Price,plus_color,plus_bckg_color) {
     @SerializedName("DEFAULT QTY")
     var defaultQuantity: String? = null
         get() = field ?: "0"

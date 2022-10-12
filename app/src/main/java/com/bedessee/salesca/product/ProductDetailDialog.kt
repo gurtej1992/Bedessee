@@ -163,12 +163,13 @@ class ProductDetailDialog : DialogFragment() {
             view.textView_brand.text = "${product.brand} "
         view.textView_brand_desc.text="${product.description}"
             view.textView_uom.text = "Unit: ${product.pieceUom}"
+        view.textView_size_field.text="${requireContext().getString(R.string.field_string_formatter, product.caseUom)}"
 
             val casePrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.casePrice else custSpecPrice.price
             setupField(
                     view.textView_price_field,
-                    requireContext().getString(R.string.field_string_formatter, product.caseUom),
-                    requireContext().getString(R.string.quantity_string_formatter, casePrice),
+                    //requireContext().getString(R.string.field_string_formatter, product.caseUom),
+                 requireContext().getString(R.string.quantity_string_formatter, casePrice),
                     product.lPriceColor!!,
                     product.lPriceBackgroundColor!!
             )

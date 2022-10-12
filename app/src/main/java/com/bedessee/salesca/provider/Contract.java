@@ -73,6 +73,8 @@ public class Contract {
         public static final String COLUMN_LVL3FROM = "lvl3From";
         public static final String COLUMN_LVL3To = "lvl3To";
         public static final String COLUMN_LVL3PRICE = "lvl3Price";
+        public static final String COLUMN_PLUS_SIGN_COLOR = "plus_color";
+        public static final String COLUMN_PLUS_SIGN_BCKG_COLOR = "plus_bckg_color";
     }
 
     public static class SideMenuColumns {

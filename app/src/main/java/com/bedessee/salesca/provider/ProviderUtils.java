@@ -101,6 +101,8 @@ public class ProviderUtils {
         values.put(Contract.ProductColumns.COLUMN_LVL3FROM, product.getLvl3From());
         values.put(Contract.ProductColumns.COLUMN_LVL3To, product.getLvl3To());
         values.put(Contract.ProductColumns.COLUMN_LVL3PRICE, product.getLvl3Price());
+        values.put(Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR, product.getPlus_color());
+        values.put(Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR, product.getPlus_bckg_color());
 
 
 
@@ -169,7 +171,12 @@ public class ProviderUtils {
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL2PRICE)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3FROM)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3To)),
-                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3PRICE)));
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3PRICE)),
+        cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR)),
+        cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR)));
+
+
+
     }
 
 

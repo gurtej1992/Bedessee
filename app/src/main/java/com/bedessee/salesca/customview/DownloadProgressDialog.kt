@@ -205,27 +205,27 @@ class DownloadProgressDialog : DialogFragment() {
 
                 mAlertDialog.dismiss()
 
-                    progressTitle?.let { it ->
-            it.text = "The file $unzippedFile was unzipped completely"
-            positiveButton.post {
-                positiveButton.visibility = View.VISIBLE
-                positiveButton.text = "Cancel"
-                negativeButton.text = "Daily update"
-                negativeButton.visibility = View.VISIBLE
-                dialog?.setCancelable(true)
-                positiveButton.setOnClickListener {
-                    dismiss()
-                }
-                message.visibility= View.VISIBLE
-                message.text="Now, It is recommended to run a daily update"
-
-                negativeButton.setOnClickListener { view ->
+//                    progressTitle?.let { it ->
+//            it.text = "The file $unzippedFile was unzipped completely"
+//            positiveButton.post {
+//                positiveButton.visibility = View.VISIBLE
+//                positiveButton.text = "Cancel"
+//                negativeButton.text = "Daily update"
+//                negativeButton.visibility = View.VISIBLE
+//                dialog?.setCancelable(true)
+//                positiveButton.setOnClickListener {
+//                    dismiss()
+//                }
+//                message.visibility= View.VISIBLE
+//                message.text="Now, It is recommended to run a daily update"
+//
+//                negativeButton.setOnClickListener { view ->
                     MixPanelManager.trackButtonClick(context, "Button click: Top menu: DAILY UPDATE")
                     startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
                     dismiss()
-                }
-            }
-        }
+               // }
+           // }
+      //  }
                 }
 
 

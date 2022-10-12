@@ -220,6 +220,13 @@
                             android:textSize="16sp"
                             android:textStyle="bold"
                             android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/textView_size_field"
+                            style="@style/FieldTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_gutter"
+                            tools:text="_qty:20: " />
 
                         <TextView
                             android:id="@+id/textView_price_field"
@@ -227,7 +234,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_gutter"
-                            tools:text="_qty:20: " />
+                            android:text="@string/level_0_price" />
 
                         <TextView
                             android:id="@+id/textView_unitprice_field"
