@@ -98,6 +98,9 @@ class ToolFragment : Fragment() {
             if (noLogin.menuLabel2 != null) {
                 utilsStrings.add(noLogin.menuLabel2)
             }
+            if (noLogin.menuLabel3 != null) {
+                utilsStrings.add(noLogin.menuLabel3)
+            }
         }
 
         toolAdapter = object : ToolAdapter(getContext(), utilsStrings) {
@@ -185,6 +188,14 @@ class ToolFragment : Fragment() {
 
 
 
+                        }
+                    }
+                    9 -> {
+                        noLogin?.let {
+
+
+                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
+                            fetchRequest(context, it.link3)
 
 
                         }

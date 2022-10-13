@@ -18,6 +18,7 @@ import kotlin.concurrent.thread
 object FolderClearUp {
     const val clear_folder_json = "app_folders_to_clear.json"
     const val general_cleanup = "clear.json"
+    const val other_folder_json="other_folders_to_clear.json"
 
     fun clearFoldersByName(context: Context, fileName:String) : Boolean {
         var result = false
@@ -50,7 +51,7 @@ object FolderClearUp {
                 }
             }
         } else {
-            Toast.makeText(context, "file $clear_folder_json not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "file $fileName not found", Toast.LENGTH_SHORT).show()
         }
 
         return result

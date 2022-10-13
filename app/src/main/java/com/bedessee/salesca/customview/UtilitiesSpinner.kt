@@ -63,6 +63,9 @@ class UtilitiesSpinner : Spinner {
             if (noLogin.menuLabel2 != null) {
                 utilsStrings.add(noLogin.menuLabel2)
             }
+            if (noLogin.menuLabel3 != null) {
+                utilsStrings.add(noLogin.menuLabel3)
+            }
         }
         val utilsAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, utilsStrings)
         adapter = utilsAdapter
@@ -141,6 +144,13 @@ class UtilitiesSpinner : Spinner {
                         noLogin?.let {
                             FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
                             fetchRequest(context, it.link2)
+                        }
+                    }
+                    13->{
+
+                        noLogin?.let {
+                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
+                            fetchRequest(context, it.link3)
                         }
                     }
                 }

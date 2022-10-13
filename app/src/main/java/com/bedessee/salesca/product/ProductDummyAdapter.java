@@ -235,8 +235,10 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
                         holder.mTextUom,
                         context.getString(R.string.field_string_formatter, product.getCaseUom()),
                         context.getString(R.string.quantity_string_formatter, product.getCasePrice()),
-                        product.getLPriceColor(),
-                        product.getLPriceBackgroundColor()
+                        product.getLPriceBackgroundColor(),
+                        product.getLPriceColor()
+
+
                 );
 
                 if (!isBusy) {
