@@ -130,6 +130,7 @@ open class Product(
     var plus_color: String?,
     @SerializedName("PLUS SIGN BCKG COLOR")
     var plus_bckg_color: String?
+
     ) : Serializable, Comparable<Product> {
     fun getLargeImagePath(context: Context?): String? {
         val sharedPrefs = SharedPrefsManager(context)

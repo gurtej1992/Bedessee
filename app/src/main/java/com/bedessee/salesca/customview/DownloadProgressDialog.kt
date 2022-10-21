@@ -107,20 +107,20 @@ class DownloadProgressDialog : DialogFragment() {
                     it.text = "The Download has been completed."
                 }
 
-                positiveButton?.let { posButton ->
-                    posButton.text = "Unzip"
-                    posButton.visibility = View.VISIBLE
-                   posButton.setOnClickListener {
+//                positiveButton?.let { posButton ->
+//                    posButton.text = "Unzip"
+//                    posButton.visibility = View.VISIBLE
+//                   posButton.setOnClickListener {
 
                            unzip(context, download.file)
 
-                       progressBarView.visibility = View.GONE
-                        progressText.visibility = View.GONE
-                       posButton.visibility = View.GONE
-                        negativeButton.visibility = View.GONE
-
-                    }
-                }
+//                       progressBarView.visibility = View.GONE
+//                        progressText.visibility = View.GONE
+//                       posButton.visibility = View.GONE
+//                        negativeButton.visibility = View.GONE
+//
+//                    }
+//                }
             }
 
             override fun onDeleted(download: Download) {
@@ -189,8 +189,6 @@ class DownloadProgressDialog : DialogFragment() {
                 .setMessage("The file $unzippedFile is Unzipping Please wait\"")
                 .setView(view)
                 .setCancelable(false)
-
-
         }
 
         val mAlertDialog = alertDialogBuilder.create()

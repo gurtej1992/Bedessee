@@ -210,7 +210,11 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
         if (priceColor != null) {
             holder.mTextPriceUnit.setTextColor(priceColor);
             holder.mTextUomUnit.setTextColor(priceColor);
-            holder.add.setColorFilter(priceColor);
+            if(product.getPlus_bckg_color().equals("")){
+                holder.add.setColorFilter(Utilities.parseSaveColor("#f9c52d"));
+            }else {
+                holder.add.setColorFilter(Utilities.parseSaveColor(product.getPlus_bckg_color()));
+            }
 
             //  holder.product_type.setBackgroundColor(priceColor);
         }
@@ -246,7 +250,11 @@ public class ProductAdapter extends CursorAdapter implements Filterable {
             }
             holder.mTextPriceUnit.setBackgroundColor(priceBackgroundColor);
             holder.mTextUomUnit.setBackgroundColor(priceBackgroundColor);
-            holder.add.setColorFilter(priceBackgroundColor);
+            if(product.getPlus_bckg_color().equals("")){
+                holder.add.setColorFilter(Utilities.parseSaveColor("#f9c52d"));
+            }else {
+                holder.add.setColorFilter(Utilities.parseSaveColor(product.getPlus_bckg_color()));
+            }
 
 
         }

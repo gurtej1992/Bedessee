@@ -47,6 +47,7 @@ class AdminPanel : AppCompatActivity() {
     var set_ornt:TextView?=null
     var select_file:TextView?=null
     var include_file:TextView?=null
+    var newlayout:TextView?=null
     var updatedList= arrayOf<String>()
     var fileList= arrayOf<String>()
 
@@ -65,6 +66,7 @@ class AdminPanel : AppCompatActivity() {
         show_file = findViewById<View>(R.id.show_file) as TextView
         show_html = findViewById<View>(R.id.show_html) as TextView
         include_file = findViewById<View>(R.id.include_price) as TextView
+        newlayout = findViewById<View>(R.id.new_layout) as TextView
 
 
         //Creating a File object for directory
@@ -176,6 +178,34 @@ class AdminPanel : AppCompatActivity() {
                 ) { dialog, which -> // Do nothing
                     val sharedPreferences: SharedPreferences =
                         getSharedPreferences("selectedfile", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",false)
+                    edit.apply()
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        }
+
+        newlayout!!.setOnClickListener {
+            AlertDialog.Builder(this).setTitle("Do you want to show new layout?")
+//                .setMessage("This will show the selected file on main screen.")
+                .setPositiveButton(
+                    "YES"
+                ) { dialog, which ->
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("shownewlyout", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putBoolean("show",true)
+                    edit.apply()
+                    dialog.dismiss()
+
+                }
+                .setNegativeButton(
+                    "NO"
+                ) { dialog, which -> // Do nothing
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("shownewlyout", Context.MODE_PRIVATE)
                     val edit = sharedPreferences.edit()
                     edit.putBoolean("show",false)
                     edit.apply()
