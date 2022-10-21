@@ -103,8 +103,60 @@ public class ProviderUtils {
         values.put(Contract.ProductColumns.COLUMN_LVL3PRICE, product.getLvl3Price());
         values.put(Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR, product.getPlus_color());
         values.put(Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR, product.getPlus_bckg_color());
-
-
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_COLOR, product.getProd_line1_leftA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_BCKCOLOR, product.getProd_line1_leftA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1A, product.getProd_line1A());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_COLOR, product.getProd_line1_leftB_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_BCKCOLOR, product.getProd_line1_leftB_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1B, product.getProd_line1B());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_COLOR, product.getProd_line2_leftA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_BCKCOLOR, product.getProd_line2_leftA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2A, product.getProd_line2A());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_COLOR, product.getProd_line2_leftB_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_BCKCOLOR, product.getProd_line2_leftB_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2B, product.getProd_line2B());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_COLOR, product.getProd_line3_leftA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_BCKCOLOR, product.getProd_line3_leftA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3A, product.getProd_line3A());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_COLOR, product.getProd_line3_leftB_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_BCKCOLOR, product.getProd_line3_leftB_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3B, product.getProd_line3B());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_COLOR, product.getProd_line4_leftA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_BCKCOLOR, product.getProd_line4_leftA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4A, product.getProd_line4A());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_COLOR, product.getProd_line4_leftB_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_BCKCOLOR, product.getProd_line4_leftB_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4B, product.getProd_line4B());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_COLOR, product.getProd_line5_leftA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_BCKCOLOR, product.getProd_line5_leftA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5A, product.getProd_line5A());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_COLOR, product.getProd_line5_leftB_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_BCKCOLOR, product.getProd_line5_leftB_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5B, product.getProd_line5B());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_COLOR, product.getProd_line1_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_BCKCOLOR, product.getProd_line1_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE1R, product.getProd_line1R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_COLOR, product.getProd_line2_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_BCKCOLOR, product.getProd_line2_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE2R, product.getProd_line2R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_COLOR, product.getProd_line3_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_BCKCOLOR, product.getProd_line3_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE3R, product.getProd_line3R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_COLOR, product.getProd_line4_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_BCKCOLOR, product.getProd_line4_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE4R, product.getProd_line4R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_COLOR, product.getProd_line5_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_BCKCOLOR, product.getProd_line5_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE5R, product.getProd_line5R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_COLOR, product.getProd_line6_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_BCKCOLOR, product.getProd_line6_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE6R, product.getProd_line6R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_COLOR, product.getProd_line7_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_BCKCOLOR, product.getProd_line7_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE7R, product.getProd_line7R());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR, product.getProd_line8_rghtA_color());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR, product.getProd_line8_rghtA_bckcolor());
+        values.put(Contract.ProductColumns.COLUMN_PROD_LINE8R, product.getProd_line8R());
 
         return values;
     }
@@ -173,7 +225,62 @@ public class ProviderUtils {
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3To)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_LVL3PRICE)),
         cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR)),
-        cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR)));
+        cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR)),
+        cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1A)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1B)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2A)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2B)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3A)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3B)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4A)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4B)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5A)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5B)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE1R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE2R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE3R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE4R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE5R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE6R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE7R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8R))
+        );
 
 
 

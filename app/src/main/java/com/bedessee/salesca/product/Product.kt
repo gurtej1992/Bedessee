@@ -129,7 +129,115 @@ open class Product(
     @SerializedName("PLUS SIGN COLOR")
     var plus_color: String?,
     @SerializedName("PLUS SIGN BCKG COLOR")
-    var plus_bckg_color: String?
+    var plus_bckg_color: String?,
+    @SerializedName("PROD LINE1 LEFTA COLOR")
+    var prod_line1_leftA_color: String?,
+    @SerializedName("PROD LINE1 LEFTA BCKCOLOR")
+    var prod_line1_leftA_bckcolor: String?,
+    @SerializedName("PROD LINE1 A")
+    var prod_line1A: String?,
+    @SerializedName("PROD LINE1 LEFTB COLOR")
+    var prod_line1_leftB_color: String?,
+    @SerializedName("PROD LINE1 LEFTB BCKCOLOR")
+    var prod_line1_leftB_bckcolor: String?,
+    @SerializedName("PROD LINE1 B")
+    var prod_line1B: String?,
+    @SerializedName("PROD LINE2 LEFTA COLOR")
+    var prod_line2_leftA_color: String?,
+    @SerializedName("PROD LINE2 LEFTA BCKCOLOR")
+    var prod_line2_leftA_bckcolor: String?,
+    @SerializedName("PROD LINE2 A")
+    var prod_line2A: String?,
+    @SerializedName("PROD LINE2 LEFTB COLOR")
+    var prod_line2_leftB_color: String?,
+    @SerializedName("PROD LINE2 LEFTB BCKCOLOR")
+    var prod_line2_leftB_bckcolor: String?,
+    @SerializedName("PROD LINE2 B")
+    var prod_line2B: String?,
+    @SerializedName("PROD LINE3 LEFTA COLOR")
+    var prod_line3_leftA_color: String?,
+    @SerializedName("PROD LINE3 LEFTA BCKCOLOR")
+    var prod_line3_leftA_bckcolor: String?,
+    @SerializedName("PROD LINE3 A")
+    var prod_line3A: String?,
+    @SerializedName("PROD LINE3 LEFTB COLOR")
+    var prod_line3_leftB_color: String?,
+    @SerializedName("PROD LINE3 LEFTB BCKCOLOR")
+    var prod_line3_leftB_bckcolor: String?,
+    @SerializedName("PROD LINE3 B")
+    var prod_line3B: String?,
+    @SerializedName("PROD LINE4 LEFTA COLOR")
+    var prod_line4_leftA_color: String?,
+    @SerializedName("PROD LINE4 LEFTA BCKCOLOR")
+    var prod_line4_leftA_bckcolor: String?,
+    @SerializedName("PROD LINE4 A")
+    var prod_line4A: String?,
+    @SerializedName("PROD LINE4 LEFTB COLOR")
+    var prod_line4_leftB_color: String?,
+    @SerializedName("PROD LINE4 LEFTB BCKCOLOR")
+    var prod_line4_leftB_bckcolor: String?,
+    @SerializedName("PROD LINE4 B")
+    var prod_line4B: String?,
+    @SerializedName("PROD LINE5 LEFTA COLOR")
+    var prod_line5_leftA_color: String?,
+    @SerializedName("PROD LINE5 LEFTA BCKCOLOR")
+    var prod_line5_leftA_bckcolor: String?,
+    @SerializedName("PROD LINE5 A")
+    var prod_line5A: String?,
+    @SerializedName("PROD LINE5 LEFTB COLOR")
+    var prod_line5_leftB_color: String?,
+    @SerializedName("PROD LINE5 LEFTB BCKCOLOR")
+    var prod_line5_leftB_bckcolor: String?,
+    @SerializedName("PROD LINE5 B")
+    var prod_line5B: String?,
+    @SerializedName("PROD LINE1 RGHTA COLOR")
+    var prod_line1_rghtA_color: String?,
+    @SerializedName("PROD LINE1 RGHTA BCKCOLOR")
+    var prod_line1_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE1 R")
+    var prod_line1R: String?,
+    @SerializedName("PROD LINE2 RGHTA COLOR")
+    var prod_line2_rghtA_color: String?,
+    @SerializedName("PROD LINE2 RGHTA BCKCOLOR")
+    var prod_line2_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE2 R")
+    var prod_line2R: String?,
+    @SerializedName("PROD LINE3 RGHTA COLOR")
+    var prod_line3_rghtA_color: String?,
+    @SerializedName("PROD LINE3 RGHTA BCKCOLOR")
+    var prod_line3_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE3 R")
+    var prod_line3R: String?,
+    @SerializedName("PROD LINE4 RGHTA COLOR")
+    var prod_line4_rghtA_color: String?,
+    @SerializedName("PROD LINE4 RGHTA BCKCOLOR")
+    var prod_line4_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE4 R")
+    var prod_line4R: String?,
+    @SerializedName("PROD LINE5 RGHTA COLOR")
+    var prod_line5_rghtA_color: String?,
+    @SerializedName("PROD LINE5 RGHTA BCKCOLOR")
+    var prod_line5_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE5 R")
+    var prod_line5R: String?,
+    @SerializedName("PROD LINE6 RGHTA COLOR")
+    var prod_line6_rghtA_color: String?,
+    @SerializedName("PROD LINE6 RGHTA BCKCOLOR")
+    var prod_line6_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE6 R")
+    var prod_line6R: String?,
+    @SerializedName("PROD LINE7 RGHTA COLOR")
+    var prod_line7_rghtA_color: String?,
+    @SerializedName("PROD LINE7 RGHTA BCKCOLOR")
+    var prod_line7_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE7 R")
+    var prod_line7R: String?,
+    @SerializedName("PROD LINE8 RGHTA COLOR")
+    var prod_line8_rghtA_color: String?,
+    @SerializedName("PROD LINE8 RGHTA BCKCOLOR")
+    var prod_line8_rghtA_bckcolor: String?,
+    @SerializedName("PROD LINE8 R")
+    var prod_line8R: String?,
 
     ) : Serializable, Comparable<Product> {
     fun getLargeImagePath(context: Context?): String? {

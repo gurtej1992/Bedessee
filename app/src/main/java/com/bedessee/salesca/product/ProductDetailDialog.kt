@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.pm.ActivityInfo
 import android.database.Cursor
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -99,7 +100,11 @@ class ProductDetailDialog : DialogFragment() {
             view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
             ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
-            val productNum = product.number
+
+        val prefsManager = requireActivity().getSharedPreferences("shownewlyout", AppCompatActivity.MODE_PRIVATE)
+        val show = sh.getBoolean("show", false)
+
+        val productNum = product.number
             val currentStore = StoreManager.getCurrentStore()
             var custSpecPrice: CustSpecPrice? = null
 
@@ -163,8 +168,16 @@ class ProductDetailDialog : DialogFragment() {
             view.textView_brand.text = "${product.brand} "
         view.textView_brand_desc.text="${product.description}"
             view.textView_uom.text = "Unit: ${product.pieceUom}"
-        view.textView_size_field.text="${product.caseUom}"
+        if (show){
+            val casePricenew = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.prod_line1B else custSpecPrice.price
+            setupField(view.textView_size_field,product.prod_line1A!!,product.prod_line1_leftA_color!!,
+                product.prod_line1_leftA_bckcolor!!,
+                casePricenew!!,
+                if(product.prod_line1_leftB_color.equals("")) product.prod_line1_leftB_color!! else "00000",
+                if(product.prod_line1_leftB_bckcolor.equals("")) product.prod_line1_leftB_bckcolor!! else "ffffff")
 
+        }else{
+            view.textView_size_field.text="${product.caseUom}"
             val casePrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.casePrice else custSpecPrice.price
             setupField(
                     view.textView_price_field,
@@ -173,6 +186,10 @@ class ProductDetailDialog : DialogFragment() {
                     product.lPriceColor!!,
                     product.lPriceBackgroundColor!!
             )
+        }
+
+
+
 
             if (sharedPrefs.getBoolean("pref_show_level1price", true)) {
                 val level1price = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level1Price)) product.level1Price else custSpecPrice.level1Price

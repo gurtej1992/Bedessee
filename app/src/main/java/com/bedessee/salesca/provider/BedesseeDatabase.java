@@ -101,7 +101,63 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
                 Contract.ProductColumns.COLUMN_LVL3To + " text, " +
                 Contract.ProductColumns.COLUMN_LVL3PRICE + " text, "+
                         Contract.ProductColumns.COLUMN_PLUS_SIGN_COLOR + " text, " +
-                        Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR + " text)") ;
+                        Contract.ProductColumns.COLUMN_PLUS_SIGN_BCKG_COLOR + " text,"+
+                Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1A + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1_LEFTB_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1B + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2A + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_LEFTB_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2B + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3A + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_LEFTB_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3B + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4A + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_LEFTB_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4B + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5A + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_LEFTB_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5B + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE1R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE2R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE3R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE4R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE5R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE6_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE6R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE7_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE7R + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR + " text," +
+                Contract.ProductColumns.COLUMN_PROD_LINE8R + " text)"
+
+        ) ;
 
 
         db.execSQL("CREATE TABLE " + Tables.BRAND + "(" +
