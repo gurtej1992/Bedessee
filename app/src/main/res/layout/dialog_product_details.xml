@@ -267,6 +267,14 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/small_gutter"
                             android:text="@string/level_3_price" />
+                        <TextView
+                            android:id="@+id/textView_extra_field"
+                            style="@style/FieldTextView"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/small_gutter"
+                            tools:text="Test: " />
 
                         <TextView
                             android:id="@+id/textView_qty1_field"
@@ -382,6 +390,15 @@
                             android:layout_marginBottom="@dimen/gutter"
                             tools:text="Test: " />
 
+                        <TextView
+                            android:id="@+id/textView_extra_rghtfield"
+                            style="@style/FieldTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_marginStart="@dimen/gutter"
+                            android:layout_marginBottom="@dimen/gutter"
+                            tools:text="Test: " />
                         <TextView
                             android:id="@+id/textView_note01"
                             style="@style/FieldTextView"

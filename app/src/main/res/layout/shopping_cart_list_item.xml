@@ -5,6 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/margin"
+        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+        app:layout_constraintBottom_toTopOf="@+id/edtQty"
+        app:layout_constraintEnd_toStartOf="@+id/radioType"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
     <EditText
         android:id="@+id/edtQty"
         android:layout_width="wrap_content"

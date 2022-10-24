@@ -102,7 +102,7 @@ class ProductDetailDialog : DialogFragment() {
         }
 
         val prefsManager = requireActivity().getSharedPreferences("shownewlyout", AppCompatActivity.MODE_PRIVATE)
-        val show = sh.getBoolean("show", false)
+        val show = prefsManager.getBoolean("show", false)
 
         val productNum = product.number
             val currentStore = StoreManager.getCurrentStore()
@@ -169,83 +169,164 @@ class ProductDetailDialog : DialogFragment() {
         view.textView_brand_desc.text="${product.description}"
             view.textView_uom.text = "Unit: ${product.pieceUom}"
         if (show){
+            view.textView_size_field.visibility=View.GONE
             val casePricenew = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.prod_line1B else custSpecPrice.price
-            setupField(view.textView_size_field,product.prod_line1A!!,product.prod_line1_leftA_color!!,
+            setupField(view.textView_price_field,"${product.prod_line1A!!} ",product.prod_line1_leftA_color!!,
                 product.prod_line1_leftA_bckcolor!!,
                 casePricenew!!,
                 if(product.prod_line1_leftB_color.equals("")) product.prod_line1_leftB_color!! else "00000",
                 if(product.prod_line1_leftB_bckcolor.equals("")) product.prod_line1_leftB_bckcolor!! else "ffffff")
 
+
         }else{
             view.textView_size_field.text="${product.caseUom}"
             val casePrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.price)) product.casePrice else custSpecPrice.price
             setupField(
-                    view.textView_price_field,
-                    //requireContext().getString(R.string.field_string_formatter, product.caseUom),
-                 requireContext().getString(R.string.quantity_string_formatter, casePrice),
-                    product.lPriceColor!!,
-                    product.lPriceBackgroundColor!!
+                view.textView_price_field,
+                //requireContext().getString(R.string.field_string_formatter, product.caseUom),
+                requireContext().getString(R.string.quantity_string_formatter, casePrice),
+                product.lPriceColor!!,
+                product.lPriceBackgroundColor!!
             )
         }
 
 
 
 
+
+
+
+
             if (sharedPrefs.getBoolean("pref_show_level1price", true)) {
-                val level1price = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level1Price)) product.level1Price else custSpecPrice.level1Price
-                setupField(
+
+                if(show){
+                    val level1pricenew =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level1Price)) product.prod_line2B else custSpecPrice.level1Price
+                    setupField(
+                        view.textView_level1price_field,"${product.prod_line2A!!} " ,product.prod_line2_leftA_color!!,
+                        product.prod_line2_leftA_bckcolor!!,
+                        if (level1pricenew == "0.00") "N/A" else level1pricenew!!,
+                        if(product.prod_line2_leftB_color.equals("")) product.prod_line2_leftB_color!! else "00000",
+                        if(product.prod_line2_leftB_bckcolor.equals("")) product.prod_line2_leftB_bckcolor!! else "ffffff")
+
+                }
+                else {
+                    val level1price =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level1Price)) product.level1Price else custSpecPrice.level1Price
+                    setupField(
                         view.textView_level1price_field,
                         if (level1price == "0.00") "N/A" else level1price!!,
                         product.level1PriceColor!!,
                         product.level1BackgroundColor!!
-                )
+                    )
+                }
             } else {
                 view.textView_level1price_field.visibility = View.GONE
             }
 
             if (sharedPrefs.getBoolean("pref_show_level2price", true)) {
-                val level2price = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level2Price)) product.level2Price else custSpecPrice.level2Price
-                setupField(
+                if(show){
+                    val level2pricenew =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level2Price)) product.prod_line3B else custSpecPrice.level2Price
+                    setupField(
+                        view.textView_level2price_field,"${product.prod_line3A!!} ",product.prod_line3_leftA_color!!,
+                        product.prod_line3_leftA_bckcolor!!,
+                        if (level2pricenew == "0.00") "N/A" else level2pricenew!!,
+                        if(product.prod_line3_leftB_color.equals("")) product.prod_line3_leftB_color!! else "00000",
+                        if(product.prod_line3_leftB_bckcolor.equals("")) product.prod_line3_leftB_bckcolor!! else "ffffff")
+
+
+                }else {
+                    val level2price =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level2Price)) product.level2Price else custSpecPrice.level2Price
+                    setupField(
                         view.textView_level2price_field,
                         if (level2price == "0.00") "N/A" else level2price!!,
                         product.level2PriceColor!!,
                         product.level2BackgroundColor!!
-                )
+                    )
+                }
             } else {
                 view.textView_level2price_field.visibility = View.GONE
             }
 
             if (sharedPrefs.getBoolean("pref_show_level3price", true)) {
-                val level3price = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level3Price)) product.level3Price else custSpecPrice.level3Price
-                setupField(
+                if(show){
+                    val level3pricenew =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level3Price)) product.prod_line4B else custSpecPrice.level3Price
+                    setupField(
+                        view.textView_level3price_field,"${product.prod_line4A!!} ",product.prod_line4_leftA_color!!,
+                        product.prod_line4_leftA_bckcolor!!,
+                        if (level3pricenew == "0.00") "N/A" else level3pricenew!!,
+                        if(product.prod_line4_leftB_color.equals("")) product.prod_line4_leftB_color!! else "00000",
+                        if(product.prod_line4_leftB_bckcolor.equals("")) product.prod_line4_leftB_bckcolor!! else "ffffff")
+
+
+                }else {
+                    val level3price =
+                        if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.level3Price)) product.level3Price else custSpecPrice.level3Price
+                    setupField(
                         view.textView_level3price_field,
                         if (level3price == "0.00") "N/A" else level3price!!,
                         product.level3PriceColor!!,
                         product.level3BackgroundColor!!
-                )
+                    )
+                }
             } else {
                 view.findViewById<View>(R.id.textView_level3price_field).visibility = View.GONE
             }
 
-            val unitPrice = if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.unitPrice)) product.piecePrice else custSpecPrice.unitPrice
+        if(show){
+            view.textView_unitprice_field.visibility=View.GONE
+            view.textView_extra_field.visibility=View.VISIBLE
+            setupField(view.textView_extra_field,"${product.prod_line5A!!} ",product.prod_line5_leftA_color!!,
+                product.prod_line5_leftA_bckcolor!!,
+                product.prod_line5B!!,
+                if(product.prod_line5_leftB_color.equals("")) product.prod_line5_leftB_color!! else "00000",
+                if(product.prod_line5_leftB_bckcolor.equals("")) product.prod_line5_leftB_bckcolor!! else "ffffff")
+
+        }
+        else {
+
+            view.textView_extra_field.visibility=View.GONE
+            val unitPrice =
+                if (custSpecPrice == null || TextUtils.isEmpty(custSpecPrice.unitPrice)) product.piecePrice else custSpecPrice.unitPrice
             setupField(
-                    view.textView_unitprice_field,
-                    "${product.pieceUom} $unitPrice",
-                    product.lPriceColor!!,
-                    product.lPriceBackgroundColor!!
+                view.textView_unitprice_field,
+                "${product.pieceUom} $unitPrice",
+                product.lPriceColor!!,
+                product.lPriceBackgroundColor!!
             )
+        }
+            if(show){
+                setupField(view.textView_status,product.prod_line1R!!,product.prod_line1_rghtA_color!!,product.prod_line1_rghtA_bckcolor!!)
+                setupField(view.textView_casesperskid,product.prod_line2R!!,product.prod_line2_rghtA_color!!,product.prod_line2_rghtA_bckcolor!!)
+                setupField(view.textView_casesperrow,product.prod_line3R!!,product.prod_line3_rghtA_color!!,product.prod_line3_rghtA_bckcolor!!)
+                setupField(view.textView_layersperskid,product.prod_line4R!!,product.prod_line4_rghtA_color!!,product.prod_line4_rghtA_bckcolor!!)
+                setupField(view.textView_totalqty,product.prod_line5R!!,product.prod_line5_rghtA_color!!,product.prod_line5_rghtA_bckcolor!!)
+                setupField(view.textView_totalqty,product.prod_line5R!!,product.prod_line5_rghtA_color!!,product.prod_line5_rghtA_bckcolor!!)
+                setupField(view.textView_prodnum,product.prod_line6R!!,product.prod_line6_rghtA_color!!,product.prod_line6_rghtA_bckcolor!!)
+                setupField(view.textView_upc,product.prod_line7R!!,product.prod_line7_rghtA_color!!,product.prod_line7_rghtA_bckcolor!!)
+              view.textView_extra_rghtfield.visibility=View.VISIBLE
+                setupField(view.textView_extra_rghtfield,product.prod_line8R!!,product.prod_line8_rghtA_color!!,product.prod_line8_rghtA_bckcolor!!)
 
-            view.textView_status.text = "Status: ${product.mStatus}"
 
-            view.textView_casesperskid.text = "Cases Per Skid: ${product.casesPerSkid}"
-            view.textView_casesperrow.text = "Cases Per Row: ${product.casesPerRow}"
-            view.textView_layersperskid.text = "Layers Per Skid: ${product.layersPerSkid}"
-            view.textView_totalqty.text = "Total Qty: ${product.totalQty}"
+            }else {
+                view.textView_extra_rghtfield.visibility = View.VISIBLE
 
+                view.textView_status.text = "Status: ${product.mStatus}"
+
+                view.textView_casesperskid.text = "Cases Per Skid: ${product.casesPerSkid}"
+                view.textView_casesperrow.text = "Cases Per Row: ${product.casesPerRow}"
+                view.textView_layersperskid.text = "Layers Per Skid: ${product.layersPerSkid}"
+                view.textView_totalqty.text = "Total Qty: ${product.totalQty}"
+                view.textView_prodnum.text = "Product #: ${product.number}"
+                view.textView_upc.text = "UPC Code: ${product.uPC}"
+
+            }
             setupDataInfo(view, product, custSpecPrice)
 
-            view.textView_prodnum.text = "Product #: ${product.number}"
-            view.textView_upc.text = "UPC Code: ${product.uPC}"
+
 
             val gridViewSimilarProducts = view.horizontalScrollView_similarProducts
             searchStrings = product.description!!.split(" ").toTypedArray()

@@ -26,6 +26,17 @@
         tools:ignore="LabelFor"
         tools:text="4" />
 
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/margin"
+        android:src="@drawable/ic_baseline_fiber_manual_record_24"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edtQty"
+        app:layout_constraintEnd_toStartOf="@+id/radioType"/>
+
     <RadioGroup
         android:id="@+id/radioType"
         android:layout_width="wrap_content"
@@ -33,7 +44,7 @@
         android:layout_marginStart="@dimen/default_margin"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/edtQty"
+        app:layout_constraintStart_toEndOf="@id/margin"
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
