@@ -13,6 +13,7 @@ import androidx.core.content.FileProvider;
 
 import com.bedessee.salesca.BuildConfig;
 import com.bedessee.salesca.customview.ItemType;
+import com.bedessee.salesca.orderhistory.SavedItem;
 import com.bedessee.salesca.product.Product;
 import com.bedessee.salesca.salesman.SalesmanManager;
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager;
@@ -24,7 +25,15 @@ import com.bedessee.salesca.store.StoreManager;
 import com.bedessee.salesca.utilities.ProductEnteredFrom;
 import com.bedessee.salesca.utilities.Utilities;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -69,7 +78,7 @@ public class GMailUtils {
 
         Log.d("SalesMan", " object: " + emailPrefix);
 
-
+        makeJson(activity,sShoppingCart,DateFormat.format("yyyy-MM-dd hh:mmaa", new Date()).toString(),StoreManager.getCurrentStore().getName().split("-")[0]);
         //all the extras that will be passed to the email app
         if (aEmailList != null && aEmailList.length > 0) {
             intent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);
@@ -265,5 +274,64 @@ public class GMailUtils {
             }
         }
         return count;
+    }
+    private static void writeToFile(String data,String path) {
+        Log.e("@#@#","get store name"+StoreManager.getCurrentStore());
+        try {
+            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/CompletedOrderHistory/cos_" + StoreManager.getCurrentStore().getName() + ".json"),true);
+            outputStreamWriter.write(data.getBytes(StandardCharsets.UTF_8));
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+        }
+    }
+
+    public static void makeJson(Activity activity, ShoppingCart sShoppingCart, String s, String s1){
+        String baseFilePath = new SharedPrefsManager(activity).getSugarSyncDir();
+        String parentDirectory = new File(baseFilePath).getParent();
+        File f1 = new File(parentDirectory , "CompletedOrderHistory");
+        if (!f1.exists()) {
+            f1.mkdirs();
+        }
+       // File file = new File(parentDirectory + "/CompletedOrderHistory/cos_" + StoreManager.getCurrentStore().getName() + ".json");
+        String json = null;
+        try {
+            json = makeJsonObject(sShoppingCart,s,s1).toString(8);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        writeToFile(json, parentDirectory);
+    }
+    private static JSONObject makeJsonObject(ShoppingCart shoppingCart,String datetime,String Storename){
+        JSONObject jsonObject=new JSONObject();
+        JSONObject obj = null;
+        JSONArray jsonArray = new JSONArray();
+        try {
+            jsonObject.put("Date&Time",datetime);
+            jsonObject.put("TotalItems",shoppingCart.getTotalItems());
+            jsonObject.put("StoreName",Storename);
+
+            ArrayList<ShoppingCartProduct> shoppingCartProducts = shoppingCart.getProducts();
+
+            ArrayList<ShoppingCartProduct> sortedList = new ArrayList<>(new HashSet<>(shoppingCartProducts));
+            Collections.sort(sortedList);
+
+            for (ShoppingCartProduct shoppingCartProduct : sortedList) {
+                final Product product = shoppingCartProduct.getProduct();
+                obj = new JSONObject();
+                obj.put("ProductNumber",product.getNumber());
+                obj.put("ProductBrand",product.getBrand());
+                obj.put("productQuantity",shoppingCartProduct.getQuantity());
+                jsonArray.put(obj);
+
+            }
+
+            jsonObject.put("Products",jsonArray);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }
