@@ -40,9 +40,12 @@ import com.bedessee.salesca.product.brand.Brand;
 import com.bedessee.salesca.product.category.Category2;
 import com.bedessee.salesca.product.status.Status;
 import com.bedessee.salesca.provider.Contract;
+import com.bedessee.salesca.provider.ProviderUtils;
 import com.bedessee.salesca.utilities.Utilities;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Fragment that holds a list of products. If no brand or category is passed into the constructor,
@@ -60,6 +63,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private String mStatusString;
     CheckBox upcBox;
     String currentHint = "",searchtype="";
+    private ArrayList<Product> productArrayList;
     public static boolean shouldRestartLoaderOnResume = true;
     private ProductDummyAdapter mAdapter;
 
@@ -115,8 +119,10 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+        productArrayList=new ArrayList<>();
+
         int[] dimens = Utilities.getScreenDimensInPx(getActivity());
-        mAdapter = new ProductDummyAdapter(getContext(),null, dimens);
+        mAdapter = new ProductDummyAdapter(getContext(),productArrayList, dimens);
         mAdapter.setListener(new ProductDummyAdapter.Listener() {
             @Override
             public void onClick(Product product) {
@@ -239,26 +245,28 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                filter(s.toString());
               //  mAdapter.mCursorAdapter.getFilter().filter(s);
 
-                MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
-
-                final String filter = getFilterWhereClause();
-                String whereClause;
-                if(upcBox.isChecked()){
-                    whereClause = Contract.ProductColumns.COLUMN_UPC + " LIKE '%" + s + "%'";
-                }
-                else{
-                     whereClause = Contract.ProductColumns.COLUMN_BRAND + " LIKE '%" + s + "%'" + " OR " +
-                            Contract.ProductColumns.COLUMN_NUMBER + " LIKE '%" + s + "%'" + " OR " +
-                            Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
-                }
-                //
-                String filterWhere = filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")";
-                Log.e("LOLLLOL",filterWhere);
-                mAdapter.mCursorAdapter.getFilter().filter(filterWhere);
-                mAdapter.mCursorAdapter.notifyDataSetChanged();
-                mAdapter.notifyDataSetChanged();
+//                MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
+//
+//                final String filter = getFilterWhereClause();
+//                String whereClause;
+//                if(upcBox.isChecked()){
+//                    whereClause = Contract.ProductColumns.COLUMN_UPC + " LIKE '%" + s + "%'";
+//                }
+//                else{
+//                     whereClause = Contract.ProductColumns.COLUMN_BRAND + " LIKE '%" + s + "%'" + " OR " +
+//                            Contract.ProductColumns.COLUMN_NUMBER + " LIKE '%" + s + "%'" + " OR " +
+//                            Contract.ProductColumns.COLUMN_DESCRIPTION + " LIKE '%" + s + "%'";
+//                }
+//                //
+//                String filterWhere = filter + (!filter.equals("") ? " AND " : "") + "(" + whereClause + ")";
+//                Log.e("LOLLLOL",filterWhere);
+//                mAdapter.mCursorAdapter.getFilter().filter(filterWhere);
+//                mAdapter.mCursorAdapter.notifyDataSetChanged();
+//                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -432,16 +440,57 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor != null) {
-            mAdapter.mCursorAdapter.changeCursor(cursor);
+            while (cursor.moveToNext()) {
+
+                Product product = ProviderUtils.cursorToProduct(cursor);
+                productArrayList.add(product);
+            }
+            Log.e("@#@","get products after reset"+productArrayList.size());
+
+
+           // mAdapter.mCursorAdapter.changeCursor(cursor);
             mAdapter.notifyDataSetChanged();
+//
+//            Log.e("@#@","get products"+cursor.getPosition());
         }
+
+    }
+
+    private void filter(String text){
+
+        ArrayList<Product> filteredArraylist=new ArrayList<>();
+        for (Product item : productArrayList) {
+//            Log.e("@#@","get item"+item.getBrand()+"  "+item.getDescription());
+//            Log.e("@#@","get text"+text.toUpperCase());
+
+            // checking if the entered string matched with any item of our recycler view.
+            if ((item.getBrand().toLowerCase().contains(text.toLowerCase()))) {
+                // if the item is matched we are
+                // adding it to our filtered list.
+                filteredArraylist.add(item);
+                Log.e("@#@#","get filtered list"+filteredArraylist.size());
+            }
+        }
+        if (filteredArraylist.isEmpty()) {
+            // if no item is added in filtered list we are
+            // displaying a toast message as no data found.
+            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+        } else {
+            // at last we are passing that filtered
+            // list to our adapter class.
+            mAdapter.filterList(filteredArraylist);
+        }
+
     }
 
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+       // mAdapter.mCursorAdapter.changeCursor(null);
+        //final Product product = ProviderUtils.cursorToProduct(mAdapter.mCursorAdapter.getCursor());
 
-        mAdapter.mCursorAdapter.changeCursor(null);
+        //Log.e("@#@","get products after reset"+product.toString());
+
     }
 
 

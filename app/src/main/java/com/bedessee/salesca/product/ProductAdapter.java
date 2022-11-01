@@ -36,7 +36,7 @@ import com.bedessee.salesca.utilities.Utilities;
 
 import java.util.ArrayList;
 
-public class ProductAdapter extends CursorAdapter implements Filterable {
+public class ProductAdapter extends CursorAdapter {
 
     private static final String TAG = "ProductAdapter";
 
