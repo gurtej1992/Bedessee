@@ -238,6 +238,19 @@ open class Product(
     var prod_line8_rghtA_bckcolor: String?,
     @SerializedName("PROD LINE8 R")
     var prod_line8R: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 1 COLOR")
+    var prod_tile_line1_color: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 1 BCKGRD")
+    var prod_tile_line1_bckgrd: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 1 SHOW")
+    var prod_tile_line1_show: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 2 COLOR")
+    var prod_tile_line2_color: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 2 BCKGRD")
+    var prod_tile_line2_bckgrd: String?,
+    @SerializedName("PRODUCT TILE SCREEN LINE 2 SHOW")
+    var prod_tile_line2_show: String?
+
 
     ) : Serializable, Comparable<Product> {
     fun getLargeImagePath(context: Context?): String? {

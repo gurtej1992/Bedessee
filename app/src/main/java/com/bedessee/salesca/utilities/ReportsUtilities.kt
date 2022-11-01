@@ -61,8 +61,8 @@ class ReportsUtilities {
                 reportsMenu.deviceFolder
             )
 
-            val shared = context.getSharedPreferences("htmlsetting", AppCompatActivity.MODE_PRIVATE)
-            val option = shared.getString("option", "chrome")
+//            val shared = context.getSharedPreferences("htmlsetting", AppCompatActivity.MODE_PRIVATE)
+//            val option = shared.getString("option", "chrome")
             if (file.exists()) {
                 when (reportsMenu.popupType) {
                     "TXT" -> {
@@ -77,28 +77,28 @@ class ReportsUtilities {
                         if (!result) notSuccessfullyOpen(context)
                     }
                     "HTM" -> {
-                        if(option.equals("chrome")) {
-
-                            if (isChromeInstalledAndVersionGreaterThan65(context)) {
-                                openHtml(
-                                    context, FileUtilities.getFile(
-                                        context,
-                                        store.baseNumber,
-                                        reportsMenu.popupType,
-                                        reportsMenu.deviceFolder
-                                    ).absolutePath
-                                )
-                            } else {
-                                show(
-                                    context, FileUtilities.getFile(
-                                        context,
-                                        store.baseNumber,
-                                        reportsMenu.popupType,
-                                        reportsMenu.deviceFolder
-                                    ).absolutePath
-                                )
-                            }
-                        }else{
+//                        if(option.equals("chrome")) {
+//
+//                            if (isChromeInstalledAndVersionGreaterThan65(context)) {
+//                                openHtml(
+//                                    context, FileUtilities.getFile(
+//                                        context,
+//                                        store.baseNumber,
+//                                        reportsMenu.popupType,
+//                                        reportsMenu.deviceFolder
+//                                    ).absolutePath
+//                                )
+//                            } else {
+//                                show(
+//                                    context, FileUtilities.getFile(
+//                                        context,
+//                                        store.baseNumber,
+//                                        reportsMenu.popupType,
+//                                        reportsMenu.deviceFolder
+//                                    ).absolutePath
+//                                )
+//                            }
+//                        }else{
                             show(
                                 context, FileUtilities.getFile(
                                     context,
@@ -108,7 +108,7 @@ class ReportsUtilities {
                                 ).absolutePath
                             )
 
-                        }
+                       // }
                        
                     }
                 }

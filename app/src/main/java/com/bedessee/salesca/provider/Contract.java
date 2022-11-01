@@ -129,6 +129,12 @@ public class Contract {
         public static final String COLUMN_PROD_LINE8_RGHTA_COLOR = "prod_line8_rghtA_color";
         public static final String COLUMN_PROD_LINE8_RGHTA_BCKCOLOR = "prod_line8_rghtA_bckcolor";
         public static final String COLUMN_PROD_LINE8R = "prod_line8R";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE1_COLOR = "prod_tile_line1_color";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE1_BCKGRD = "prod_tile_line1_bckgrd";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE1_SHOW = "prod_tile_line1_show";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE2_COLOR = "prod_tile_line2_color";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE2_BCKGRD = "prod_tile_line2_bckgrd";
+        public static final String COLUMN_PRODUCT_TILE_SCREEN_LINE2_SHOW = "prod_tile_line2_show";
     }
 
     public static class SideMenuColumns {

@@ -97,7 +97,7 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl0Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl0Price!!.toDouble())))
-                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
             }else if((getQuantity(shoppingCartProduct).toInt()>= product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999"))
 
@@ -105,21 +105,21 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl1Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl1Price!!.toDouble())))
-                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1PriceColor)!!)
+                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
 
             }
             else if((getQuantity(shoppingCartProduct).toInt()>= product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
                 f = java.lang.Float.valueOf(product.lvl2Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl2Price!!.toDouble())))
-                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2PriceColor)!!)
+                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
 
             }
             else{
                 f = java.lang.Float.valueOf(product.lvl3Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl3Price!!.toDouble())))
-                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3PriceColor)!!)
+                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
 
             }
 
@@ -129,7 +129,7 @@ class ShoppingCartAdapter(
             holder.totalCase.setText("$" + String.format("%.2f",f))
             holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.casePrice!!.toDouble())))
 
-                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
             }
         }
         else{
@@ -151,7 +151,7 @@ class ShoppingCartAdapter(
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * part2!!.toDouble())))
 
             }
-            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
 
         }
@@ -229,26 +229,26 @@ class ShoppingCartAdapter(
 
                                     if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl0Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
                                     }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
 
                                     }
                                     else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
 
                                     }else{
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
 
                                     }
                                 }
                                 else {
                                     holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
-                                    holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                    holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
                                 }
 
@@ -272,7 +272,7 @@ class ShoppingCartAdapter(
                                     holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
 
                                 }
-                                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
                             }
 
@@ -304,27 +304,27 @@ class ShoppingCartAdapter(
 
                                     if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl0Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
 
                                     }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
 
                                     }
                                     else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
 
                                     }else{
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3PriceColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
 
                                     }
                                 }
                                 else {
                                     holder.Price.setText("$"+ String.format("%.2f",qty* product.casePrice!!.toDouble()))
-                                    holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                    holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
                                 }
 
@@ -348,7 +348,7 @@ class ShoppingCartAdapter(
                                     holder.Price.setText("$" + String.format("%.2f", qty * part2!!.toDouble()))
 
                                 }
-                                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceColor)!!)
+                                holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
 
                             }
 

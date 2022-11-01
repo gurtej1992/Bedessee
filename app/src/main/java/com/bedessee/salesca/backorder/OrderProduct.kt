@@ -71,7 +71,13 @@ class OrderProduct(number: String?, brand: String?, description: String?, pieceU
                    prod_line7R:String,
                    prod_line8_rghtA_color:String,
                    prod_line8_rghtA_bckcolor:String,
-                   prod_line8R:String
+                   prod_line8R:String,
+                   prod_tile_line1_color:String,
+                   prod_tile_line1_bckgrd:String,
+                   prod_tile_line1_show:String,
+                   prod_tile_line2_color:String,
+                   prod_tile_line2_bckgrd:String,
+                   prod_tile_line2_show:String
 ) : Product(number, brand, description, pieceUom, casePrice, lPriceColor, lPriceBackgroundColor, level1Price, level1PriceColor, level1BackgroundColor, level2Price, level2PriceColor, level2BackgroundColor, level3Price, level3PriceColor, level3BackgroundColor, statusCode, mStatus, statusDescription, casesPerSkid, casesPerRow, layersPerSkid, imagePath, piecePrice, caseUom, totalQty, uPC, qty1, qty2, qty3, qty4, showQty1, showQty2, showQty3, showQty4, note01, note02, note03, note04, note05, popUpPrice, popUpPriceFlag, likeTag, newTag, priceRangeFrom, priceRangeTo, fileCreatedOn, totalQtySold, lvl0From,
     lvl0To,
     lvl0Price,
@@ -89,7 +95,7 @@ prod_line3_leftA_color,prod_line3_leftA_bckcolor,prod_line3A,prod_line3_leftB_co
 prod_line5_leftA_color,prod_line5_leftA_bckcolor,prod_line5A,prod_line5_leftB_color,prod_line5_leftB_bckcolor,prod_line5B,prod_line1_rghtA_color,prod_line1_rghtA_bckcolor,prod_line1R,
 prod_line2_rghtA_color,prod_line2_rghtA_bckcolor,prod_line2R,prod_line3_rghtA_color,prod_line3_rghtA_bckcolor,prod_line3R,prod_line4_rghtA_color,prod_line4_rghtA_bckcolor,prod_line4R,
 prod_line5_rghtA_color,prod_line5_rghtA_bckcolor,prod_line5R,prod_line6_rghtA_color,prod_line6_rghtA_bckcolor,prod_line6R,prod_line7_rghtA_color,prod_line7_rghtA_bckcolor,prod_line7R,
-    prod_line8_rghtA_color,prod_line8_rghtA_bckcolor,prod_line8R) {
+    prod_line8_rghtA_color,prod_line8_rghtA_bckcolor,prod_line8R, prod_tile_line1_color, prod_tile_line1_bckgrd,prod_tile_line1_show,prod_tile_line2_color,prod_tile_line2_bckgrd,prod_tile_line2_show) {
     @SerializedName("DEFAULT QTY")
     var defaultQuantity: String? = null
         get() = field ?: "0"

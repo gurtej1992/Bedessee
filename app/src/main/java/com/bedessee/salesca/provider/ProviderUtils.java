@@ -157,6 +157,12 @@ public class ProviderUtils {
         values.put(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR, product.getProd_line8_rghtA_color());
         values.put(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR, product.getProd_line8_rghtA_bckcolor());
         values.put(Contract.ProductColumns.COLUMN_PROD_LINE8R, product.getProd_line8R());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_COLOR, product.getProd_tile_line1_color());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_BCKGRD, product.getProd_tile_line1_bckgrd());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_SHOW , product.getProd_tile_line1_show());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_COLOR, product.getProd_tile_line2_color());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_BCKGRD, product.getProd_tile_line2_bckgrd());
+        values.put(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_SHOW , product.getProd_tile_line2_show());
 
         return values;
     }
@@ -279,7 +285,16 @@ public class ProviderUtils {
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE7R)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR)),
                 cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR)),
-                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8R))
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PROD_LINE8R)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_BCKGRD)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_SHOW)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_COLOR)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_BCKGRD)),
+                cursor.getString(cursor.getColumnIndex(Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_SHOW))
+
+
+
         );
 
 

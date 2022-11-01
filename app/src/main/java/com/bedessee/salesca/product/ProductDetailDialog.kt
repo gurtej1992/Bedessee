@@ -174,8 +174,8 @@ class ProductDetailDialog : DialogFragment() {
             setupField(view.textView_price_field,"${product.prod_line1A!!} ",product.prod_line1_leftA_color!!,
                 product.prod_line1_leftA_bckcolor!!,
                 casePricenew!!,
-                if(product.prod_line1_leftB_color.equals("")) product.prod_line1_leftB_color!! else "00000",
-                if(product.prod_line1_leftB_bckcolor.equals("")) product.prod_line1_leftB_bckcolor!! else "ffffff")
+                if(product.prod_line1_leftB_color.equals("")) "00000" else product.prod_line1_leftB_color!!,
+                if(product.prod_line1_leftB_bckcolor.equals("")) "ffffff" else product.prod_line1_leftB_bckcolor!! )
 
 
         }else{
@@ -206,8 +206,8 @@ class ProductDetailDialog : DialogFragment() {
                         view.textView_level1price_field,"${product.prod_line2A!!} " ,product.prod_line2_leftA_color!!,
                         product.prod_line2_leftA_bckcolor!!,
                         if (level1pricenew == "0.00") "N/A" else level1pricenew!!,
-                        if(product.prod_line2_leftB_color.equals("")) product.prod_line2_leftB_color!! else "00000",
-                        if(product.prod_line2_leftB_bckcolor.equals("")) product.prod_line2_leftB_bckcolor!! else "ffffff")
+                        if(product.prod_line2_leftB_color.equals("")) "00000" else product.prod_line2_leftB_color!! ,
+                        if(product.prod_line2_leftB_bckcolor.equals("")) "ffffff" else product.prod_line2_leftB_bckcolor!!  )
 
                 }
                 else {
@@ -232,8 +232,8 @@ class ProductDetailDialog : DialogFragment() {
                         view.textView_level2price_field,"${product.prod_line3A!!} ",product.prod_line3_leftA_color!!,
                         product.prod_line3_leftA_bckcolor!!,
                         if (level2pricenew == "0.00") "N/A" else level2pricenew!!,
-                        if(product.prod_line3_leftB_color.equals("")) product.prod_line3_leftB_color!! else "00000",
-                        if(product.prod_line3_leftB_bckcolor.equals("")) product.prod_line3_leftB_bckcolor!! else "ffffff")
+                        if(product.prod_line3_leftB_color.equals("")) "00000" else product.prod_line3_leftB_color!!,
+                        if(product.prod_line3_leftB_bckcolor.equals("")) "ffffff" else product.prod_line3_leftB_bckcolor!!)
 
 
                 }else {
@@ -258,8 +258,8 @@ class ProductDetailDialog : DialogFragment() {
                         view.textView_level3price_field,"${product.prod_line4A!!} ",product.prod_line4_leftA_color!!,
                         product.prod_line4_leftA_bckcolor!!,
                         if (level3pricenew == "0.00") "N/A" else level3pricenew!!,
-                        if(product.prod_line4_leftB_color.equals("")) product.prod_line4_leftB_color!! else "00000",
-                        if(product.prod_line4_leftB_bckcolor.equals("")) product.prod_line4_leftB_bckcolor!! else "ffffff")
+                        if(product.prod_line4_leftB_color.equals(""))"00000" else  product.prod_line4_leftB_color!! ,
+                        if(product.prod_line4_leftB_bckcolor.equals("")) "ffffff" else product.prod_line4_leftB_bckcolor!! )
 
 
                 }else {
@@ -282,8 +282,8 @@ class ProductDetailDialog : DialogFragment() {
             setupField(view.textView_extra_field,"${product.prod_line5A!!} ",product.prod_line5_leftA_color!!,
                 product.prod_line5_leftA_bckcolor!!,
                 product.prod_line5B!!,
-                if(product.prod_line5_leftB_color.equals("")) product.prod_line5_leftB_color!! else "00000",
-                if(product.prod_line5_leftB_bckcolor.equals("")) product.prod_line5_leftB_bckcolor!! else "ffffff")
+                if(product.prod_line5_leftB_color.equals("")) "00000" else product.prod_line5_leftB_color!! ,
+                if(product.prod_line5_leftB_bckcolor.equals("")) "ffffff" else product.prod_line5_leftB_bckcolor!!)
 
         }
         else {
@@ -303,7 +303,6 @@ class ProductDetailDialog : DialogFragment() {
                 setupField(view.textView_casesperskid,product.prod_line2R!!,product.prod_line2_rghtA_color!!,product.prod_line2_rghtA_bckcolor!!)
                 setupField(view.textView_casesperrow,product.prod_line3R!!,product.prod_line3_rghtA_color!!,product.prod_line3_rghtA_bckcolor!!)
                 setupField(view.textView_layersperskid,product.prod_line4R!!,product.prod_line4_rghtA_color!!,product.prod_line4_rghtA_bckcolor!!)
-                setupField(view.textView_totalqty,product.prod_line5R!!,product.prod_line5_rghtA_color!!,product.prod_line5_rghtA_bckcolor!!)
                 setupField(view.textView_totalqty,product.prod_line5R!!,product.prod_line5_rghtA_color!!,product.prod_line5_rghtA_bckcolor!!)
                 setupField(view.textView_prodnum,product.prod_line6R!!,product.prod_line6_rghtA_color!!,product.prod_line6_rghtA_bckcolor!!)
                 setupField(view.textView_upc,product.prod_line7R!!,product.prod_line7_rghtA_color!!,product.prod_line7_rghtA_bckcolor!!)

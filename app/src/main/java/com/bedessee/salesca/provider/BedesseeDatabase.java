@@ -155,7 +155,14 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
                 Contract.ProductColumns.COLUMN_PROD_LINE7R + " text," +
                 Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_COLOR + " text," +
                 Contract.ProductColumns.COLUMN_PROD_LINE8_RGHTA_BCKCOLOR + " text," +
-                Contract.ProductColumns.COLUMN_PROD_LINE8R + " text)"
+                Contract.ProductColumns.COLUMN_PROD_LINE8R + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_BCKGRD + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE1_SHOW + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_COLOR + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_BCKGRD + " text," +
+                Contract.ProductColumns.COLUMN_PRODUCT_TILE_SCREEN_LINE2_SHOW + " text)"
+
 
         ) ;
 

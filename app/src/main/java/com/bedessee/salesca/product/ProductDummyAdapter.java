@@ -231,15 +231,21 @@ public class ProductDummyAdapter extends RecyclerView.Adapter<ProductDummyAdapte
 
                 }
 
-                FieldUtilities.Companion.setupField(
-                        holder.mTextUom,
-                        context.getString(R.string.field_string_formatter, product.getCaseUom()),
-                        context.getString(R.string.quantity_string_formatter, product.getCasePrice()),
-                        product.getLPriceColor(),
-                        product.getLPriceBackgroundColor()
-
-
-                );
+//                FieldUtilities.Companion.setupField(
+//                        holder.mTextUom,
+//                        context.getString(R.string.field_string_formatter, product.getCaseUom()),
+//                        context.getString(R.string.quantity_string_formatter, product.getCasePrice()),
+//                        product.getLPriceColor(),
+//                        product.getLPriceBackgroundColor()
+//
+//
+//                );
+                FieldUtilities.Companion.setupField(holder.mTextUom,product.getProd_tile_line1_show()+" ",
+                        (product.getProd_tile_line1_color().equals(""))? "000000" : product.getProd_tile_line1_color(),
+                        (product.getProd_tile_line1_bckgrd().equals(""))? "ffffff" : product.getProd_tile_line1_bckgrd(),
+                        product.getProd_tile_line2_show(),
+                        product.getProd_tile_line2_color(),
+                        product.getProd_tile_line2_bckgrd());
 
                 if (!isBusy) {
 

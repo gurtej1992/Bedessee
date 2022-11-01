@@ -231,9 +231,11 @@ public class OrderHistoryDialog extends Fragment {
                     String data = readFromFile(requireContext(), file);
                     newData+=data;
                 }
-                String data="["+newData+"]";
-                    String Data = data.replace("}{","},{");
-                   final List<SavedOrder> savedOrders =(new Gson().fromJson(Data, new TypeToken<List<SavedOrder>>() {
+              String data="["+newData+"]";
+             //   Log.e("@#@#","value"+data);
+                   String Data = data.replace("}{","},{");
+                Gson gson = new GsonBuilder().setDateFormat("E MMM dd HH:mm:ss Z yyyy").create();
+                   final List<SavedOrder> savedOrders =(gson.fromJson(data, new TypeToken<List<SavedOrder>>() {
                     }.getType()));
 
                    for (SavedOrder order : savedOrders) {

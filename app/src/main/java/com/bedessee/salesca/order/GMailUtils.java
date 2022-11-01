@@ -278,60 +278,63 @@ public class GMailUtils {
     private static void writeToFile(String data,String path) {
         Log.e("@#@#","get store name"+StoreManager.getCurrentStore());
         try {
-            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/CompletedOrderHistory/cos_" + StoreManager.getCurrentStore().getName() + ".json"),true);
+            OutputStream outputStreamWriter = new FileOutputStream(new File(path + "/CompletedOrder/cos_" + StoreManager.getCurrentStore().getName() + ".txt"),true);
             outputStreamWriter.write(data.getBytes(StandardCharsets.UTF_8));
             outputStreamWriter.close();
         }
         catch (IOException e) {
+            Log.e("@#@#","exception here"+e.getLocalizedMessage());
         }
     }
 
     public static void makeJson(Activity activity, ShoppingCart sShoppingCart, String s, String s1){
         String baseFilePath = new SharedPrefsManager(activity).getSugarSyncDir();
         String parentDirectory = new File(baseFilePath).getParent();
-        File f1 = new File(parentDirectory , "CompletedOrderHistory");
+        File f1 = new File(parentDirectory , "CompletedOrder");
         if (!f1.exists()) {
             f1.mkdirs();
         }
-       // File file = new File(parentDirectory + "/CompletedOrderHistory/cos_" + StoreManager.getCurrentStore().getName() + ".json");
+        File file = new File(parentDirectory + "/CompletedOrder/cos_" + StoreManager.getCurrentStore().getName() + ".txt");
         String json = null;
-        try {
-            json = makeJsonObject(sShoppingCart,s,s1).toString(8);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        json = makeJsonObject(sShoppingCart,s,s1);
+
         writeToFile(json, parentDirectory);
     }
-    private static JSONObject makeJsonObject(ShoppingCart shoppingCart,String datetime,String Storename){
-        JSONObject jsonObject=new JSONObject();
-        JSONObject obj = null;
-        JSONArray jsonArray = new JSONArray();
-        try {
-            jsonObject.put("Date&Time",datetime);
-            jsonObject.put("TotalItems",shoppingCart.getTotalItems());
-            jsonObject.put("StoreName",Storename);
+    private static String makeJsonObject(ShoppingCart shoppingCart,String datetime,String Storename){
 
-            ArrayList<ShoppingCartProduct> shoppingCartProducts = shoppingCart.getProducts();
+        String output;
+        output=
+                        "\n\n" +
+                        "Date&Time: " + datetime +
+                        "\n\n" +
+                                "Total Items: " + shoppingCart.getTotalItems() +
+                                "\n\n" +
+                                "Store Name: " + Storename +
+                                "\n\n" ;
 
-            ArrayList<ShoppingCartProduct> sortedList = new ArrayList<>(new HashSet<>(shoppingCartProducts));
-            Collections.sort(sortedList);
+        String bodyproducts ="";
+        ArrayList<ShoppingCartProduct> shoppingCartProducts = shoppingCart.getProducts();
 
-            for (ShoppingCartProduct shoppingCartProduct : sortedList) {
-                final Product product = shoppingCartProduct.getProduct();
-                obj = new JSONObject();
-                obj.put("ProductNumber",product.getNumber());
-                obj.put("ProductBrand",product.getBrand());
-                obj.put("productQuantity",shoppingCartProduct.getQuantity());
-                jsonArray.put(obj);
+        ArrayList<ShoppingCartProduct> sortedList = new ArrayList<>(new HashSet<>(shoppingCartProducts));
+        Collections.sort(sortedList);
+        for (ShoppingCartProduct shoppingCartProduct : sortedList) {
+            final Product product = shoppingCartProduct.getProduct();
+            bodyproducts= bodyproducts+
+                    "\n\n" +
+                    "Product Number: " + product.getNumber() +
+                    "\n\n" +
+                    "Product Brand: " + product.getBrand() +
+                    "\n\n" +
+                    "Product Quantity: " + shoppingCartProduct.getQuantity() +
+                            "\n\n" +
+                            "========================" ;
 
-            }
 
-            jsonObject.put("Products",jsonArray);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
-        return jsonObject;
+        return output +
+                "\n\n" +
+                "========== Products ========" + bodyproducts;
     }
 }

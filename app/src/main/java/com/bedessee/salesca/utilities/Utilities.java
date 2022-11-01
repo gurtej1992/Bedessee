@@ -624,7 +624,7 @@ public class Utilities {
                 jsonObject2.put("UPC",savedItemList.get(i).getShoppingCartProduct().getProduct().getUPC());
                 jsonObject1.put("mProduct",jsonObject2);
                 obj.put("mShoppingCartProduct",jsonObject1);
-                obj.put("-------------","-----------------------------------------------------");
+               // obj.put("-------------","-----------------------------------------------------");
 
 
                 jsonArray.put(obj);

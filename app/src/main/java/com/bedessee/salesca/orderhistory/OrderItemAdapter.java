@@ -66,6 +66,7 @@ public abstract class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAda
         String baseFilePath = new SharedPrefsManager(mContext).getSugarSyncDir();
         String parentDirectory = new File(baseFilePath).getParent();
         if (order.getStartTime() != null) {
+            Log.e("@#@#","get time"+order.getStartTime());
            holder.date.setText(DateFormat.getDateTimeInstance().format(order.getStartTime()));
         }
 
