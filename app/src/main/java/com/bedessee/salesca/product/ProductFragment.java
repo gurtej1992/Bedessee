@@ -303,6 +303,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                                 searchBar.setVisibility(View.GONE);
                             }
                         });
+                            searchtype="All";
             }
             else{
                 searchBar.setVisibility(View.VISIBLE);
@@ -321,7 +322,9 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     public void onResume() {
         super.onResume();
 
+
         if (shouldRestartLoaderOnResume) {
+            productArrayList.clear();
             final int loaderId = getLoaderId();
             requireActivity().getLoaderManager().restartLoader(loaderId, null, this);
         }
@@ -462,14 +465,23 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         for (Product item : productArrayList) {
 //            Log.e("@#@","get item"+item.getBrand()+"  "+item.getDescription());
 //            Log.e("@#@","get text"+text.toUpperCase());
+            if (upcBox.isChecked()) {
+
+                if(item.getUPC().contains(text.toLowerCase())){
+                    filteredArraylist.add(item);
+                    Log.e("@#@#", "get filtered list" + filteredArraylist.size());
+                }
+
+            } else {
 
             // checking if the entered string matched with any item of our recycler view.
-            if ((item.getBrand().toLowerCase().contains(text.toLowerCase()))) {
+            if ((item.getBrand().toLowerCase().contains(text.toLowerCase()))||(item.getDescription().toLowerCase().contains(text.toLowerCase()))) {
                 // if the item is matched we are
                 // adding it to our filtered list.
                 filteredArraylist.add(item);
-                Log.e("@#@#","get filtered list"+filteredArraylist.size());
+                Log.e("@#@#", "get filtered list" + filteredArraylist.size());
             }
+        }
         }
         if (filteredArraylist.isEmpty()) {
             // if no item is added in filtered list we are
