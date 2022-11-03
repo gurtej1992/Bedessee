@@ -46,6 +46,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +60,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -232,10 +234,12 @@ public class OrderHistoryDialog extends Fragment {
                     newData+=data;
                 }
               String data="["+newData+"]";
-             //   Log.e("@#@#","value"+data);
+                Log.e("@#@#","value"+data);
                    String Data = data.replace("}{","},{");
                 Gson gson = new GsonBuilder().setDateFormat("E MMM dd HH:mm:ss Z yyyy").create();
-                   final List<SavedOrder> savedOrders =(gson.fromJson(data, new TypeToken<List<SavedOrder>>() {
+                JsonReader reader = new JsonReader(new StringReader(Data));
+                reader.setLenient(true);
+                   final List<SavedOrder> savedOrders =(gson.fromJson(reader, new TypeToken<List<SavedOrder>>() {
                     }.getType()));
 
                    for (SavedOrder order : savedOrders) {

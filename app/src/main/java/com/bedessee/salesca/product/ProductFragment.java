@@ -36,6 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bedessee.salesca.R;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
+import com.bedessee.salesca.orderhistory.SavedOrder;
 import com.bedessee.salesca.product.brand.Brand;
 import com.bedessee.salesca.product.category.Category2;
 import com.bedessee.salesca.product.status.Status;
@@ -64,6 +65,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     CheckBox upcBox;
     String currentHint = "",searchtype="";
     private ArrayList<Product> productArrayList;
+    ArrayList<Product> productfinalList;
     public static boolean shouldRestartLoaderOnResume = true;
     private ProductDummyAdapter mAdapter;
 
@@ -120,6 +122,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         }
 
         productArrayList=new ArrayList<>();
+        Log.e("@#@#","get loader id"+mFilter);
 
         int[] dimens = Utilities.getScreenDimensInPx(getActivity());
         mAdapter = new ProductDummyAdapter(getContext(),productArrayList, dimens);
@@ -150,6 +153,8 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 if (editText != null) {
                     editText.setText(null);
                     Utilities.hideSoftKeyboard(requireActivity());
+                    mAdapter.productArrayList=productArrayList;
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -231,6 +236,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 loaderId = mFilter.hashCode();
                 break;
         }
+        Log.e("@#@#","get loader id"+loaderId);
         requireActivity().getLoaderManager().initLoader(loaderId, null, this);
 
 
@@ -245,8 +251,13 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+              Log.e("@#@#","get char"+s.toString());
+              if(s.toString().equals("")){
 
-                filter(s.toString());
+
+              }else {
+                  filter(s.toString());
+              }
               //  mAdapter.mCursorAdapter.getFilter().filter(s);
 
 //                MixPanelManager.trackSearch(getActivity(), "Products screen", s.toString());
@@ -274,6 +285,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
             }
         });
+
 
         mEditSearchReference.get().setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -303,7 +315,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                                 searchBar.setVisibility(View.GONE);
                             }
                         });
-                            searchtype="All";
+                          //  searchtype="All";
             }
             else{
                 searchBar.setVisibility(View.VISIBLE);
@@ -311,10 +323,23 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 searchBar.animate()
                         .alpha(1.0f)
                         .setListener(null);
-                    searchtype="All";
+                  //  searchtype="All";
+            }
+            final Cursor cursor = requireActivity().getContentResolver().query(Contract.Product.CONTENT_URI, null, null, null, Contract.ProductColumns.COLUMN_NUMBER + " ASC");
+            productfinalList=new ArrayList<>();
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+
+                    Product product = ProviderUtils.cursorToProduct(cursor);
+                    productfinalList.add(product);
+                }
+                Log.e("@#@","get products final reset"+productfinalList.size());
+
+
+
             }
         } );
-
+//        searchtype="All";
         return rootView;
     }
 
@@ -326,6 +351,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         if (shouldRestartLoaderOnResume) {
             productArrayList.clear();
             final int loaderId = getLoaderId();
+            Log.e("@#@","on resume called"+loaderId);
             requireActivity().getLoaderManager().restartLoader(loaderId, null, this);
         }
 
@@ -452,7 +478,9 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
 
            // mAdapter.mCursorAdapter.changeCursor(cursor);
+
             mAdapter.notifyDataSetChanged();
+
 //
 //            Log.e("@#@","get products"+cursor.getPosition());
         }
@@ -462,7 +490,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private void filter(String text){
 
         ArrayList<Product> filteredArraylist=new ArrayList<>();
-        for (Product item : productArrayList) {
+        for (Product item : productfinalList) {
 //            Log.e("@#@","get item"+item.getBrand()+"  "+item.getDescription());
 //            Log.e("@#@","get text"+text.toUpperCase());
             if (upcBox.isChecked()) {

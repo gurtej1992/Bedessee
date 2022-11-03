@@ -309,7 +309,7 @@ class ShoppingCartAdapter(
 
                                     }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
+                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1PriceColor)!!)
 
                                     }
                                     else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
