@@ -143,12 +143,15 @@ class AdminPanel : AppCompatActivity() {
 // Set up the buttons
             builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                 // Here you get get input text from the Edittext
-                var m_Text: Int = input.text.toString().toInt()
-                val sharedPreferences: SharedPreferences =
-                    getSharedPreferences("setting", Context.MODE_PRIVATE)
-                val edit = sharedPreferences.edit()
-                edit.putInt("spanCount", m_Text)
-                edit.apply()
+                if(input.text.toString().isNotBlank()) {
+                    var m_Text: Int = input.text.toString().toInt()
+
+                    val sharedPreferences: SharedPreferences =
+                        getSharedPreferences("setting", Context.MODE_PRIVATE)
+                    val edit = sharedPreferences.edit()
+                    edit.putInt("spanCount", m_Text)
+                    edit.apply()
+                }
             })
             builder.setNegativeButton(
                 "Cancel",

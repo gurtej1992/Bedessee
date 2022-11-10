@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(from.equalsIgnoreCase("order")){
+        if("order".equalsIgnoreCase(from)){
             home_icon.setImageResource(R.drawable.ic_homelight);
             cart_icon.setImageResource(R.drawable.ic_cart);
             report_icon.setImageResource(R.drawable.ic_documentlight);
@@ -453,7 +453,7 @@ public class MainActivity extends AppCompatActivity {
                 drawer.closeDrawer(GravityCompat.START);
                 break;
             default:
-                if(from.equalsIgnoreCase("order")){
+                if("order".equalsIgnoreCase(from)){
                     home_icon.setImageResource(R.drawable.ic_homelight);
                     cart_icon.setImageResource(R.drawable.ic_cart);
                     report_icon.setImageResource(R.drawable.ic_documentlight);

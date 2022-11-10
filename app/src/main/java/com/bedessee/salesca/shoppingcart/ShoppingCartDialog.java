@@ -249,11 +249,14 @@ if(StoreManager.getCurrentStore()!=null) {
         switch (v.getId()) {
             case R.id.btnViewStatement:
                 Store store = StoreManager.getCurrentStore();
-                 File file = FileUtilities.Companion.getFile(getContext(),store.getBaseNumber(), "PDF",
-                        "r545");
+                if(store!=null) {
+                    File file = FileUtilities.Companion.getFile(getContext(), store.getBaseNumber(), "PDF",
+                            "r545");
 
-                if (file.exists()) {
-                    FileUtilities.Companion.openPDF(getContext(), file);
+
+                    if (file.exists()) {
+                        FileUtilities.Companion.openPDF(getContext(), file);
+                    }
                 }
 //                String path = new SharedPrefsManager(ShoppingCartDialog.this).getSugarSyncDir();
 //                Store store = StoreManager.getCurrentStore();

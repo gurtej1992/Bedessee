@@ -490,26 +490,29 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private void filter(String text){
 
         ArrayList<Product> filteredArraylist=new ArrayList<>();
-        for (Product item : productfinalList) {
+
+        if(productfinalList!=null) {
+            for (Product item : productfinalList) {
 //            Log.e("@#@","get item"+item.getBrand()+"  "+item.getDescription());
 //            Log.e("@#@","get text"+text.toUpperCase());
-            if (upcBox.isChecked()) {
+                if (upcBox.isChecked()) {
 
-                if(item.getUPC().contains(text.toLowerCase())){
-                    filteredArraylist.add(item);
-                    Log.e("@#@#", "get filtered list" + filteredArraylist.size());
+                    if (item.getUPC().contains(text.toLowerCase())) {
+                        filteredArraylist.add(item);
+                        Log.e("@#@#", "get filtered list" + filteredArraylist.size());
+                    }
+
+                } else {
+
+                    // checking if the entered string matched with any item of our recycler view.
+                    if ((item.getBrand().toLowerCase().contains(text.toLowerCase())) || (item.getDescription().toLowerCase().contains(text.toLowerCase()))) {
+                        // if the item is matched we are
+                        // adding it to our filtered list.
+                        filteredArraylist.add(item);
+                        Log.e("@#@#", "get filtered list" + filteredArraylist.size());
+                    }
                 }
-
-            } else {
-
-            // checking if the entered string matched with any item of our recycler view.
-            if ((item.getBrand().toLowerCase().contains(text.toLowerCase()))||(item.getDescription().toLowerCase().contains(text.toLowerCase()))) {
-                // if the item is matched we are
-                // adding it to our filtered list.
-                filteredArraylist.add(item);
-                Log.e("@#@#", "get filtered list" + filteredArraylist.size());
             }
-        }
         }
         if (filteredArraylist.isEmpty()) {
             // if no item is added in filtered list we are
