@@ -13,6 +13,7 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +30,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bedessee.salesca.R;
+import com.bedessee.salesca.admin.AdminPanel;
 import com.bedessee.salesca.backorder.BackOrderActivity;
 import com.bedessee.salesca.customview.DialogNumberPad;
 import com.bedessee.salesca.customview.GenericDialog;
 import com.bedessee.salesca.login.Login;
+import com.bedessee.salesca.login.NoLogin;
 import com.bedessee.salesca.mixpanel.MixPanelManager;
 import com.bedessee.salesca.orderhistory.OrderHistoryDialog;
 import com.bedessee.salesca.orderhistory.SavedOrder;
@@ -269,8 +272,24 @@ public class MainActivity extends AppCompatActivity {
         menuicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String adminvalue="";
+                final SharedPrefsManager sharedPrefsManager = new SharedPrefsManager(MainActivity.this);
+                NoLogin noLogin = sharedPrefsManager.getNoLogin();
+                if (noLogin != null) {
+                    if(adminvalue!=null) {
+                        adminvalue = noLogin.getAdmin();
+                    }
+
+                }
+
                 PopupMenu popup = new PopupMenu(MainActivity.this, v);
                 popup.getMenuInflater().inflate(R.menu.menu, popup.getMenu());
+                if(adminvalue.equalsIgnoreCase("Yes")){
+                    popup.getMenu().findItem(R.id.admin).setVisible(true);
+                }else {
+                    popup.getMenu().findItem(R.id.admin).setVisible(false);
+
+                }
                 popup.getMenu().findItem(R.id.version).setTitle("V " + Utilities.getVersionString(MainActivity.this));
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -280,7 +299,11 @@ public class MainActivity extends AppCompatActivity {
                                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: DAILY UPDATE");
                                 startActivityForResult(UpdateActivity.newIntent(MainActivity.this), UpdateActivity.REQUEST_CODE);
                                 return true;
+                            case R.id.admin:
+                                final Intent adminIntent = new Intent(MainActivity.this, AdminPanel.class);
+                                startActivity(adminIntent);
 
+                                return true;
                             case R.id.past_order:
                                 final Intent pastSalesIntent = new Intent(MainActivity.this, PastOrderActivity.class);
                                 startActivity(pastSalesIntent);

@@ -6,6 +6,7 @@ import java.io.Serializable
 data class NoLogin(
     val name: String,
     val email: String,
+    val admin: String,
     @SerializedName("SALES REP UPDATE WEB LINK1") val link1: String,
     @SerializedName("MENU DISPLAY1") val menuLabel1: String?,
     @SerializedName("MENU DISPLAY2") val menuLabel2: String?,

@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.Environment
 import android.text.InputType
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -20,16 +18,15 @@ import com.bedessee.salesca.R
 import com.bedessee.salesca.customview.GenericDialog
 import com.bedessee.salesca.customview.UtilitiesSpinner
 import com.bedessee.salesca.login.Login
+import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
 import com.bedessee.salesca.sharedprefs.SharedPrefsManager
 import com.bedessee.salesca.update.UpdateActivity
 import com.bedessee.salesca.utilities.FolderClearUp
 import com.bedessee.salesca.utilities.Utilities
 import org.json.JSONArray
-import org.json.JSONObject
 import java.io.File
 import java.io.FileInputStream
-import java.io.FilenameFilter
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 import java.nio.charset.Charset
@@ -383,8 +380,12 @@ class AdminPanel : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        val i = Intent(this, MainActivity::class.java)
+       // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(i)
         finish()
+        super.onBackPressed()
+        //finish()
     }
 
 

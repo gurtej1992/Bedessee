@@ -1,10 +1,16 @@
 package com.bedessee.salesca.shoppingcart;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -16,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,11 +65,12 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Dialog for shopping cart.
  */
-public class ShoppingCartDialog extends Fragment implements View.OnClickListener {
+public class ShoppingCartDialog extends Fragment implements View.OnClickListener, LocationListener {
 
     final public static int REQUEST_CODE = 200;
     final public static int RESULT_CODE_CONTINUED = 199;
@@ -70,6 +78,7 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
 
     final public static String KEY_SHOPPING_CART = "shopping_cart_key";
     public final static String TAG = "ShoppingCart";
+    Double lat=0.0,lng=0.0;
 
     private static ShoppingCartDialog instance;
     public static ShoppingCartDialog getInstance() {
@@ -280,6 +289,7 @@ if(StoreManager.getCurrentStore()!=null) {
                 if (mShoppingCart.isEmpty()) {
                     Utilities.shortToast(getContext(), "Please add a product before checking out");
                 } else {
+                    getLocation(getContext());
                     saveCommentAndContact();
                     ShoppingCart shoppingCart = mShoppingCart;
                     ShoppingCartNew x = new ShoppingCartNew();
@@ -289,7 +299,7 @@ if(StoreManager.getCurrentStore()!=null) {
                     ShoppingCart.setCurrentOrderId(getActivity(), null);
                     NewStoreDialog.getInstance().clearAll();
 //                    setResult(RESULT_CODE_CHECKED_OUT);
-                    GMailUtils.sendShoppingCart(getActivity(), shoppingCart);
+                    GMailUtils.sendShoppingCart(getActivity(), shoppingCart,lat,lng);
 
                     mShoppingCart.clearProducts();
                     mShoppingCart.clearComment();
@@ -330,5 +340,91 @@ if(StoreManager.getCurrentStore()!=null) {
             edtContact.setText("");
         }
         super.onResume();
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+       lat = location.getLatitude();
+        lng = location.getLongitude();
+        String msg = "New Latitude: " + lat + "New Longitude: " + lng;
+        Log.e("!!!","get new location"+msg);
+//        Geocoder geocoder;
+//        List<Address> addresses;
+//        geocoder = new Geocoder(getContext(), Locale.getDefault());
+
+       // try {
+//            addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+//            String address = addresses.get(0).getAddressLine(0);
+//            Log.e("!!!","get address"+address);
+//            Toast.makeText(getContext(),"get address"+address,Toast.LENGTH_SHORT).show();
+
+
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+    }
+
+    @SuppressLint("MissingPermission")
+    public Location getLocation(Context context) {
+        LocationManager mLocationManager;
+        Location location = null;
+
+        try {
+            mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+            // getting GPS status
+            boolean isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            // getting network status
+            boolean isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (!isGPSEnabled && !isNetworkEnabled) {
+                // no network provider is enabled
+            } else {
+                //get the location by gps
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, this);
+                        Log.d("GPS Enabled", "GPS Enabled");
+                        if (mLocationManager != null) {
+                            location = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                lat = location.getLatitude();
+                                lng = location.getLongitude();
+                                String msg = " Latitude: " + lat + "Longitude: " + lng;
+                                Log.e("!!!","get new location"+msg);
+
+                            }
+                        }
+                    }
+                }
+
+                // get location from Network Provider
+                if (isNetworkEnabled) {
+                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 2000,
+                            10, this);
+                    Log.d("Network", "Network");
+                    if (mLocationManager != null) {
+                        location = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                        if (location != null) {
+                            lat = location.getLatitude();
+                            lng = location.getLongitude();
+                            String msg = " Latitude: " + lat + "Longitude: " + lng;
+                            Log.e("!!!","get new location when network enabled"+msg);
+                        }
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return location;
+
+
+
     }
 }

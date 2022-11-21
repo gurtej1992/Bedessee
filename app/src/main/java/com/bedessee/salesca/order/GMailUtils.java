@@ -51,11 +51,14 @@ public class GMailUtils {
 
     private static Activity sActivity;
     private static ShoppingCart sShoppingCart;
+    static Double latitude=0.0,logitude=0.0;
 
-    public static void sendShoppingCart(Activity activity, ShoppingCart shoppingCart) {
+    public static void sendShoppingCart(Activity activity, ShoppingCart shoppingCart,Double lat,Double lng) {
 
         sActivity = activity;
         sShoppingCart = shoppingCart;
+      latitude=lat;
+      logitude=lng;
         final Intent intent = getGmailIntent(activity);
 
         final SharedPrefsManager prefsManager = new SharedPrefsManager(activity);
@@ -262,7 +265,9 @@ public class GMailUtils {
                 "\n\n" +
                 "upload: " + shoppingCartProducts.get(0).getProduct().getFileCreatedOn() +
                 "\n\n" +
-                "APP VERSION: " + Utilities.getVersionString(sActivity);
+                "APP VERSION: " + Utilities.getVersionString(sActivity) +
+                "\n\n" +
+                "Location Coordinates:  " + latitude +" , "+ logitude;
     }
 
     private static int getTotalProductsFromList(ProductEnteredFrom countFrom) {

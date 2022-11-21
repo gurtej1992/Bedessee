@@ -9,6 +9,11 @@
         app:showAsAction="never"
           android:showAsAction="never" />
 
+   <item android:id="@+id/admin"
+    android:title="Admin"
+    app:showAsAction="never"
+       />
+
     <item android:id="@+id/past_order"
           android:title="Past Sales"
         app:showAsAction="never"

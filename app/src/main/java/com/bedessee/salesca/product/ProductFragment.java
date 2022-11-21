@@ -505,7 +505,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
                 } else {
 
                     // checking if the entered string matched with any item of our recycler view.
-                    if ((item.getBrand().toLowerCase().contains(text.toLowerCase())) || (item.getDescription().toLowerCase().contains(text.toLowerCase()))) {
+                    if ((item.getBrand().toLowerCase().contains(text.toLowerCase())) || (item.getDescription().toLowerCase().contains(text.toLowerCase()))||(item.getNumber().contains(text.toUpperCase()))||(item.getDescription().toLowerCase().contains(text.toLowerCase()))) {
                         // if the item is matched we are
                         // adding it to our filtered list.
                         filteredArraylist.add(item);
