@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -96,8 +97,8 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl0Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl0Price!!.toDouble())))
-                if (product.lPriceBackgroundColor == "") {
-                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("ffffff")!!)
+                if (product.lPriceBackgroundColor .isNullOrBlank()) {
+                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
 
                 } else {
                     holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
@@ -111,8 +112,8 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl1Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl1Price!!.toDouble())))
-                if (product.level1BackgroundColor == "") {
-                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("ffffff")!!)
+                if (product.level1BackgroundColor .isNullOrBlank()) {
+                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
 
                 } else {
                     holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
@@ -125,8 +126,8 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl2Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl2Price!!.toDouble())))
-                if (product.level2BackgroundColor == "") {
-                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("ffffff")!!)
+                if (product.level2BackgroundColor .isNullOrBlank()) {
+                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
 
                 } else {
                     holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
@@ -138,8 +139,10 @@ class ShoppingCartAdapter(
                 f = java.lang.Float.valueOf(product.lvl3Price.toString())
                 holder.totalCase.setText("$" + String.format("%.2f",f))
                 holder.Price.setText("$" + String.format("%.2f",(getQuantity(shoppingCartProduct).toDouble() * product.lvl3Price!!.toDouble())))
-                if (product.level3BackgroundColor == "") {
-                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("ffffff")!!)
+                Log.e("@@","get levelbckgvalue"+product.level3BackgroundColor)
+
+                if (product.level3BackgroundColor .isNullOrBlank()) {
+                    holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
 
                 } else {
                     holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
@@ -255,20 +258,46 @@ class ShoppingCartAdapter(
 
                                     if((getQuantity(shoppingCartProduct).toInt()> product.lvl0From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl0To!!.toInt())||product.lvl0To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl0Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
+                                        if (product.lPriceBackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.lPriceBackgroundColor)!!)
+
+                                        }
 
                                     }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
+                                        if (product.level1BackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
+
+                                        }
 
                                     }
                                     else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
+                                        if (product.level2BackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
+
+                                        }
 
                                     }else{
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
+                                        Log.e("@@","get levelbckgvalue"+product.level3BackgroundColor)
+
+                                        if (product.level3BackgroundColor.isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
+
+                                        }
 
                                     }
                                 }
@@ -335,16 +364,35 @@ class ShoppingCartAdapter(
 
                                     }else if((getQuantity(shoppingCartProduct).toInt()> product.lvl1From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl1To!!.toInt())||product.lvl1To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl1Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1PriceColor)!!)
+                                        if (product.level1BackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level1BackgroundColor)!!)
+
+                                        }
 
                                     }
                                     else if((getQuantity(shoppingCartProduct).toInt()> product.lvl2From!!.toInt()&&getQuantity(shoppingCartProduct).toInt()<= product.lvl2To!!.toInt())||product.lvl2To.equals("999")){
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl2Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
+                                        if (product.level2BackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level2BackgroundColor)!!)
+
+                                        }
 
                                     }else{
                                         holder.Price.setText("$"+ String.format("%.2f",qty* product.lvl3Price!!.toDouble()))
-                                        holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
+                                        Log.e("@@","get levelbckgvalue"+product.level3BackgroundColor)
+                                        if (product.level3BackgroundColor .isNullOrBlank()) {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor("#ffffff")!!)
+
+                                        } else {
+                                            holder.marginColor.setColorFilter(Utilities.parseSaveColor(product.level3BackgroundColor)!!)
+
+                                        }
 
                                     }
                                 }
