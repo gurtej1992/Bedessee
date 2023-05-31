@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <ImageButton
         android:id="@+id/imageView_close"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="@+id/control_bar"
         app:layout_constraintTop_toTopOf="@+id/control_bar"
         app:srcCompat="@drawable/ic_close_2"
-        tools:ignore="ContentDescription" />
+        />
 
     <TextView
         android:id="@+id/textView_brand"
@@ -79,7 +79,7 @@
         app:srcCompat="@drawable/ic_eye"
         tools:ignore="ContentDescription" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <ImageButton
         android:id="@+id/btn_code"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -94,7 +94,7 @@
         app:srcCompat="@drawable/icon_barcode"
         tools:ignore="ContentDescription" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <ImageButton
         android:id="@+id/btn_share"
         android:layout_width="wrap_content"
         android:layout_height="0dp"

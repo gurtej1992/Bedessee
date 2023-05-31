@@ -518,6 +518,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
             // if no item is added in filtered list we are
             // displaying a toast message as no data found.
             Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+            mAdapter.filterList(filteredArraylist);
         } else {
             // at last we are passing that filtered
             // list to our adapter class.
