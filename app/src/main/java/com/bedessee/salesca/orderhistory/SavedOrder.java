@@ -27,7 +27,7 @@ public class SavedOrder implements Comparable, Serializable {
     private String contact;
 
     private int mNumProducts;
-    private int totalProducts;
+
     List<SavedItem> savedItem;
 
     public SavedOrder(String id, String store, Date startTime, Date endTime, boolean isClosed, int numProducts,String mcomment,String mcontact) {
