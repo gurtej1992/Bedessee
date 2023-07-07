@@ -66,14 +66,14 @@ public abstract class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAda
         String baseFilePath = new SharedPrefsManager(mContext).getSugarSyncDir();
         String parentDirectory = new File(baseFilePath).getParent();
         if (order.getStartTime() != null) {
-            Log.e("@#@#","get time"+order.getStartTime());
+            Log.e("@#@#","get time"+ShoppingCart.getSavedOrder(mContext,order.getId()).getTotalItems());
            holder.date.setText(DateFormat.getDateTimeInstance().format(order.getStartTime()));
         }
 
         final String storeName = order.getId().split("_")[0];
      //   Log.e("@#@","get store"+storeName.split("-")[1]);
 
-        holder.customer.setText(mContext.getString(R.string.order_item_title, storeName, order.getNumProducts()));
+        holder.customer.setText(mContext.getString(R.string.order_item_title, storeName,ShoppingCart.getSavedOrder(mContext,order.getId()).getTotalItems()));
 
        holder.btn_delete_order.setOnClickListener(new View.OnClickListener() {
             @Override
