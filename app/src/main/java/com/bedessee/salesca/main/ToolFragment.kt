@@ -138,11 +138,7 @@ class ToolFragment : Fragment() {
                     }
                     /* Launch markup calc */
                     2-> context.startActivity(Intent(context, MarginCalculator::class.java))
-//                    3 -> {
-//                        /* Launch GMail */
-//                        val intent = context.packageManager.getLaunchIntentForPackage("com.google.android.gm")
-//                        context.startActivity(intent)
-//                    }
+
                     3 -> {
                         /* Load prev update */
                         UpdateSelector().show((context as AppCompatActivity).supportFragmentManager, "Test")
@@ -172,14 +168,6 @@ class ToolFragment : Fragment() {
                         }, formatNumber = false, allowDecimals = true, showHint = false)
                                 .show((context as AppCompatActivity).supportFragmentManager, "Test")
                     }
-//                    6 -> {
-//                        val clearAction = FolderClearUp.clear_folder_json
-//                        showClearDialog(clearAction)
-//                    }
-//                    7 -> {
-//                        val clearAction = FolderClearUp.general_cleanup
-//                        showClearDialog(clearAction)
-//                    }
                     5 -> GenericDialog.newInstance(
                             context.getString(R.string.wipe_data_message),
                             "",
@@ -195,91 +183,12 @@ class ToolFragment : Fragment() {
 //                        signOut(true)
 //                    }
                     6 -> showWhatsNew()
-//                    7 -> {
-//                        noLogin?.let {
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
-//                                fetchRequest(context, it.link1)
-//
-//                        }
-//                    }
-//                    8 -> {
-//                        noLogin?.let {
-//
-//
-//                                FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
-//                                fetchRequest(context, it.link2)
-//
-//
-//
-//                        }
-//                    }
-//                    9 -> {
-//                        noLogin?.let {
-//
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
-//                            fetchRequest(context, it.link3)
-//
-//
-//                        }
-//                    }
-//                    10 -> {
-//                        noLogin?.let {
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore4)
-//                            fetchRequest(context, it.link4)
-//
-//                        }
-//                    }
-//                    11 -> {
-//                        noLogin?.let {
-//
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore5)
-//                            fetchRequest(context, it.link5)
-//
-//
-//
-//                        }
-//                    }
-//                    12 -> {
-//                        noLogin?.let {
-//
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore6)
-//                            fetchRequest(context, it.link6)
-//
-//
-//                        }
-//                    }
-//                    13 -> {
-//                        noLogin?.let {
-//
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore7)
-//                            fetchRequest(context, it.link7)
-//
-//
-//
-//                        }
-//                    }
-//                    14 -> {
-//                        noLogin?.let {
-//
-//
-//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore8)
-//                            fetchRequest(context, it.link8)
-//
-//
-  //                      }
-   //                 }
 
                     else -> {
                         noLogin?.let {
                             val menuItem = it.menus[pos-7];
                              FolderClearUp.clearFoldersByName(context, menuItem.process.toString())
-                             fetchRequest(context, menuItem.link.toString())
+                             fetchRequest(context, menuItem.link.toString(),menuItem.dailyUpdate ?: false)
                         }
 
                     }
@@ -310,7 +219,7 @@ class ToolFragment : Fragment() {
         ).show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
     }
 
-    private fun fetchRequest(context: Context, url: String) {
+    private fun fetchRequest(context: Context, url: String,daily : Boolean) {
         val safeUrl = if (!url.contains("http")) {
             "https://$url"
         } else {
@@ -324,9 +233,8 @@ class ToolFragment : Fragment() {
         request.priority = Priority.HIGH
         request.addHeader("Referer", "https://www.bedessee.com/")
 
-        DownloadProgressDialog.newInstance(request)
+        DownloadProgressDialog.newInstance(request,daily)
                 .show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
-
 
     }
 

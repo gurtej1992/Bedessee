@@ -34,12 +34,14 @@ import java.io.IOException
 //Create a DialogFragment which download a zip file from url
 class DownloadProgressDialog : DialogFragment() {
     private lateinit var request: Request
+    private var dailyUpdate: Boolean? = false
     val mainLooper = Looper.getMainLooper()
 
 
     companion object {
-        fun newInstance(request:Request) = DownloadProgressDialog().apply {
+        fun newInstance(request:Request,dailyUpdate : Boolean? = false) = DownloadProgressDialog().apply {
             this.request = request
+            this.dailyUpdate = dailyUpdate
         }
     }
 
@@ -207,7 +209,8 @@ class DownloadProgressDialog : DialogFragment() {
                     if (isAdded) {
                         mAlertDialog.dismiss()
                          MixPanelManager.trackButtonClick(context, "Button click: Top menu: DAILY UPDATE")
-                         startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
+                            if( dailyUpdate!!)
+                                startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
                         dismiss()
                     }
                 }
