@@ -94,7 +94,8 @@ class DownloadProgressDialog : DialogFragment() {
         getFetchManager(context).addListener(object:FetchListener {
             override fun onAdded(download: Download) {
                 progressTitle?.let {
-                    it.text = "The Download has added"
+                    val filename=FilenameUtils.getName(download.file)
+                    it.text = "The Download $filename has added"
                 }
             }
 

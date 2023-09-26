@@ -44,6 +44,6 @@ data class NoLogin( @SerializedName("email"   ) var email   : String?          =
 data class Menus(@SerializedName("link"         ) var link        : String?  = null,
                  @SerializedName("menu"         ) var menu        : String?  = null,
                  @SerializedName("process"      ) var process     : String?  = null,
-                 @SerializedName("daily_update" ) var dailyUpdate : Boolean? = null
+                 @SerializedName("run_daily_update" ) var dailyUpdate : Boolean? = null
 )
 
