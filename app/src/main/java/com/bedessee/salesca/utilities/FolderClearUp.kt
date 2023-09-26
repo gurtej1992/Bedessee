@@ -21,6 +21,9 @@ object FolderClearUp {
     const val other_folder_json="other_folders_to_clear.json"
 
     fun clearFoldersByName(context: Context, fileName:String) : Boolean {
+        if (fileName === "")
+            return false
+
         var result = false
         val folder = SharedPrefsManager(context).dataFolder
         val sugarFolder = File(SharedPrefsManager(context).sugarSyncDir)

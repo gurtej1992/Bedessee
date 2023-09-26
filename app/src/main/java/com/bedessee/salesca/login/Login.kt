@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.nononsenseapps.filepicker.FilePickerActivity
 import org.json.JSONArray
+import org.json.JSONObject
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.File
@@ -416,9 +417,10 @@ class Login : Activity() {
 
             val result = String(buffer, Charset.forName("UTF-8"))
 
-            val jsonObject = JSONArray(result).getJSONObject(0)
+            val jsonObject = JSONObject(result)
 
             val noLogin = Gson().fromJson(jsonObject.toString(), NoLogin::class.java)
+
 
         if (TextUtils.isEmpty(noLogin.name) || TextUtils.isEmpty(noLogin.email)) {
             loginWithStubUser(noLogin)

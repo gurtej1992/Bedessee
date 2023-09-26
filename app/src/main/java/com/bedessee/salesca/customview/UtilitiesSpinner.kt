@@ -57,15 +57,15 @@ class UtilitiesSpinner : Spinner {
         val utilsStrings = arrayOf("Util", "Calc", "Margin", "GMail", "Load old", "Admin", "Clear1", "Clear2", "Wipe Data", "Sign Out", "New?").toMutableList()
         val noLogin = SharedPrefsManager(context).noLogin
         if (noLogin != null) {
-            if (noLogin.menuLabel1 != null) {
-                utilsStrings.add(noLogin.menuLabel1)
-            }
-            if (noLogin.menuLabel2 != null) {
-                utilsStrings.add(noLogin.menuLabel2)
-            }
-            if (noLogin.menuLabel3 != null) {
-                utilsStrings.add(noLogin.menuLabel3)
-            }
+//            if (noLogin.menuLabel1 != null) {
+//                utilsStrings.add(noLogin.menuLabel1)
+//            }
+//            if (noLogin.menuLabel2 != null) {
+//                utilsStrings.add(noLogin.menuLabel2)
+//            }
+//            if (noLogin.menuLabel3 != null) {
+//                utilsStrings.add(noLogin.menuLabel3)
+//            }
         }
         val utilsAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, utilsStrings)
         adapter = utilsAdapter
@@ -134,25 +134,25 @@ class UtilitiesSpinner : Spinner {
                         signOut(true)
                     }
                     10 -> showWhatsNew()
-                    11 -> {
-                        noLogin?.let {
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
-                            fetchRequest(context, it.link1)
-                        }
-                    }
-                    12 -> {
-                        noLogin?.let {
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
-                            fetchRequest(context, it.link2)
-                        }
-                    }
-                    13->{
-
-                        noLogin?.let {
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
-                            fetchRequest(context, it.link3)
-                        }
-                    }
+//                    11 -> {
+//                        noLogin?.let {
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
+//                            fetchRequest(context, it.link1)
+//                        }
+//                    }
+//                    12 -> {
+//                        noLogin?.let {
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
+//                            fetchRequest(context, it.link2)
+//                        }
+//                    }
+//                    13->{
+//
+//                        noLogin?.let {
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
+//                            fetchRequest(context, it.link3)
+//                        }
+//                    }
                 }
                 //reset spinner back to position 0
                 parent.setSelection(0)

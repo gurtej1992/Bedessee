@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -32,7 +34,6 @@ import com.tonyodev.fetch2.Request
 import org.apache.commons.io.FilenameUtils
 import java.io.File
 import java.net.URL
-import kotlin.concurrent.thread
 
 class ToolFragment : Fragment() {
     var toolAdapter: ToolAdapter? = null
@@ -91,19 +92,42 @@ class ToolFragment : Fragment() {
     private fun init(context: Context) {
         val utilsStrings = arrayOf("Util", "Calc", "Margin", "Load old", "Admin", "Wipe Data", "New?").toMutableList()
         val noLogin = SharedPrefsManager(context).noLogin
-        if (noLogin != null) {
-            if (noLogin.menuLabel1 != null) {
-                utilsStrings.add(noLogin.menuLabel1)
-            }
-            if (noLogin.menuLabel2 != null) {
-                utilsStrings.add(noLogin.menuLabel2)
-            }
-            if (noLogin.menuLabel3 != null) {
-                utilsStrings.add(noLogin.menuLabel3)
-            }
+        noLogin?.let {
+            for (m in it.menus)
+                utilsStrings.add(m.menu.toString())
         }
 
+
+//        if (noLogin != null) {
+//            if (noLogin.menuLabel1 != null) {
+//                utilsStrings.add(noLogin.menuLabel1)
+//            }
+//            if (noLogin.menuLabel2 != null) {
+//                utilsStrings.add(noLogin.menuLabel2)
+//            }
+//            if (noLogin.menuLabel3 != null) {
+//                utilsStrings.add(noLogin.menuLabel3)
+//            }
+//            if (noLogin.menuLabel4 != null) {
+//                utilsStrings.add(noLogin.menuLabel4)
+//            }
+//            if (noLogin.menuLabel5 != null) {
+//                utilsStrings.add(noLogin.menuLabel5)
+//            }
+//            if (noLogin.menuLabel6 != null) {
+//                utilsStrings.add(noLogin.menuLabel6)
+//            }
+//            if (noLogin.menuLabel7 != null) {
+//                utilsStrings.add(noLogin.menuLabel7)
+//            }
+//            if (noLogin.menuLabel8 != null) {
+//                utilsStrings.add(noLogin.menuLabel8)
+//                Log.e("!!!","get array"+utilsStrings.size);
+//            }
+//        }
+
         toolAdapter = object : ToolAdapter(getContext(), utilsStrings) {
+
             override fun onClickView(pos: Int) {
                 when (pos) {
                     0 ->{
@@ -171,34 +195,93 @@ class ToolFragment : Fragment() {
 //                        signOut(true)
 //                    }
                     6 -> showWhatsNew()
-                    7 -> {
+//                    7 -> {
+//                        noLogin?.let {
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
+//                                fetchRequest(context, it.link1)
+//
+//                        }
+//                    }
+//                    8 -> {
+//                        noLogin?.let {
+//
+//
+//                                FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
+//                                fetchRequest(context, it.link2)
+//
+//
+//
+//                        }
+//                    }
+//                    9 -> {
+//                        noLogin?.let {
+//
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
+//                            fetchRequest(context, it.link3)
+//
+//
+//                        }
+//                    }
+//                    10 -> {
+//                        noLogin?.let {
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore4)
+//                            fetchRequest(context, it.link4)
+//
+//                        }
+//                    }
+//                    11 -> {
+//                        noLogin?.let {
+//
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore5)
+//                            fetchRequest(context, it.link5)
+//
+//
+//
+//                        }
+//                    }
+//                    12 -> {
+//                        noLogin?.let {
+//
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore6)
+//                            fetchRequest(context, it.link6)
+//
+//
+//                        }
+//                    }
+//                    13 -> {
+//                        noLogin?.let {
+//
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore7)
+//                            fetchRequest(context, it.link7)
+//
+//
+//
+//                        }
+//                    }
+//                    14 -> {
+//                        noLogin?.let {
+//
+//
+//                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore8)
+//                            fetchRequest(context, it.link8)
+//
+//
+  //                      }
+   //                 }
+
+                    else -> {
                         noLogin?.let {
-
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore)
-                                fetchRequest(context, it.link1)
-
+                            val menuItem = it.menus[pos-7];
+                             FolderClearUp.clearFoldersByName(context, menuItem.process.toString())
+                             fetchRequest(context, menuItem.link.toString())
                         }
-                    }
-                    8 -> {
-                        noLogin?.let {
 
-
-                                FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore2)
-                                fetchRequest(context, it.link2)
-
-
-
-                        }
-                    }
-                    9 -> {
-                        noLogin?.let {
-
-
-                            FolderClearUp.clearFoldersByName(context, it.fileToProcessBefore3)
-                            fetchRequest(context, it.link3)
-
-
-                        }
                     }
                 }
 
@@ -243,6 +326,8 @@ class ToolFragment : Fragment() {
 
         DownloadProgressDialog.newInstance(request)
                 .show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
+
+
     }
 
 

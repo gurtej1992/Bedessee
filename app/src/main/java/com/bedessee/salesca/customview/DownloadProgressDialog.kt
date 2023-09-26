@@ -31,7 +31,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
-
+//Create a DialogFragment which download a zip file from url
 class DownloadProgressDialog : DialogFragment() {
     private lateinit var request: Request
     val mainLooper = Looper.getMainLooper()
@@ -180,6 +180,10 @@ class DownloadProgressDialog : DialogFragment() {
     }
 
     private fun unzip(context:Context, archiveFile: String) {
+        if (!isAdded) {
+            return
+        }
+
         val sugarPath = SharedPrefsManager(context).sugarSyncDir
         val unzippedFile = FilenameUtils.getName(archiveFile)
         val alertDialogBuilder = AlertDialog.Builder(context)
@@ -200,34 +204,13 @@ class DownloadProgressDialog : DialogFragment() {
                 ZipArchive.unzip(archiveFile, sugarPath, "")
 
                 Handler(mainLooper).post {
-
-                mAlertDialog.dismiss()
-
-//                    progressTitle?.let { it ->
-//            it.text = "The file $unzippedFile was unzipped completely"
-//            positiveButton.post {
-//                positiveButton.visibility = View.VISIBLE
-//                positiveButton.text = "Cancel"
-//                negativeButton.text = "Daily update"
-//                negativeButton.visibility = View.VISIBLE
-//                dialog?.setCancelable(true)
-//                positiveButton.setOnClickListener {
-//                    dismiss()
-//                }
-//                message.visibility= View.VISIBLE
-//                message.text="Now, It is recommended to run a daily update"
-//
-//                negativeButton.setOnClickListener { view ->
-                    MixPanelManager.trackButtonClick(context, "Button click: Top menu: DAILY UPDATE")
-                    startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
-                    dismiss()
-               // }
-           // }
-      //  }
+                    if (isAdded) {
+                        mAlertDialog.dismiss()
+                         MixPanelManager.trackButtonClick(context, "Button click: Top menu: DAILY UPDATE")
+                         startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
+                        dismiss()
+                    }
                 }
-
-
-
             })
                 .start()
 
@@ -245,28 +228,5 @@ class DownloadProgressDialog : DialogFragment() {
 
             return
         }
-
-//        val unzippedFile = FilenameUtils.getName(archiveFile)
-//        progressTitle?.let { it ->
-//            it.text = "The file $unzippedFile was unzipped completely"
-//            positiveButton.post {
-//                positiveButton.visibility = View.VISIBLE
-//                positiveButton.text = "Cancel"
-//                negativeButton.text = "Daily update"
-//                negativeButton.visibility = View.VISIBLE
-//                dialog?.setCancelable(true)
-//                positiveButton.setOnClickListener {
-//                    dismiss()
-//                }
-//                message.visibility= View.VISIBLE
-//                message.text="Now, It is recommended to run a daily update"
-//
-//                negativeButton.setOnClickListener { view ->
-//                    MixPanelManager.trackButtonClick(context, "Button click: Top menu: DAILY UPDATE")
-//                    startActivityForResult(UpdateActivity.newIntent(context), UpdateActivity.REQUEST_CODE)
-//                    dismiss()
-//                }
-//            }
-//        }
     }
 }
