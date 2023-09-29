@@ -79,7 +79,11 @@ class Login : Activity() {
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS)
 
             } else {
-                launchFilePicker()
+                /*------------------------------------------------------------*/
+               //comment on 27 sep 2023
+            launchFilePicker()
+
+                /*------------------------------------------------------------*/
             }
         } else {
 
@@ -143,7 +147,12 @@ class Login : Activity() {
             finish()
         } else if(sharedPrefsManager.sugarSyncDir != null) {
             Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
-            launchFilePicker()
+
+            /*------------------------------------------------------------*/
+           //Comment on 27 sep 2023
+        launchFilePicker()
+
+            /*------------------------------------------------------------*/
         }
     }
 
@@ -154,7 +163,12 @@ class Login : Activity() {
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    launchFilePicker()
+
+                    /*------------------------------------------------------------*/
+                 //Comment on 27 sep 2023
+                launchFilePicker()
+
+                    /*------------------------------------------------------------*/
                 } else {
                     Toast.makeText(this, "YOU MUST ACCEPT STORAGE PERMISSION TO CONTINUE", Toast.LENGTH_LONG).show()
                 }
