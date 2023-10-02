@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences shared = getSharedPreferences("selectedfile", Context.MODE_PRIVATE);
         filename= shared.getString("Showfilename","ProductMain");
         value=shared.getBoolean("show",false);
+        final SharedPrefsManager sharedPref = new SharedPrefsManager(MainActivity.this);
+
 
 
 
@@ -205,9 +207,11 @@ public class MainActivity extends AppCompatActivity {
             cart_txt.setTextColor(getResources().getColor(R.color.divider));
             report_txt.setTextColor(getResources().getColor(R.color.divider));
             tool_txt.setTextColor(getResources().getColor(R.color.divider));
+
             final ProductFragment productFragment = ProductFragment.getInstance();
             productFragment.setFilter("HM");
             switchFragment(productFragment, ProductFragment.TAG);
+
         });
 
 

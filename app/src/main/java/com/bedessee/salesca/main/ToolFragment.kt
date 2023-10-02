@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -61,6 +60,9 @@ class ToolFragment : Fragment() {
         val shared = requireActivity().getSharedPreferences("selectedfile", AppCompatActivity.MODE_PRIVATE)
         val filename = shared.getString("Showfilename", "ProductMain")
         val value= shared.getBoolean("show",false)
+        val sharedPref = SharedPrefsManager(context)
+
+        Log.e("@#@", "get folder" + sharedPref.getSugarSyncDir())
         filename_text = (context as MainActivity?)?.findViewById(R.id.filename_text)
         requireActivity().requestedOrientation = if (orient == "landscape") {
             ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE

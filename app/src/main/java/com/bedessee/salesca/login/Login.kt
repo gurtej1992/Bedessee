@@ -3,19 +3,24 @@ package com.bedessee.salesca.login
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bedessee.salesca.R
+import com.bedessee.salesca.customview.DownloadProgressDialog
+import com.bedessee.salesca.customview.UtilitiesSpinner
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
 import com.bedessee.salesca.provider.Contract
@@ -33,19 +38,24 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.gson.Gson
 import com.nononsenseapps.filepicker.FilePickerActivity
+import com.tonyodev.fetch2.NetworkType
+import com.tonyodev.fetch2.Priority
+import com.tonyodev.fetch2.Request
+import org.apache.commons.io.FilenameUtils
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileInputStream
+import java.net.URL
 import java.nio.charset.Charset
 import java.util.*
 
 /**
  * Login screen.
  */
-class Login : Activity() {
+class Login : AppCompatActivity() {
 
     private val RC_SIGN_IN: Int = 101
     private val MY_PERMISSIONS_REQUEST_READ_CONTACTS: Int = 202
@@ -55,6 +65,7 @@ class Login : Activity() {
     private var mProgressBar: ProgressBar? = null
 
     private var dialog: Dialog? = null
+    private var URL:String="https://www.bedesseebrands.com/_sls_app/HF003-DATA.ZIP"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,7 +92,8 @@ class Login : Activity() {
             } else {
                 /*------------------------------------------------------------*/
                //comment on 27 sep 2023
-            launchFilePicker()
+         //   launchFilePicker()
+               fetchRequest(this ,URL,true)
 
                 /*------------------------------------------------------------*/
             }
@@ -127,6 +139,28 @@ class Login : Activity() {
         startActivityForResult(intent, FILE_CODE)
     }
 
+    private fun fetchRequest(context: Context, url: String, daily : Boolean) {
+        val safeUrl = if (!url.contains("http")) {
+            "https://$url"
+        } else {
+            url
+        }
+        val downloadFolder =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
+        val fileName = (FilenameUtils.getName(URL(safeUrl).path))
+        val sharedPrefs = SharedPrefsManager(this)
+        Timber.d("setting sugar directory")
+        sharedPrefs.sugarSyncDir = downloadFolder
+        val sugarPath = SharedPrefsManager(context).sugarSyncDir
+        val request = Request(safeUrl, "$sugarPath/$fileName")
+        request.networkType = NetworkType.ALL
+        request.priority = Priority.HIGH
+        request.addHeader("Referer", "https://www.bedessee.com/")
+    //    startActivityForResult(intent, FILE_CODE)
+        DownloadProgressDialog.newInstance(request,daily)
+            .show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
+
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -145,15 +179,19 @@ class Login : Activity() {
             intent.putExtra("from", "home")
             startActivity(intent)
             finish()
-        } else if(sharedPrefsManager.sugarSyncDir != null) {
-            Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
+        }
+//        else if(sharedPrefsManager.sugarSyncDir != null) {
+//            Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
 
             /*------------------------------------------------------------*/
            //Comment on 27 sep 2023
-        launchFilePicker()
+     //   launchFilePicker()
+            Log.e("@#@","called api")
+          //  fetchRequest(this,URL,false)
+
 
             /*------------------------------------------------------------*/
-        }
+      //  }
     }
 
 
@@ -166,7 +204,9 @@ class Login : Activity() {
 
                     /*------------------------------------------------------------*/
                  //Comment on 27 sep 2023
-                launchFilePicker()
+             //  launchFilePicker()
+                    fetchRequest(this,URL,true)
+
 
                     /*------------------------------------------------------------*/
                 } else {
