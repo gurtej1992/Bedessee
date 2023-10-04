@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,7 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
     private Status mStatus;
     private String mStatusString;
     CheckBox upcBox;
+    ImageView search;
     String currentHint = "",searchtype="";
     private ArrayList<Product> productArrayList;
     ArrayList<Product> productfinalList;
@@ -141,6 +143,8 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
 
             }
         });
+        search=getActivity().findViewById(R.id.search);
+        search.setVisibility(View.VISIBLE);
         upcBox = rootView.findViewById(R.id.checkBoxUPC);
         mEditSearchReference = new WeakReference<>(rootView.findViewById(R.id.editText_search));
         mEditSearchReference.get().clearFocus();

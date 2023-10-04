@@ -46,6 +46,8 @@ class AdminPanel : AppCompatActivity() {
     var newlayout:TextView?=null
     var updatedList= arrayOf<String>()
     var fileList= arrayOf<String>()
+    var back:ImageView?=null
+    lateinit var orient:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +64,20 @@ class AdminPanel : AppCompatActivity() {
         show_file = findViewById<View>(R.id.show_file) as TextView
         include_file = findViewById<View>(R.id.include_price) as TextView
         newlayout = findViewById<View>(R.id.new_layout) as TextView
+        back = findViewById<View>(R.id.back) as ImageView
+
 
 
         //Creating a File object for directory
         val sharedPrefs = SharedPrefsManager(this)
         var mSugarSyncDir = sharedPrefs.sugarSyncDir
-
-
+        val sh = getSharedPreferences("setting", MODE_PRIVATE)
+        orient = sh.getString("orientation", "landscape")!!
+        requestedOrientation = if (orient == "landscape") {
+            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        } else {
+            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
         try {
             val directoryPath = File(mSugarSyncDir + "/data/prod_files_can_select.json")
             val stream = FileInputStream(directoryPath)
@@ -114,6 +123,15 @@ class AdminPanel : AppCompatActivity() {
                 )
             )
         }
+
+      back!!.setOnClickListener {
+          this@AdminPanel.startActivity(
+              Intent(
+                  this@AdminPanel,
+                  MainActivity::class.java
+              )
+          )
+      }
         clear1!!.setOnClickListener {
             val clearAction = FolderClearUp.clear_folder_json
             showClearDialog(clearAction)

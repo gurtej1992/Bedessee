@@ -172,7 +172,7 @@
 
                 <Button
                     android:layout_margin="30dp"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.1"
                     android:id="@+id/btnAddToCart"
                     android:layout_width="0dp"
                     android:visibility="invisible"

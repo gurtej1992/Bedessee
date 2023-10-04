@@ -11,6 +11,7 @@ import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -183,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
             cart_icon.setImageResource(R.drawable.ic_cart);
             report_icon.setImageResource(R.drawable.ic_documentlight);
             tool_icon.setImageResource(R.drawable.ic_toolslight);
+            search.setVisibility(View.VISIBLE);
             home_txt.setTextColor(getResources().getColor(R.color.divider));
             cart_txt.setTextColor(getResources().getColor(R.color.white));
             report_txt.setTextColor(getResources().getColor(R.color.divider));
@@ -207,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
             cart_txt.setTextColor(getResources().getColor(R.color.divider));
             report_txt.setTextColor(getResources().getColor(R.color.divider));
             tool_txt.setTextColor(getResources().getColor(R.color.divider));
-
+            search.setVisibility(View.VISIBLE);
             final ProductFragment productFragment = ProductFragment.getInstance();
             productFragment.setFilter("HM");
             switchFragment(productFragment, ProductFragment.TAG);
@@ -220,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
             cart_icon.setImageResource(R.drawable.ic_cartight);
             report_icon.setImageResource(R.drawable.ic_document);
             tool_icon.setImageResource(R.drawable.ic_toolslight);
+            search.setVisibility(View.GONE);
             home_txt.setTextColor(getResources().getColor(R.color.divider));
             cart_txt.setTextColor(getResources().getColor(R.color.divider));
             report_txt.setTextColor(getResources().getColor(R.color.white));
@@ -236,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
                 cart_icon.setImageResource(R.drawable.ic_cart);
                 report_icon.setImageResource(R.drawable.ic_documentlight);
                 tool_icon.setImageResource(R.drawable.ic_toolslight);
+                search.setVisibility(View.GONE);
                 home_txt.setTextColor(getResources().getColor(R.color.divider));
                 cart_txt.setTextColor(getResources().getColor(R.color.white));
                 report_txt.setTextColor(getResources().getColor(R.color.divider));
@@ -258,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 cart_icon.setImageResource(R.drawable.ic_cartight);
                 report_icon.setImageResource(R.drawable.ic_documentlight);
                 tool_icon.setImageResource(R.drawable.ic_tools);
+                search.setVisibility(View.GONE);
                 home_txt.setTextColor(getResources().getColor(R.color.divider));
                 cart_txt.setTextColor(getResources().getColor(R.color.divider));
                 report_txt.setTextColor(getResources().getColor(R.color.divider));
@@ -317,10 +322,9 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.exit:
-                                MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: EXIT APP");
-                                finish();
-                                System.exit(0);
-                                return true;
+                               finishAffinity();
+                               return true;
+
 
                             case R.id.version:
                                 MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Top menu: APP VERSION");
@@ -818,6 +822,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new GenericDialog.OnClickListener() {
                     @Override
                     public void onClick(@NotNull DialogFragment dialog) {
+                        Log.e("@#@#","I clicked");
                         MixPanelManager.trackButtonClick(MainActivity.this, "Button click: Resume saved order? NO");
                         ShoppingCart.setCurrentOrderId(MainActivity.this, null);
                     }
@@ -925,6 +930,11 @@ public class MainActivity extends AppCompatActivity {
             mFragmentManager.popBackStack();
         }
     }
+    private boolean isInFront;
+
+
+
+
 
 
 

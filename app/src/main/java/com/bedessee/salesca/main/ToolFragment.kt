@@ -92,7 +92,7 @@ class ToolFragment : Fragment() {
     }
 
     private fun init(context: Context) {
-        val utilsStrings = arrayOf("Util", "Calc", "Margin", "Load old", "Admin", "Wipe Data", "New?").toMutableList()
+        val utilsStrings = arrayOf( "Calc", "Margin", "Load old", "Admin", "Wipe Data", "New?").toMutableList()
         val noLogin = SharedPrefsManager(context).noLogin
         noLogin?.let {
             for (m in it.menus)
@@ -133,19 +133,17 @@ class ToolFragment : Fragment() {
             override fun onClickView(pos: Int) {
                 when (pos) {
                     0 ->{
+                        Utilities.launchRegularCalculator(context)
 
                     }
                     1 -> {
-                        Utilities.launchRegularCalculator(context)
+                        context.startActivity(Intent(context, MarginCalculator::class.java))
                     }
                     /* Launch markup calc */
-                    2-> context.startActivity(Intent(context, MarginCalculator::class.java))
+                    2->
+                        UpdateSelector().show((context as AppCompatActivity).supportFragmentManager, "Test")
 
                     3 -> {
-                        /* Load prev update */
-                        UpdateSelector().show((context as AppCompatActivity).supportFragmentManager, "Test")
-                    }
-                    4 -> {
                         /* Admin menu */
                         val secretPin = SharedPrefsManager(context).adminPin
 
@@ -170,7 +168,7 @@ class ToolFragment : Fragment() {
                         }, formatNumber = false, allowDecimals = true, showHint = false)
                                 .show((context as AppCompatActivity).supportFragmentManager, "Test")
                     }
-                    5 -> GenericDialog.newInstance(
+                    4 -> GenericDialog.newInstance(
                             context.getString(R.string.wipe_data_message),
                             "",
                             object : GenericDialog.OnClickListener {
@@ -184,11 +182,11 @@ class ToolFragment : Fragment() {
 //                        MixPanelManager.trackButtonClick(getContext(), "Button click: Top menu: SIGN OUT")
 //                        signOut(true)
 //                    }
-                    6 -> showWhatsNew()
+                    5 -> showWhatsNew()
 
                     else -> {
                         noLogin?.let {
-                            val menuItem = it.menus[pos-7];
+                            val menuItem = it.menus[pos-6];
                              FolderClearUp.clearFoldersByName(context, menuItem.process.toString())
                              fetchRequest(context, menuItem.link.toString(),menuItem.dailyUpdate ?: false)
                         }
