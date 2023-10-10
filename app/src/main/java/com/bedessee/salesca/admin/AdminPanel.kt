@@ -142,6 +142,8 @@ class AdminPanel : AppCompatActivity() {
         }
         signout!!.setOnClickListener {
             MixPanelManager.trackButtonClick(this, "Button click: Top menu: SIGN OUT")
+//            val sharedPrefs = SharedPrefsManager(this)
+//            sharedPrefs.sugarSyncDir = null
             signOut(true)
         }
         num!!.setOnClickListener {

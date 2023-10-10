@@ -60,6 +60,7 @@ public class SharedPrefsManager {
 
     private static final String KEY_SHOW_UOM_IN_PRODUCT_GRID = "show_uom_in_grid";
     private static final String KEY_SHOW_TYPE_IN_PRODUCT_GRID = "show_type_in_grid";
+    private static final String KEY_URL_LINK = "url_link";
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -170,6 +171,11 @@ public class SharedPrefsManager {
         mEditor.putString(KEY_LINK_TO_PROD_IMGS, path).apply();
     }
 
+    public void setLinkURL(final String path) {
+
+        mEditor.putString(KEY_URL_LINK, path).apply();
+    }
+
     public void setLinkToLargeProdImages(final String largePath) {
         mEditor.putString(KEY_LINK_TO_LARGE_PROD_IMGS, largePath).apply();
     }
@@ -180,6 +186,10 @@ public class SharedPrefsManager {
 
     public String getLinkToProdImages() {
         return mSharedPreferences.getString(KEY_LINK_TO_PROD_IMGS, null);
+    }
+
+    public String getLinkURL() {
+        return mSharedPreferences.getString(KEY_URL_LINK, null);
     }
 
     public void setLinkToBrandLogoImages(final String recips) {

@@ -20,9 +20,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bedessee.salesca.R
 import com.bedessee.salesca.customview.DownloadProgressDialog
+import com.bedessee.salesca.customview.UserListDialog
 import com.bedessee.salesca.customview.UtilitiesSpinner
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
+import com.bedessee.salesca.modal.SalesPerson
 import com.bedessee.salesca.provider.Contract
 import com.bedessee.salesca.provider.ProviderUtils
 import com.bedessee.salesca.salesman.Salesman
@@ -41,7 +43,12 @@ import com.nononsenseapps.filepicker.FilePickerActivity
 import com.tonyodev.fetch2.NetworkType
 import com.tonyodev.fetch2.Priority
 import com.tonyodev.fetch2.Request
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.apache.commons.io.FilenameUtils
+import org.apache.commons.io.IOUtils
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -50,7 +57,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.net.URL
 import java.nio.charset.Charset
-import java.util.*
 
 /**
  * Login screen.
@@ -63,7 +69,7 @@ class Login : AppCompatActivity() {
 //    private var googleApiClient: GoogleApiClient? = null
     private var mLoginButton: SignInButton? = null
     private var mProgressBar: ProgressBar? = null
-
+    val users = mutableListOf<SalesPerson>()
     private var dialog: Dialog? = null
     private var URL:String="https://www.bedesseebrands.com/_sls_app/HF003-DATA.ZIP"
 
@@ -73,9 +79,11 @@ class Login : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
+//
         MixPanelManager.trackScreenView(this, "Login screen")
 
         val sharedPrefs = SharedPrefsManager(this)
+
 
         if (sharedPrefs.sugarSyncDir == null) {
 
@@ -93,9 +101,47 @@ class Login : AppCompatActivity() {
                 /*------------------------------------------------------------*/
                //comment on 27 sep 2023
          //   launchFilePicker()
-               fetchRequest(this ,URL,true)
 
-                /*------------------------------------------------------------*/
+                GlobalScope.launch(Dispatchers.IO) {
+
+
+                    val jsonArray =    getJson(URL("https://www.bedesseebrands.com/_sls_app/google/google.json"))
+
+                    for (i in 0 until jsonArray!!.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        val user = SalesPerson(
+                            email = jsonObject.getString("email"),
+                            name = jsonObject.getString("APP_DISPLAY_NAME"),
+                            link = jsonObject.getString("LINK_4_DATAZIP")
+                        )
+                        users.add(user)
+
+                    }
+                    withContext(Dispatchers.Main) {
+                        // Update UI elements here
+                        val userListDialog = UserListDialog(this@Login, users) { user ->
+                            // Handle the click event here
+                            Toast.makeText(this@Login, "User clicked: ${user.name}", Toast.LENGTH_SHORT).show()
+                            user.link?.let {
+
+                                fetchRequest(this@Login , it,true)
+
+                            }
+
+                            val sharedPrefs = SharedPrefsManager(this@Login)
+                            Timber.d("setting sugar directory")
+                            sharedPrefs.linkURL = user.link
+
+                        }
+
+                        userListDialog.show()
+
+                    }
+
+                }
+              //  fetchRequest(this ,URL,true)
+
+            /*------------------------------------------------------------*/
             }
         } else {
 
@@ -129,6 +175,13 @@ class Login : AppCompatActivity() {
         }
     }
 
+
+    fun getJson(url: URL?): JSONArray? {
+
+        val json: String = IOUtils.toString(url, Charset.forName("UTF-8"))
+        return JSONArray(json)
+    }
+
     private fun launchFilePicker() {
         val intent = Intent(this@Login, FilePickerActivity::class.java)
         intent.putExtra(FilePickerActivity.EXTRA_ALLOW_MULTIPLE, false)
@@ -140,6 +193,11 @@ class Login : AppCompatActivity() {
     }
 
     private fun fetchRequest(context: Context, url: String, daily : Boolean) {
+        for (user in users) {
+            println("Display Name: ${user.name}")
+            println("Link (Data ZIP): ${user.link}")
+            println()
+        }
         val safeUrl = if (!url.contains("http")) {
             "https://$url"
         } else {
@@ -180,6 +238,7 @@ class Login : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
 //        else if(sharedPrefsManager.sugarSyncDir != null) {
 //            Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
 
@@ -205,7 +264,9 @@ class Login : AppCompatActivity() {
                     /*------------------------------------------------------------*/
                  //Comment on 27 sep 2023
              //  launchFilePicker()
-                    fetchRequest(this,URL,true)
+
+                    val sharedPrefs = SharedPrefsManager(this)
+                    fetchRequest(this,sharedPrefs.linkURL,true)
 
 
                     /*------------------------------------------------------------*/
