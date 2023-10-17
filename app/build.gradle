@@ -11,7 +11,7 @@ android {
             useSupportLibrary = true
         }
 
-        minSdkVersion 20
+        minSdkVersion 24
         multiDexEnabled true
         //noinspection HighAppVersionCode
         versionCode 20220402

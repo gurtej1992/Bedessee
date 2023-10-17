@@ -63,11 +63,11 @@ public class StoreSelector extends AppCompatActivity implements LoaderManager.Lo
         setContentView(R.layout.activity_store_selector);
         SharedPreferences sh =getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         final ListView listView = findViewById(R.id.list);
 
         mAdapter = new StoreSelectorAdapter(this);

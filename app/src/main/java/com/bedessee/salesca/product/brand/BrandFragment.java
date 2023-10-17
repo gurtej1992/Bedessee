@@ -56,11 +56,11 @@ public class BrandFragment extends Fragment implements AdapterView.OnItemClickLi
         MixPanelManager.trackScreenView(getActivity(), "Brands screen");
         SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         getActivity().getLoaderManager().initLoader(LOADER_ID, null, this);
 
         mBrandAdapter = new BrandAdapter(getActivity());

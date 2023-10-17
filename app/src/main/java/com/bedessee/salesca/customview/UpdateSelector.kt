@@ -19,11 +19,11 @@ class UpdateSelector : DialogFragment() {
         val view = inflater.inflate(R.layout.update_selector, container, false)
         val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requireActivity().requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         view.positiveButton.setOnClickListener {
             var updateDir = ""
 

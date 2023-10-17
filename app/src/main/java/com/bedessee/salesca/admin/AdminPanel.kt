@@ -73,11 +73,11 @@ class AdminPanel : AppCompatActivity() {
         var mSugarSyncDir = sharedPrefs.sugarSyncDir
         val sh = getSharedPreferences("setting", MODE_PRIVATE)
         orient = sh.getString("orientation", "landscape")!!
-        requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         try {
             val directoryPath = File(mSugarSyncDir + "/data/prod_files_can_select.json")
             val stream = FileInputStream(directoryPath)
@@ -301,7 +301,7 @@ class AdminPanel : AppCompatActivity() {
                     val edit = sharedPreferences.edit()
                     edit.putString("orientation", orn_text)
                     edit.apply()
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                     dialog.dismiss();
                 }
                 .setNegativeButton(
@@ -313,7 +313,7 @@ class AdminPanel : AppCompatActivity() {
                     val edit = sharedPreferences.edit()
                     edit.putString("orientation", orn_text)
                     edit.apply()
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                  //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                     dialog.dismiss()
                 }
                 .create()

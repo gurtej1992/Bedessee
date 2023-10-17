@@ -101,11 +101,11 @@ public class ShoppingCartDialog extends Fragment implements View.OnClickListener
         String orient= sh.getString("orientation","landscape");
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("includeprice", Context.MODE_PRIVATE);
        value= sharedPreferences.getBoolean("show",true);
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         final Bundle extras = getArguments();
 
         if (extras != null && extras.containsKey(KEY_SHOPPING_CART)) {

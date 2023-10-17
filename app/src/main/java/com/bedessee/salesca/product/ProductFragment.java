@@ -117,11 +117,11 @@ public class ProductFragment extends Fragment implements AdapterView.OnItemClick
         final RecyclerView gridView = rootView.findViewById(R.id.gridView);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sharedPreferences.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
 
         productArrayList=new ArrayList<>();
         Log.e("@#@#","get loader id"+mFilter);

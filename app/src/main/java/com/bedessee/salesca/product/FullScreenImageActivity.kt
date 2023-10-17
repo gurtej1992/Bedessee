@@ -36,11 +36,11 @@ class FullScreenImageActivity : AppCompatActivity() {
         setContentView(R.layout.fullscreenactivity)
         val sh = getSharedPreferences("setting", MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
-        requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
 
 
         imageViewTouch = findViewById<View>(R.id.imageViewTouch) as ImageViewTouch

@@ -34,11 +34,11 @@ public class MarginCalculator extends AppCompatActivity {
         setContentView(R.layout.markup_calculator);
         SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
        String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         final EditText costEdt = findViewById(R.id.editText_costprice);
         final EditText sellEdt = findViewById(R.id.editText_sellingprice);
         final EditText markupEdt = findViewById(R.id.editText_markup);

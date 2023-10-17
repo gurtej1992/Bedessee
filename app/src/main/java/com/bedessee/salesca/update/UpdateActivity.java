@@ -125,11 +125,11 @@ Boolean update=false;
         setContentView(R.layout.activity_update);
         SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
        sharedPrefsManager=getSharedPreferences("selectedfile",Context.MODE_PRIVATE);
         update=sharedPrefsManager.getBoolean("update",false);
         updatingAdapter = new UpdatingAdapter();
@@ -416,7 +416,7 @@ Boolean update=false;
                 pro = 100;
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ((ProgressBar)view.findViewById(R.id.progressbar)).setProgressTintList(ColorStateList.valueOf(Color.RED));
+                ((ProgressBar)view.findViewById(R.id.progressbar)).setProgressTintList(ColorStateList.valueOf(Color.BLUE));
             }
             ((TextView)view.findViewById(R.id.progress)).setText(pro + "%");
             if (TextUtils.isEmpty(infos.get(position).created)) {

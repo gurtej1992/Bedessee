@@ -52,11 +52,11 @@ class SpecialProductDialog : DialogFragment() {
 
         val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requireActivity().requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         val context = inflater.context
 
         val dimens = Utilities.getScreenDimensInPx(null)

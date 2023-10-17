@@ -64,11 +64,11 @@ class ToolFragment : Fragment() {
 
         Log.e("@#@", "get folder" + sharedPref.getSugarSyncDir())
         filename_text = (context as MainActivity?)?.findViewById(R.id.filename_text)
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requireActivity().requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
 
         if (value) {
             filename_text?.setVisibility(View.VISIBLE)
@@ -292,11 +292,11 @@ class ToolFragment : Fragment() {
         super.onResume()
         val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requireActivity().requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         val shared = requireActivity().getSharedPreferences("selectedfile", AppCompatActivity.MODE_PRIVATE)
         val filename = shared.getString("Showfilename", "ProductMain")
         val value= shared.getBoolean("show",false)

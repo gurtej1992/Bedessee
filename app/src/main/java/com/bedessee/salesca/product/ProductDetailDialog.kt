@@ -93,13 +93,13 @@ class ProductDetailDialog : DialogFragment() {
 
         val sh = requireActivity().getSharedPreferences("setting", AppCompatActivity.MODE_PRIVATE)
         val orient = sh.getString("orientation", "landscape")
-        requireActivity().requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            view.findViewById<View>(R.id.like_label).visibility = View.GONE
-            view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        requireActivity().requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            view.findViewById<View>(R.id.like_label).visibility = View.GONE
+//            view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
 
         val prefsManager = requireActivity().getSharedPreferences("shownewlyout", AppCompatActivity.MODE_PRIVATE)
         val show = prefsManager.getBoolean("show", false)

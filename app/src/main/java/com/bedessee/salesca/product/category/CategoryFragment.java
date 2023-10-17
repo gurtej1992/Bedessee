@@ -47,11 +47,11 @@ public class CategoryFragment extends Fragment implements AdapterView.OnItemClic
         MixPanelManager.trackScreenView(getActivity(), "Categories screen");
         SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         mAdapter = new CategoryAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, null, new String[]{Contract.CategoryColumns.COLUMN_DESCRIPTION}, new int[] {android.R.id.text1});
 
         ListView listView = new ListView(getActivity());

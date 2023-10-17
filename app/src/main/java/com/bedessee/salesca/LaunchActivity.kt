@@ -23,12 +23,12 @@ class LaunchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_launch)
         val sh = getSharedPreferences("setting", MODE_PRIVATE)
-        val orient = sh.getString("orientation", "landscape")
-        requestedOrientation = if (orient == "landscape") {
-            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        } else {
-            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        }
+//        val orient = sh.getString("orientation", "landscape")
+//        requestedOrientation = if (orient == "landscape") {
+//            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         // Send user to MainActivity as soon as this activity loads
 //        val intent = Intent(this, MainActivity::class.java)
 //        startActivity(intent)

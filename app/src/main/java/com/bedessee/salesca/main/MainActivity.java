@@ -130,11 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-         if(orient.equals("landscape")){
-             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-         }else {
-             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-         }
+//         if(orient.equals("landscape")){
+//             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//         }else {
+//             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//         }
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         lst_menu_items = findViewById(R.id.lst_menu_items);

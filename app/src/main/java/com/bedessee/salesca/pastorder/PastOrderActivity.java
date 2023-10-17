@@ -46,11 +46,11 @@ public class PastOrderActivity extends AppCompatActivity implements QuantityChan
         setContentView(R.layout.activity_past_order);
         SharedPreferences sh = getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         ViewUtilities.Companion.setActivityWindowSize(getWindow());
         findViewById(R.id.add_all).setVisibility(View.GONE);
 

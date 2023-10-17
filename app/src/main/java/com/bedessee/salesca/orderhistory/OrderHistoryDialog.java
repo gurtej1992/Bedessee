@@ -200,11 +200,11 @@ public class OrderHistoryDialog extends Fragment {
         View view = inflater.inflate(R.layout.activity_orderhistory, container, false);
         SharedPreferences sh = getActivity().getSharedPreferences("setting", Context.MODE_PRIVATE);
         String orient= sh.getString("orientation","landscape");
-        if(orient.equals("landscape")){
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(orient.equals("landscape")){
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        }else {
+//            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
         new LoadOrders(requireActivity().getContentResolver(), new OrderListener()).execute();
 
         switchMaterial = view.findViewById(R.id.switch_stores);
