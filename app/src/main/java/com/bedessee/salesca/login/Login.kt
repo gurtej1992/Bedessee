@@ -66,12 +66,12 @@ class Login : AppCompatActivity() {
     private val RC_SIGN_IN: Int = 101
     private val MY_PERMISSIONS_REQUEST_READ_CONTACTS: Int = 202
 
-//    private var googleApiClient: GoogleApiClient? = null
+    //    private var googleApiClient: GoogleApiClient? = null
     private var mLoginButton: SignInButton? = null
     private var mProgressBar: ProgressBar? = null
     val users = mutableListOf<SalesPerson>()
     private var dialog: Dialog? = null
-    private var URL:String="https://www.bedesseebrands.com/_sls_app/HF003-DATA.ZIP"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,19 +88,19 @@ class Login : AppCompatActivity() {
         if (sharedPrefs.sugarSyncDir == null) {
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
 
-                    ActivityCompat.requestPermissions(this,
-                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                    Manifest.permission.GET_ACCOUNTS,
-                                    Manifest.permission.ACCESS_NETWORK_STATE,
-                                    Manifest.permission.BLUETOOTH),
-                            MY_PERMISSIONS_REQUEST_READ_CONTACTS)
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.BLUETOOTH),
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS)
 
             } else {
                 /*------------------------------------------------------------*/
-               //comment on 27 sep 2023
-         //   launchFilePicker()
+                //comment on 27 sep 2023
+                //   launchFilePicker()
 
                 GlobalScope.launch(Dispatchers.IO) {
 
@@ -121,7 +121,6 @@ class Login : AppCompatActivity() {
                         // Update UI elements here
                         val userListDialog = UserListDialog(this@Login, users) { user ->
                             // Handle the click event here
-                            Toast.makeText(this@Login, "User clicked: ${user.name}", Toast.LENGTH_SHORT).show()
                             user.link?.let {
 
                                 fetchRequest(this@Login , it,true)
@@ -139,9 +138,9 @@ class Login : AppCompatActivity() {
                     }
 
                 }
-              //  fetchRequest(this ,URL,true)
+                //  fetchRequest(this ,URL,true)
 
-            /*------------------------------------------------------------*/
+                /*------------------------------------------------------------*/
             }
         } else {
 
@@ -153,8 +152,8 @@ class Login : AppCompatActivity() {
             } else {
 
                 val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build()
+                    .requestEmail()
+                    .build()
 
                 val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
@@ -213,7 +212,7 @@ class Login : AppCompatActivity() {
         request.networkType = NetworkType.ALL
         request.priority = Priority.HIGH
         request.addHeader("Referer", "https://www.bedessee.com/")
-    //    startActivityForResult(intent, FILE_CODE)
+        //    startActivityForResult(intent, FILE_CODE)
         DownloadProgressDialog.newInstance(request,daily)
             .show((context as AppCompatActivity).supportFragmentManager, UtilitiesSpinner.TAG)
 
@@ -242,15 +241,15 @@ class Login : AppCompatActivity() {
 //        else if(sharedPrefsManager.sugarSyncDir != null) {
 //            Toast.makeText(applicationContext, "The folder is not valid", Toast.LENGTH_SHORT).show()
 
-            /*------------------------------------------------------------*/
-           //Comment on 27 sep 2023
-     //   launchFilePicker()
-            Log.e("@#@","called api")
-          //  fetchRequest(this,URL,false)
+        /*------------------------------------------------------------*/
+        //Comment on 27 sep 2023
+        //   launchFilePicker()
+        Log.e("@#@","called api")
+        //  fetchRequest(this,URL,false)
 
 
-            /*------------------------------------------------------------*/
-      //  }
+        /*------------------------------------------------------------*/
+        //  }
     }
 
 
@@ -262,8 +261,8 @@ class Login : AppCompatActivity() {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
 
                     /*------------------------------------------------------------*/
-                 //Comment on 27 sep 2023
-             //  launchFilePicker()
+                    //Comment on 27 sep 2023
+                    //  launchFilePicker()
 
                     val sharedPrefs = SharedPrefsManager(this)
                     fetchRequest(this,sharedPrefs.linkURL,true)
@@ -276,8 +275,8 @@ class Login : AppCompatActivity() {
                 return
             }
 
-        // Add other 'when' lines to check for other
-        // permissions this app might request.
+            // Add other 'when' lines to check for other
+            // permissions this app might request.
             else -> {
                 // Ignore all other requests.
             }
@@ -375,43 +374,43 @@ class Login : AppCompatActivity() {
 //        sSignInClicked = false
 
 //        if (googleApiClient!!.isConnected) {
-            val loggedInEmail = account.email
+        val loggedInEmail = account.email
 
-            val users = ArrayList<Salesman>()
+        val users = ArrayList<Salesman>()
 
-            val usersCursor = contentResolver.query(Contract.User.CONTENT_URI, null, null, null, null)
+        val usersCursor = contentResolver.query(Contract.User.CONTENT_URI, null, null, null, null)
 
-            while (usersCursor!!.moveToNext()) {
-                users.add(ProviderUtils.CursorToSalesman(usersCursor))
+        while (usersCursor!!.moveToNext()) {
+            users.add(ProviderUtils.CursorToSalesman(usersCursor))
+        }
+
+
+        var loggedInUser: Salesman? = null
+
+        for (user in users) {
+            if (user.email.equals(loggedInEmail)) {
+                loggedInUser = user
             }
+        }
 
+        if (loggedInUser != null) {
+            Toast.makeText(this, loggedInUser.name + " is connected!", Toast.LENGTH_LONG).show()
+            val sharedPrefsManager = SharedPrefsManager(this)
+            sharedPrefsManager.saveLoggedInUser(loggedInUser)
+            SalesmanManager.setCurrentSalesman(this, loggedInUser)
 
-            var loggedInUser: Salesman? = null
+            setIsAdmin(loggedInEmail)
 
-            for (user in users) {
-                if (user.email.equals(loggedInEmail)) {
-                    loggedInUser = user
-                }
-            }
+            MixPanelManager.trackSuccessfulLogin(this, false)
 
-            if (loggedInUser != null) {
-                Toast.makeText(this, loggedInUser.name + " is connected!", Toast.LENGTH_LONG).show()
-                val sharedPrefsManager = SharedPrefsManager(this)
-                sharedPrefsManager.saveLoggedInUser(loggedInUser)
-                SalesmanManager.setCurrentSalesman(this, loggedInUser)
+            val intent = Intent(this@Login, MainActivity::class.java)
+            intent.putExtra("from", "home")
+            startActivity(intent)
+            finish()
 
-                setIsAdmin(loggedInEmail)
-
-                MixPanelManager.trackSuccessfulLogin(this, false)
-
-                val intent = Intent(this@Login, MainActivity::class.java)
-                intent.putExtra("from", "home")
-                startActivity(intent)
-                finish()
-
-            } else {
-                Utilities.longToast(this, "Sorry, you are not a recognized user!")
-            }
+        } else {
+            Utilities.longToast(this, "Sorry, you are not a recognized user!")
+        }
 //        }
     }
 
@@ -509,32 +508,32 @@ class Login : AppCompatActivity() {
 
     private fun getDefaultLogin() {
 
-            val dirpath: String
+        val dirpath: String
 
-            val sharedPrefs = SharedPrefsManager(this)
+        val sharedPrefs = SharedPrefsManager(this)
 
-            val sugarSyncPath = sharedPrefs.sugarSyncDir
+        val sugarSyncPath = sharedPrefs.sugarSyncDir
 
-            dirpath = "$sugarSyncPath/data/nologin.json"
+        dirpath = "$sugarSyncPath/data/nologin.json"
 
-            val file = File(dirpath)
+        val file = File(dirpath)
 
-            val ois = FileInputStream(file)
-            val inputStream = BufferedInputStream(ois)
+        val ois = FileInputStream(file)
+        val inputStream = BufferedInputStream(ois)
 
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
+        val size = inputStream.available()
+        val buffer = ByteArray(size)
 
-            inputStream.read(buffer)
+        inputStream.read(buffer)
 
-            inputStream.close()
-            ois.close()
+        inputStream.close()
+        ois.close()
 
-            val result = String(buffer, Charset.forName("UTF-8"))
+        val result = String(buffer, Charset.forName("UTF-8"))
 
-            val jsonObject = JSONObject(result)
+        val jsonObject = JSONObject(result)
 
-            val noLogin = Gson().fromJson(jsonObject.toString(), NoLogin::class.java)
+        val noLogin = Gson().fromJson(jsonObject.toString(), NoLogin::class.java)
 
 
         if (TextUtils.isEmpty(noLogin.name) || TextUtils.isEmpty(noLogin.email)) {
