@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -87,7 +90,7 @@ Boolean update=false;
         CUST_SPEC_PRICE_LIST("Customer Specific Price List"),
         NO_LOGIN("No Login");
 
-        private String mDescription;
+        private final String mDescription;
 
         UpdateType(String description) {
             mDescription = description;
@@ -385,8 +388,13 @@ Boolean update=false;
         HashMap<UpdateType, Integer> updateTypeHashMap = new HashMap<>(UpdateType.values().length);
 
         public void add(UpdateInfo updateInfo) {
-            updateTypeHashMap.put(updateInfo.updateType, infos.size());
-            infos.add(updateInfo);
+
+            if (updateTypeHashMap.containsKey(updateInfo.updateType)) {
+                update(updateInfo);
+            } else {
+                updateTypeHashMap.put(updateInfo.updateType, infos.size());
+                infos.add(updateInfo);
+            }
         }
 
 
@@ -402,8 +410,15 @@ Boolean update=false;
             @SuppressLint("ViewHolder")
             final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.updating_line_item, parent, false);
 
-            ((TextView)view.findViewById(R.id.number_pad_title)).setText("Updating: " + infos.get(position).updateType.getDescription());
-            ((TextView)view.findViewById(R.id.progress)).setText(infos.get(position).progress + "%");
+            ((TextView)view.findViewById(R.id.number_pad_title)).setText(infos.get(position).updateType.getDescription());
+            int pro = infos.get(position).progress;
+            if(pro > 100){
+                pro = 100;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ((ProgressBar)view.findViewById(R.id.progressbar)).setProgressTintList(ColorStateList.valueOf(Color.RED));
+            }
+            ((TextView)view.findViewById(R.id.progress)).setText(pro + "%");
             if (TextUtils.isEmpty(infos.get(position).created)) {
                 view.findViewById(R.id.created).setVisibility(View.GONE);
             } else {
@@ -413,6 +428,8 @@ Boolean update=false;
             ((ProgressBar)view.findViewById(R.id.progressbar)).setProgress(infos.get(position).progress);
 
             return view;
+
+            //when it shows progress it show duplocate progress and titles. Some progress
         }
 
         @Override
