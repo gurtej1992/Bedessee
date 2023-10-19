@@ -6,16 +6,18 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 31
+
     defaultConfig {
         vectorDrawables {
             useSupportLibrary = true
         }
 
         minSdkVersion 24
+
         multiDexEnabled true
         //noinspection HighAppVersionCode
         versionCode 20220402
-        versionName '2023-10-03'
+        versionName '2023-10-18'
     }
 
     signingConfigs {

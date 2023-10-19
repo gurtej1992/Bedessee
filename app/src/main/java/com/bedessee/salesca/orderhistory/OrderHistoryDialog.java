@@ -220,7 +220,7 @@ public class OrderHistoryDialog extends Fragment {
             public void onClick(View v) {
 
                 String baseFilePath = new SharedPrefsManager(requireContext()).getSugarSyncDir();
-                String parentDirectory = new File(baseFilePath).getParent();
+                String parentDirectory = new File(baseFilePath).getPath();
 
                 File root=new File(parentDirectory + "/orderhistory");
                 if(root.exists()) {

@@ -40,7 +40,7 @@ class AdminPanel : AppCompatActivity() {
     var force: TextView? = null
     var num:TextView?=null
     var show_file:TextView?=null
-    var set_ornt:TextView?=null
+  //  var set_ornt:TextView?=null
     var select_file:TextView?=null
     var include_file:TextView?=null
     var newlayout:TextView?=null
@@ -59,7 +59,7 @@ class AdminPanel : AppCompatActivity() {
         signout = findViewById<View>(R.id.sign_out) as TextView
         force = findViewById<View>(R.id.force_crash) as TextView
         num = findViewById<View>(R.id.Num_Columns) as TextView
-        set_ornt = findViewById<View>(R.id.set_ornt) as TextView
+      // set_ornt = findViewById<View>(R.id.set_ornt) as TextView
         select_file = findViewById<View>(R.id.select_file) as TextView
         show_file = findViewById<View>(R.id.show_file) as TextView
         include_file = findViewById<View>(R.id.include_price) as TextView
@@ -289,36 +289,37 @@ class AdminPanel : AppCompatActivity() {
 //                .show()
 //        }
 
-        set_ornt!!.setOnClickListener {
-            AlertDialog.Builder(this).setTitle("Change Orientation")
-                .setPositiveButton(
-                    "Landscape"
-                ) { dialog, which ->
-                    // Perform Action & Dismiss dialog
-                    var orn_text: String = "landscape"
-                    val sharedPreferences: SharedPreferences =
-                        getSharedPreferences("setting", Context.MODE_PRIVATE)
-                    val edit = sharedPreferences.edit()
-                    edit.putString("orientation", orn_text)
-                    edit.apply()
-                    //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    dialog.dismiss();
-                }
-                .setNegativeButton(
-                    "Portrait"
-                ) { dialog, which ->
-                    var orn_text: String = "portrait"
-                    val sharedPreferences: SharedPreferences =
-                        getSharedPreferences("setting", Context.MODE_PRIVATE)
-                    val edit = sharedPreferences.edit()
-                    edit.putString("orientation", orn_text)
-                    edit.apply()
-                  //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    dialog.dismiss()
-                }
-                .create()
-                .show()
-        }
+//        set_ornt!!.setOnClickListener {
+//            AlertDialog.Builder(this).setTitle("Change Orientation")
+//                .setPositiveButton(
+//                    "Landscape"
+//                ) { dialog, which ->
+//                    // Perform Action & Dismiss dialog
+//                    var orn_text: String = "landscape"
+//                    val sharedPreferences: SharedPreferences =
+//                        getSharedPreferences("setting", Context.MODE_PRIVATE)
+//                    val edit = sharedPreferences.edit()
+//                    edit.putString("orientation", orn_text)
+//                    edit.apply()
+//                    //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//                    dialog.dismiss();
+//                }
+//                .setNegativeButton(
+//                    "Portrait"
+//                ) { dialog, which ->
+//                    var orn_text: String = "portrait"
+//                    val sharedPreferences: SharedPreferences =
+//                        getSharedPreferences("setting", Context.MODE_PRIVATE)
+//                    val edit = sharedPreferences.edit()
+//                    edit.putString("orientation", orn_text)
+//                    edit.apply()
+//                  //  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//                    dialog.dismiss()
+//                }
+//                .create()
+//                .show()
+//        }
+
         force!!.setOnClickListener {
             AlertDialog.Builder(this).setTitle("Are you sure want to crash the app?")
                 .setMessage("This is for Testing, Force crash will crash the app.")

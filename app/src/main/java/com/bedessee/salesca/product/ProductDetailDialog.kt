@@ -1,10 +1,8 @@
 package com.bedessee.salesca.product
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.database.Cursor
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -100,6 +98,15 @@ class ProductDetailDialog : DialogFragment() {
 //            view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
 //            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 //        }
+
+        val orientation = requireActivity().resources.configuration.orientation
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            // code for portrait mode
+            view.findViewById<View>(R.id.like_label).visibility = View.GONE
+            view.findViewById<View>(R.id.horizontalScrollView_similarProducts).visibility = View.GONE
+        } else {
+            // code for landscape mode
+        }
 
         val prefsManager = requireActivity().getSharedPreferences("shownewlyout", AppCompatActivity.MODE_PRIVATE)
         val show = prefsManager.getBoolean("show", false)

@@ -99,45 +99,11 @@ class Login : AppCompatActivity() {
 
             } else {
                 /*------------------------------------------------------------*/
-                //comment on 27 sep 2023
+                //comment on 27 sep 2023x
                 //   launchFilePicker()
 
-                GlobalScope.launch(Dispatchers.IO) {
+                fetchData()
 
-
-                    val jsonArray =    getJson(URL("https://www.bedesseebrands.com/_sls_app/google/google.json"))
-
-                    for (i in 0 until jsonArray!!.length()) {
-                        val jsonObject = jsonArray.getJSONObject(i)
-                        val user = SalesPerson(
-                            email = jsonObject.getString("email"),
-                            name = jsonObject.getString("APP_DISPLAY_NAME"),
-                            link = jsonObject.getString("LINK_4_DATAZIP")
-                        )
-                        users.add(user)
-
-                    }
-                    withContext(Dispatchers.Main) {
-                        // Update UI elements here
-                        val userListDialog = UserListDialog(this@Login, users) { user ->
-                            // Handle the click event here
-                            user.link?.let {
-
-                                fetchRequest(this@Login , it,true)
-
-                            }
-
-                            val sharedPrefs = SharedPrefsManager(this@Login)
-                            Timber.d("setting sugar directory")
-                            sharedPrefs.linkURL = user.link
-
-                        }
-
-                        userListDialog.show()
-
-                    }
-
-                }
                 //  fetchRequest(this ,URL,true)
 
                 /*------------------------------------------------------------*/
@@ -202,11 +168,18 @@ class Login : AppCompatActivity() {
         } else {
             url
         }
+
+
         val downloadFolder =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
+        val parentDirectory = File(downloadFolder).parent
+        val f1 = File(parentDirectory, "Bedessee")
+        if (!f1.exists()) {
+            f1.mkdirs()
+        }
         val fileName = (FilenameUtils.getName(URL(safeUrl).path))
         val sharedPrefs = SharedPrefsManager(this)
         Timber.d("setting sugar directory")
-        sharedPrefs.sugarSyncDir = downloadFolder
+        sharedPrefs.sugarSyncDir = f1.path
         val sugarPath = SharedPrefsManager(context).sugarSyncDir
         val request = Request(safeUrl, "$sugarPath/$fileName")
         request.networkType = NetworkType.ALL
@@ -252,6 +225,46 @@ class Login : AppCompatActivity() {
         //  }
     }
 
+    private fun fetchData() {
+        GlobalScope.launch(Dispatchers.IO) {
+
+
+            val jsonArray =    getJson(URL("https://www.bedesseebrands.com/_sls_app/google/google.json"))
+
+            for (i in 0 until jsonArray!!.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                val user = SalesPerson(
+                    email = jsonObject.getString("email"),
+                    name = jsonObject.getString("APP_DISPLAY_NAME"),
+                    link = jsonObject.getString("LINK_4_DATAZIP")
+                )
+                users.add(user)
+
+            }
+            withContext(Dispatchers.Main) {
+                // Update UI elements here
+                val userListDialog = UserListDialog(this@Login, users) { user ->
+                    // Handle the click event here
+                    user.link?.let {
+
+                        fetchRequest(this@Login , it,true)
+
+                    }
+
+                    val sharedPrefs = SharedPrefsManager(this@Login)
+                    Timber.d("setting sugar directory")
+                    sharedPrefs.linkURL = user.link
+
+                }
+
+                userListDialog.show()
+
+            }
+
+        }
+    }
+
+
 
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
@@ -263,14 +276,14 @@ class Login : AppCompatActivity() {
                     /*------------------------------------------------------------*/
                     //Comment on 27 sep 2023
                     //  launchFilePicker()
-
-                    val sharedPrefs = SharedPrefsManager(this)
-                    fetchRequest(this,sharedPrefs.linkURL,true)
+                        fetchData()
+//                    val sharedPrefs = SharedPrefsManager(this)
+//                    fetchRequest(this,sharedPrefs.linkURL,true)
 
 
                     /*------------------------------------------------------------*/
                 } else {
-                    Toast.makeText(this, "YOU MUST ACCEPT STORAGE PERMISSION TO CONTINUE", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "YOU MUST ACCEPT  PERMISSIONS TO CONTINUE", Toast.LENGTH_LONG).show()
                 }
                 return
             }
@@ -279,6 +292,9 @@ class Login : AppCompatActivity() {
             // permissions this app might request.
             else -> {
                 // Ignore all other requests.
+
+                Toast.makeText(this, "YOU MUST ACCEPT  PERMISSIONS TO CONTINUE", Toast.LENGTH_LONG).show()
+
             }
         }
     }

@@ -180,22 +180,22 @@
                 android:layout_height="1dp"
                 android:background="@color/colorAccent" />
 
-            <TextView
-                android:id="@+id/set_ornt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingTop="@dimen/gutter"
-                android:paddingBottom="@dimen/gutter"
-                android:text="Set Orientation"
-                android:textColor="@color/primary_text"
-                android:textSize="@dimen/field_text_size" />
+<!--            <TextView-->
+<!--                android:id="@+id/set_ornt"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:paddingTop="@dimen/gutter"-->
+<!--                android:paddingBottom="@dimen/gutter"-->
+<!--                android:text="Set Orientation"-->
+<!--                android:textColor="@color/primary_text"-->
+<!--                android:textSize="@dimen/field_text_size" />-->
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/colorAccent" />
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="1dp"-->
+<!--                android:background="@color/colorAccent" />-->
 
             <TextView
                 android:id="@+id/price"

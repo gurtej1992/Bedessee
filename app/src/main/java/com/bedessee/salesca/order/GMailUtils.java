@@ -294,7 +294,7 @@ public class GMailUtils {
 
     public static void makeJson(Activity activity, ShoppingCart sShoppingCart, String s, String s1){
         String baseFilePath = new SharedPrefsManager(activity).getSugarSyncDir();
-        String parentDirectory = new File(baseFilePath).getParent();
+        String parentDirectory = new File(baseFilePath).getPath();
         File f1 = new File(parentDirectory , "CompletedOrder");
         if (!f1.exists()) {
             f1.mkdirs();
