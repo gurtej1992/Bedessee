@@ -288,6 +288,7 @@ class Login : AppCompatActivity() {
                 return
             }
 
+
             // Add other 'when' lines to check for other
             // permissions this app might request.
             else -> {
@@ -326,6 +327,8 @@ class Login : AppCompatActivity() {
             onCreate(null)
 
         } else if (requestCode == FILE_CODE && responseCode == RESULT_CANCELED) {
+            Utilities.longToast(this@Login, "Couldn't log in.")
+
             finish()
         }
 

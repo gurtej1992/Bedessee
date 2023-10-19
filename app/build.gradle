@@ -12,7 +12,7 @@ android {
             useSupportLibrary = true
         }
 
-        minSdkVersion 24
+        minSdkVersion 22
 
         multiDexEnabled true
         //noinspection HighAppVersionCode
