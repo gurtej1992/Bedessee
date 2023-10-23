@@ -172,7 +172,7 @@ class Login : AppCompatActivity() {
 
         val downloadFolder =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path
         val parentDirectory = File(downloadFolder).parent
-        val f1 = File(parentDirectory, "Bedessee")
+        val f1 = File(parentDirectory, "Bedessee/Sales_App")
         if (!f1.exists()) {
             f1.mkdirs()
         }

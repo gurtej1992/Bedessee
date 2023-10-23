@@ -64,7 +64,7 @@ public abstract class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAda
     public void onBindViewHolder(@NonNull OrderItemAdapter.ViewHolder holder, int position) {
         final SavedOrder order = mSavedOrders.get(position);
         String baseFilePath = new SharedPrefsManager(mContext).getSugarSyncDir();
-        String parentDirectory = new File(baseFilePath).getPath();
+        String parentDirectory = new File(baseFilePath).getParent();
         if (order.getStartTime() != null) {
             Log.e("@#@#","get time"+ShoppingCart.getSavedOrder(mContext,order.getId()).getTotalItems());
            holder.date.setText(DateFormat.getDateTimeInstance().format(order.getStartTime()));

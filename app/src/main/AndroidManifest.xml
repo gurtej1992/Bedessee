@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -48,7 +50,9 @@
         <activity
             android:name=".LaunchActivity"
             android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|screenSize|keyboardHidden">
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +62,8 @@
         <activity
             android:name="com.nononsenseapps.filepicker.FilePickerActivity"
             android:label="sdf"
-            android:theme="@style/FilePicker.Theme">
+            android:theme="@style/FilePicker.Theme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.GET_CONTENT" />
 
@@ -70,42 +75,52 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/MaterialAppTheme"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".admin.AdminSettings"
             android:label="@string/app_name"
+            android:resizeableActivity="true"
             />
         <activity
             android:name=".login.Login"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"
            />
         <activity
             android:name=".shoppingcart.ShoppingCartDialog"
             android:configChanges="orientation|screenSize|keyboardHidden"
+
              />
         <activity
             android:name=".update.UpdateActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"
              />
         <activity
             android:name=".store.StoreSelector"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/MaterialDialogAppTheme" />
+            android:theme="@style/MaterialDialogAppTheme"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".customview.MarginCalculator"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/MaterialDialogAppTheme" />
+            android:theme="@style/MaterialDialogAppTheme"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".orderhistory.OrderHistoryDialog"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"
             />
         <activity
             android:name=".pastorder.PastOrderActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"/>
         <activity
             android:name=".backorder.BackOrderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"
             />
         <activity
             android:name=".store.WebViewer"
@@ -114,9 +129,11 @@
         <activity
             android:name=".sellsheets.SellSheetsDialog"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"/>
         <activity android:name=".product.FullScreenImageActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:resizeableActivity="true"/>
 
         <provider
             android:name=".provider.Provider"

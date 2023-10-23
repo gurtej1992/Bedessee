@@ -19,7 +19,7 @@ public class BedesseeDatabase extends SQLiteOpenHelper {
     private static final int CUR_DATABASE_VERSION = 43;
 
     public static String getDatabaseFile(String directory) {
-        String parentDirectory = new File(directory).getPath();
+        String parentDirectory = new File(directory).getParent();
         return parentDirectory
                 + File.separator + "sls_app_db"
                 + File.separator + BuildConfig.FLAVOR + DATABASE_NAME;

@@ -192,7 +192,7 @@ public class Utilities  {
                             }
 
                             String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                            String parentDirectory = new File(baseFilePath).getPath();
+                            String parentDirectory = new File(baseFilePath).getParent();
                             File f1 = new File(parentDirectory, "orderhistory");
                             if (!f1.exists()) {
                                 f1.mkdirs();
@@ -278,7 +278,7 @@ public class Utilities  {
                             }
 
                             String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                            String parentDirectory = new File(baseFilePath).getPath();
+                            String parentDirectory = new File(baseFilePath).getParent();
                             File f1 = new File(parentDirectory, "orderhistory");
                             if (!f1.exists()) {
                                 f1.mkdirs();
@@ -402,7 +402,7 @@ public class Utilities  {
                                 }
 
                                 String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                                String parentDirectory = new File(baseFilePath).getPath();
+                                String parentDirectory = new File(baseFilePath).getParent();
                                 File f1 = new File(parentDirectory, "orderhistory");
                                 if (!f1.exists()) {
                                     f1.mkdirs();
@@ -570,7 +570,7 @@ public class Utilities  {
                     context.getContentResolver().update(Contract.SavedOrder.CONTENT_URI, contentValues, Contract.SavedOrderColumns.COLUMN_ID + " = ?", new String[]{orderId});
                 }
                 String baseFilePath = new SharedPrefsManager(context).getSugarSyncDir();
-                String parentDirectory = new File(baseFilePath).getPath();
+                String parentDirectory = new File(baseFilePath).getParent();
 
 
                 File f1 = new File(parentDirectory, "orderhistory");
@@ -865,6 +865,7 @@ public class Utilities  {
             ViewConfiguration config = ViewConfiguration.get(context);
             Field menuKeyField = ViewConfiguration.class
                     .getDeclaredField("sHasPermanentMenuKey");
+           // boolean hasPermanentMenuKey = ViewConfiguration.get(context).hasPermanentMenuKey();
             if (menuKeyField != null) {
                 menuKeyField.setAccessible(true);
                 menuKeyField.setBoolean(config, false);

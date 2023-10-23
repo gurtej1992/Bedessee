@@ -5,8 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
     android:gravity="center">
+
+
 
     <com.google.android.gms.common.SignInButton
         android:visibility="invisible"
@@ -19,5 +20,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/progress_bar"
         android:visibility="gone"/>
+
 
 </LinearLayout>
