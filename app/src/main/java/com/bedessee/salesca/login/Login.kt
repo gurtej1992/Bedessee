@@ -18,10 +18,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bedessee.salesca.R
-import com.bedessee.salesca.customview.DownloadProgressDialog
-import com.bedessee.salesca.customview.UserListDialog
-import com.bedessee.salesca.customview.UtilitiesSpinner
+import com.bedessee.salesca.admin.AdminPanel
+import com.bedessee.salesca.customview.*
 import com.bedessee.salesca.main.MainActivity
 import com.bedessee.salesca.mixpanel.MixPanelManager
 import com.bedessee.salesca.modal.SalesPerson
@@ -71,7 +72,7 @@ class Login : AppCompatActivity() {
     private var mProgressBar: ProgressBar? = null
     val users = mutableListOf<SalesPerson>()
     private var dialog: Dialog? = null
-
+    private var recyclerView: RecyclerView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +82,8 @@ class Login : AppCompatActivity() {
 
 //
         MixPanelManager.trackScreenView(this, "Login screen")
+
+        recyclerView=findViewById(R.id.recyclerview)
 
         val sharedPrefs = SharedPrefsManager(this)
 
@@ -236,18 +239,38 @@ class Login : AppCompatActivity() {
                 val user = SalesPerson(
                     email = jsonObject.getString("email"),
                     name = jsonObject.getString("APP_DISPLAY_NAME"),
-                    link = jsonObject.getString("LINK_4_DATAZIP")
-                )
+                    link = jsonObject.getString("LINK_4_DATAZIP"),
+                    pin = jsonObject.getString("PIN_TO_ACCESS"),
+
+                    )
                 users.add(user)
 
             }
             withContext(Dispatchers.Main) {
                 // Update UI elements here
-                val userListDialog = UserListDialog(this@Login, users) { user ->
+
+                val adapter = UserListAsapter(users){ user ->
                     // Handle the click event here
                     user.link?.let {
 
-                        fetchRequest(this@Login , it,true)
+                        val secretPin = user.pin
+
+                        DialogNumberPad.newInstance(object :
+                            DialogNumberPad.OnNumberSelectedListener {
+                            override fun onSelected(number: Double) {
+                                if (number.toInt() == secretPin?.toInt()) {
+                                    MixPanelManager.trackButtonClick(
+                                        this@Login,
+                                        "Button click: User Info"
+                                    )
+                                    fetchRequest(this@Login , it,true)
+                                } else {
+                                    Utilities.shortToast(this@Login, "Sorry, wrong pin!")
+                                }
+                            }
+                        }, formatNumber = false, allowDecimals = false, showHint = false)
+                            .show((this@Login as AppCompatActivity).supportFragmentManager, "Test")
+
 
                     }
 
@@ -256,8 +279,23 @@ class Login : AppCompatActivity() {
                     sharedPrefs.linkURL = user.link
 
                 }
-
-                userListDialog.show()
+                recyclerView?.adapter = adapter
+                recyclerView?.layoutManager = LinearLayoutManager(this@Login)
+//                val userListDialog = UserListDialog(this@Login, users) { user ->
+//                    // Handle the click event here
+//                    user.link?.let {
+//
+//                        fetchRequest(this@Login , it,true)
+//
+//                    }
+//
+//                    val sharedPrefs = SharedPrefsManager(this@Login)
+//                    Timber.d("setting sugar directory")
+//                    sharedPrefs.linkURL = user.link
+//
+//                }
+//
+//                userListDialog.show()
 
             }
 
